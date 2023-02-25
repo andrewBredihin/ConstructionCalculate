@@ -19,6 +19,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/static/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -40,4 +41,6 @@ public class WebSecurityConfig {
 
         return new InMemoryUserDetailsManager(user);
     }
+
+
 }
