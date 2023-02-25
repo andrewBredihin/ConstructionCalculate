@@ -3,6 +3,7 @@ package com.project.calculate.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Openings_InStructural_Element_Frame")
 public class OpeningsInStructuralElementFrame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

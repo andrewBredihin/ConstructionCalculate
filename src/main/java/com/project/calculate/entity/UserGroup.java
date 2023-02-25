@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"UserGroup\"")
+@Table(name = "User_group")
 public class UserGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,7 @@ public class UserGroup {
     private Integer id;
 
     @Lob
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", columnDefinition = "text", nullable = false)
     private String title;
 
     @ManyToMany
