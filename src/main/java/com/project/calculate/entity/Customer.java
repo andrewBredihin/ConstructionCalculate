@@ -37,10 +37,19 @@ public class Customer {
     private String adress;
 
     @OneToMany(mappedBy = "customer")
-    private Set<User> users = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "customer")
     private Set<Calculation> calculations = new LinkedHashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    private User manager;
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
 
     public Set<Calculation> getCalculations() {
         return calculations;
@@ -48,14 +57,6 @@ public class Customer {
 
     public void setCalculations(Set<Calculation> calculations) {
         this.calculations = calculations;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     public String getAdress() {

@@ -17,10 +17,6 @@ public class User implements UserDetails {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "state_id", nullable = false)
     private UserStatus state;
 
@@ -36,9 +32,6 @@ public class User implements UserDetails {
     @Column(name = "second_name", nullable = false)
     private String secondName;
 
-    @Column(name = "phone", nullable = false)
-    private Integer phone;
-
     @Lob
     @Column(name = "email", nullable = false)
     private String email;
@@ -53,6 +46,28 @@ public class User implements UserDetails {
 
     @ManyToMany(mappedBy = "users")
     private Set<UserGroup> userGroups = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "manager")
+    private Set<Customer> customers = new LinkedHashSet<>();
+
+    @Column(name = "phone", nullable = false)
+    private Long phone;
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
 
     public Set<UserGroup> getUserGroups() {
         return userGroups;
@@ -116,14 +131,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Integer getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Integer phone) {
-        this.phone = phone;
-    }
-
     public String getSecondName() {
         return secondName;
     }
@@ -154,14 +161,6 @@ public class User implements UserDetails {
 
     public void setState(UserStatus state) {
         this.state = state;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public Integer getId() {
