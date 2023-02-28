@@ -1,6 +1,8 @@
 package com.project.calculate.entity;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,12 +15,20 @@ public class UserStatus {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Lob
     @Column(name = "title", nullable = false)
     private String title;
 
     @OneToMany(mappedBy = "state")
     private Set<User> users = new LinkedHashSet<>();
+
+
+    public UserStatus(Integer id) {
+        this.id = id;
+    }
+
+    public UserStatus() {
+
+    }
 
     public Set<User> getUsers() {
         return users;

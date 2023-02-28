@@ -1,34 +1,51 @@
 package com.project.calculate.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "User_group")
-public class UserGroup {
+@Table(name = "user_group")
+public class UserGroup implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Lob
-    @Column(name = "title", columnDefinition = "text", nullable = false)
+    @Column(name = "title", nullable = false, length = Integer.MAX_VALUE)
     private String title;
 
     @ManyToMany
-    @JoinTable(name = "UsersGroup",
+    @JoinTable(name = "users_group",
             joinColumns = @JoinColumn(name = "usersgroup_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
-    private Set<User> users = new LinkedHashSet<>();
+    private Set<User> userTables = new LinkedHashSet<>();
 
-    public Set<User> getUsers() {
-        return users;
+    public UserGroup() {
+
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public Set<User> getUserTables() {
+        return userTables;
+    }
+
+    public void setUserTables(Set<User> userTables) {
+        this.userTables = userTables;
+    }
+
+    public UserGroup(String title) {
+        this.title = title;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -39,11 +56,10 @@ public class UserGroup {
         this.title = title;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
+
+    @Override
+    public String getAuthority() {
+        return getTitle();
     }
 }

@@ -13,7 +13,6 @@ public class Material {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Lob
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -21,11 +20,9 @@ public class Material {
     @JoinColumn(name = "\"mаterial_caracteristics_id\"", nullable = false)
     private MaterialCharacteristic mаterialCaracteristics;
 
-    @Lob
     @Column(name = "material_type", nullable = false)
     private String materialType;
 
-    @Lob
     @Column(name = "structural_element_type", nullable = false)
     private String structuralElementType;
 

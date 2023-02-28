@@ -15,7 +15,6 @@ public class Calculation {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Lob
     @Column(name = "address_object_constractions", nullable = false)
     private String addressObjectConstractions;
 

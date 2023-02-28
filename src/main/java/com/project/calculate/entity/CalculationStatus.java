@@ -13,7 +13,6 @@ public class CalculationStatus {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Lob
     @Column(name = "title", nullable = false)
     private String title;
 

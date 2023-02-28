@@ -13,7 +13,6 @@ public class MaterialCharacteristic {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Lob
     @Column(name = "name", nullable = false)
     private String name;
 

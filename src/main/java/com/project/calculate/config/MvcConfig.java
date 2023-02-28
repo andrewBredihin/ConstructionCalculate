@@ -1,7 +1,6 @@
 package com.project.calculate.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -11,6 +10,6 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("MainPage");
         registry.addViewController("/").setViewName("AddClient");
-        registry.addViewController("/login").setViewName("index");
+        //registry.addViewController("/login").setViewName("testlogin");
     }
 }

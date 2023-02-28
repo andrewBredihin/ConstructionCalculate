@@ -17,7 +17,6 @@ public class Result {
     @JoinColumn(name = "material_characteristics_id", nullable = false)
     private MaterialCharacteristic materialCharacteristics;
 
-    @Lob
     @Column(name = "material", nullable = false)
     private String material;
 
@@ -27,7 +26,6 @@ public class Result {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @Lob
     @Column(name = "measurement_unit", nullable = false)
     private String measurementUnit;
 

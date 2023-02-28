@@ -13,26 +13,21 @@ public class Customer {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Lob
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Lob
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Lob
     @Column(name = "second_name", nullable = false)
     private String secondName;
 
     @Column(name = "phone", nullable = false)
     private Integer phone;
 
-    @Lob
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Lob
     @Column(name = "adress", nullable = false)
     private String adress;
 

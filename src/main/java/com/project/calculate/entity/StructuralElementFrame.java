@@ -40,43 +40,33 @@ public class StructuralElementFrame {
     @Column(name = "internal_wall_thickness", nullable = false)
     private Double internalWallThickness;
 
-    @Lob
     @Column(name = "\"OSB_external_wall\"", nullable = false)
     private String osbExternalWall;
 
-    @Lob
     @Column(name = "\"steam_waterproofing_external _wall\"", nullable = false)
     private String steamWaterproofingExternalWall;
 
-    @Lob
     @Column(name = "windscreen_external_wall", nullable = false)
     private String windscreenExternalWall;
 
-    @Lob
     @Column(name = "insulation_external_wall", nullable = false)
     private String insulationExternalWall;
 
-    @Lob
     @Column(name = "overlap_thickness", nullable = false)
     private String overlapThickness;
 
-    @Lob
     @Column(name = "\"OSB_thickness\"", nullable = false)
     private String osbThickness;
 
-    @Lob
     @Column(name = "steam_waterproofing_thicknes", nullable = false)
     private String steamWaterproofingThicknes;
 
-    @Lob
     @Column(name = "windscreen_thickness", nullable = false)
     private String windscreenThickness;
 
-    @Lob
     @Column(name = "insulation__thickness", nullable = false)
     private String insulationThickness;
 
-    @Lob
     @Column(name = "\"OSB_internal_wal\"", nullable = false)
     private String osbInternalWal;
 

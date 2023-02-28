@@ -13,7 +13,6 @@ public class Opening {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Lob
     @Column(name = "type", nullable = false)
     private String type;
 

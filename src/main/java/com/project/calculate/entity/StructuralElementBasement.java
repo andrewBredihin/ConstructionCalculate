@@ -19,11 +19,9 @@ public class StructuralElementBasement {
     @Column(name = "\"Internal_wall_length\"", nullable = false)
     private Double internalWallLength;
 
-    @Lob
     @Column(name = "\"Concrete_piles\"", nullable = false)
     private String concretePiles;
 
-    @Lob
     @Column(name = "\"Concrete\"", nullable = false)
     private String concrete;
 
