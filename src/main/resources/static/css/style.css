@@ -137,7 +137,6 @@
     border:none;
     border-bottom:1px solid transparent;
     border-radius:0;
-    color:#ccc;
     box-shadow:none;
     color:inherit;
     transition:border-bottom-color 0.3s;
@@ -146,7 +145,16 @@
 .header-blue .navbar .form-inline .search-field:focus {
     border-bottom:1px solid #ccc;
 }
-
+.phone{
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+}
+.phone a {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+}
 .header-blue .hero {
     margin-top:20px;
     text-align:center;
