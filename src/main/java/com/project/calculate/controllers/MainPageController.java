@@ -6,6 +6,7 @@ import com.project.calculate.entity.UserStatus;
 import com.project.calculate.repository.UserGroupRepository;
 import com.project.calculate.repository.UserRepository;
 import com.project.calculate.repository.UserStatusRepository;
+import com.project.calculate.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,9 +27,22 @@ public class MainPageController {
     private UserStatusRepository userStatusRepository;
     @Autowired
     private UserGroupRepository userGroupRepository;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
+
+        User user = new User();
+        user.setLogin("user2");
+        user.setPassword("12345");
+        user.setFirstName("test");
+        user.setLastName("test");
+        user.setSecondName("test");
+        user.setPhone(123L);
+        user.setEmail("test@mail.ru");
+
+        userService.saveUser(user);
 
         return "MainPage";
     }

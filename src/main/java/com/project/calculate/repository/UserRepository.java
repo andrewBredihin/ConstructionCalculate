@@ -9,8 +9,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByLogin(String login);
 
-    User findById(int id);
-
     User findByEmail(String email);
 
     @Query(value = "SELECT MAX(`id`) from `User`", nativeQuery = true)

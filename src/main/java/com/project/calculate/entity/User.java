@@ -42,7 +42,7 @@ public class User implements UserDetails {
     @Column(name = "phone", nullable = false)
     private Long phone;
 
-    @ManyToMany(mappedBy = "userTables")
+    @ManyToMany(mappedBy = "userTables", fetch = FetchType.EAGER)
     private Set<UserGroup> userGroups = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "manager")
@@ -128,27 +128,27 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return login;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
 

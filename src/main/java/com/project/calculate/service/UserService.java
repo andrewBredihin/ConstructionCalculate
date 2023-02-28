@@ -3,14 +3,17 @@ package com.project.calculate.service;
 import com.project.calculate.entity.User;
 import com.project.calculate.repository.UserGroupRepository;
 import com.project.calculate.repository.UserRepository;
+import com.project.calculate.repository.UserStatusRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +27,10 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     @Autowired
     UserGroupRepository userGroupRepository;
-    //@Autowired
-    //BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    UserStatusRepository userStatusRepository;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -35,7 +40,21 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return null;
+        return user;
+    }
+
+    public boolean saveUser(User user) {
+        User userFromDB = userRepository.findByLogin(user.getUsername());
+
+        if (userFromDB != null) {
+            return false;
+        }
+
+        user.setUserGroups(Collections.singleton(userGroupRepository.getById(1L)));
+        user.setState(userStatusRepository.findById(1));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
     }
 
     public User findUserById(Long userId) {
