@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -25,7 +25,10 @@
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100">
-      <form class="card-body cardbody-color p-lg-4 ">
+      <form class="card-body cardbody-color p-lg-4 "
+            th:action="@{/addClient}"
+            th:object="${clientForm}"
+            method="POST">
         <span class="login100-form-title">
           Добавить клиента
         </span>
@@ -33,42 +36,42 @@
         <div class="row mb-4">
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example1" class="form-control" />
+              <input type="text" id="form6Example1" class="form-control" th:field="*{first_name}"/>
               <label class="form-label" for="form6Example1">Имя</label>
             </div>
           </div>
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example2" class="form-control" />
+              <input type="text" id="form6Example2" class="form-control" th:field="*{last_name}"/>
               <label class="form-label" for="form6Example2">Фамилия</label>
             </div>
           </div>
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example" class="form-control" />
+              <input type="text" id="form6Example" class="form-control" th:field="*{second_name}"/>
               <label class="form-label" for="form6Example2">Отчество</label>
             </div>
           </div>
         </div>
         <!-- Text input -->
         <div class="form-outline mb-4">
-          <input type="text" id="form6Example4" class="form-control" />
+          <input type="text" id="form6Example4" class="form-control" th:field="*{adress}"/>
           <label class="form-label" for="form6Example4">Адрес</label>
         </div>
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-          <input type="email" id="form6Example5" class="form-control" />
+          <input type="email" id="form6Example5" class="form-control" th:field="*{email}"/>
           <label class="form-label" for="form6Example5">Email</label>
         </div>
 
         <!-- Number input -->
         <div class="form-outline mb-4">
-          <input type="number" id="form6Example6" class="form-control" />
+          <input type="number" id="form6Example6" class="form-control" th:field="*{phone}"/>
           <label class="form-label" for="form6Example6">Телефон</label>
         </div>
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Сохранить</button>
+        <button type="submit" class="btn btn-primary btn-block mb-4" onClick='location.href="/home"'>Сохранить</button>
       </form>
     </div>
   </div>
