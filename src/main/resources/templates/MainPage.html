@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -39,11 +40,13 @@
                             Клиенты
                          </span>
                 </div>
-                <div class="row">
-                    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                       <button class="btn btn-light btn-lg action-button" type="button">Создать клиента</button>
+                <form >
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                           <button class="btn btn-light btn-lg action-button" type="button" onclick='location.href="/addClient"'>Создать клиента</button>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <br>
                 <div class="row">
                     <div class="col-xl-4 col-lg-6 mb-4">

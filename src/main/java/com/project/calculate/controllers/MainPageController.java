@@ -39,4 +39,10 @@ public class MainPageController {
 
         return "MainPage";
     }
+
+    @RequestMapping(value = "/homeRedirect", method = RequestMethod.GET)
+    public String redirect() {
+
+        return "redirect:/addClient";
+    }
 }
