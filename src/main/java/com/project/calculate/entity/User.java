@@ -173,4 +173,8 @@ public class User implements UserDetails {
     }
 
 
+    public String getUserName()
+    {
+        return firstName + " " + lastName;
+    }
 }

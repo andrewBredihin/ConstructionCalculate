@@ -1,48 +1,41 @@
 package com.project.calculate.controllers;
 
 import com.project.calculate.entity.User;
-import com.project.calculate.entity.UserGroup;
-import com.project.calculate.entity.UserStatus;
-import com.project.calculate.repository.UserGroupRepository;
 import com.project.calculate.repository.UserRepository;
-import com.project.calculate.repository.UserStatusRepository;
-import com.project.calculate.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
+import java.util.Collection;
 
 @Controller
 public class MainPageController {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserStatusRepository userStatusRepository;
-    @Autowired
-    private UserGroupRepository userGroupRepository;
-    @Autowired
-    private UserService userService;
 
-    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+    @RequestMapping(value = "/home" , method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
 
-        User user = new User();
-        user.setLogin("user2");
-        user.setPassword("12345");
-        user.setFirstName("test");
-        user.setLastName("test");
-        user.setSecondName("test");
-        user.setPhone(123L);
-        user.setEmail("test@mail.ru");
+        String principal = request.getUserPrincipal().getName();
+        User user = userRepository.findByLogin(principal);
+        String user_name = user.getUserName();
+        String user_role = "";
 
-        userService.saveUser(user);
+        Collection<? extends GrantedAuthority> roles = user.getAuthorities();
+        for (GrantedAuthority x : roles) {
+            if (x.getAuthority().equals("USER"))
+                user_role = "Менеджер";
+            else if (x.getAuthority().equals("ADMIN"))
+                user_role = "Администратор";
+        }
+
+        String user_info = user_name + ": " + user_role;
+        model.addAttribute("user_name", user_info);
 
         return "MainPage";
     }
