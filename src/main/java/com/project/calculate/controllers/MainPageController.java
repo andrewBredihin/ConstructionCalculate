@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MainPageController {
@@ -26,6 +28,7 @@ public class MainPageController {
     @RequestMapping(value = "/home" , method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
 
+        //Отображение ФИ:должность пользователя
         String principal = request.getUserPrincipal().getName();
         User user = userRepository.findByLogin(principal);
         String user_name = user.getUserName();
@@ -42,8 +45,7 @@ public class MainPageController {
         String user_info = user_name + ": " + user_role;
         model.addAttribute("user_name", user_info);
 
-
-        List<Customer> customers = customerRepository.findAll();
+        Set<Customer> customers = user.getCustomers();
         model.addAttribute("customers", customers);
 
         return "MainPage";
