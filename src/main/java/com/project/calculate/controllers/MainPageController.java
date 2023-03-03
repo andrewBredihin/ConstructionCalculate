@@ -1,6 +1,8 @@
 package com.project.calculate.controllers;
 
+import com.project.calculate.entity.Customer;
 import com.project.calculate.entity.User;
+import com.project.calculate.repository.CustomerRepository;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +12,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MainPageController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @RequestMapping(value = "/home" , method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
 
+        //Отображение ФИ:должность пользователя
         String principal = request.getUserPrincipal().getName();
         User user = userRepository.findByLogin(principal);
         String user_name = user.getUserName();
@@ -36,6 +44,9 @@ public class MainPageController {
 
         String user_info = user_name + ": " + user_role;
         model.addAttribute("user_name", user_info);
+
+        Set<Customer> customers = user.getCustomers();
+        model.addAttribute("customers", customers);
 
         return "MainPage";
     }

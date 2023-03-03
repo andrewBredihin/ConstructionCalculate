@@ -110,4 +110,7 @@ public class Customer {
         this.id = id;
     }
 
+    public String getFirstLastName(){
+        return firstName + " " + lastName;
+    }
 }
