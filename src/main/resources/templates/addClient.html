@@ -19,6 +19,10 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <!-- Подключение библиотеки jQuery -->
+  <script th:src="@{jquery.js}"></script>
+  <!-- Подключение jQuery плагина Masked Input -->
+  <script src="jquery.maskedinput.min.js"></script>
   <!--===============================================================================================-->
 </head>
 <body>
@@ -36,26 +40,26 @@
         <div class="row mb-4">
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example1" class="form-control" th:field="*{first_name}"/>
+              <input type="text" id="form6Example1" class="form-control" th:field="*{first_name}" maxlength="10"/>
               <label class="form-label" for="form6Example1">Имя</label>
             </div>
           </div>
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example2" class="form-control" th:field="*{last_name}"/>
+              <input type="text" id="form6Example2" class="form-control" th:field="*{last_name}" maxlength="15"/>
               <label class="form-label" for="form6Example2">Фамилия</label>
             </div>
           </div>
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example" class="form-control" th:field="*{second_name}"/>
+              <input type="text" id="form6Example" class="form-control" th:field="*{second_name}" maxlength="15"/>
               <label class="form-label" for="form6Example2">Отчество</label>
             </div>
           </div>
         </div>
         <!-- Text input -->
         <div class="form-outline mb-4">
-          <input type="text" id="form6Example4" class="form-control" th:field="*{adress}"/>
+          <input type="text" id="form6Example4" class="form-control" th:field="*{adress}" maxlength="20"/>
           <label class="form-label" for="form6Example4">Адрес</label>
         </div>
 
@@ -67,8 +71,8 @@
 
         <!-- Number input -->
         <div class="form-outline mb-4">
-          <input type="number" id="form6Example6" class="form-control" th:field="*{phone}"/>
-          <label class="form-label" for="form6Example6">Телефон</label>
+          <input type="tel" id="phone" name="tel" class="form-control" th:field="*{phone}" maxlength="11" />
+          <label class="form-label" for="phone">Телефон</label>
         </div>
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4" onClick='location.href="/home"'>Сохранить</button>
@@ -85,6 +89,8 @@
 <script th:src="@{/vendor/select2/select2.min.js}"></script>
 <!--===============================================================================================-->
 <script th:src="@{/vendor/tilt/tilt.jquery.min.js}"></script>
+<script th:src="@{/vendor/jquery/jquery.maskedinput.js}"></script>
+<script th:src="@{/vendor/jquery/jquery.maskedinput.min.js}"></script>
 <script >
   $('.js-tilt').tilt({
     scale: 1.1
@@ -92,6 +98,13 @@
 </script>
 <!--===============================================================================================-->
 <script th:src="@{/js/main.js}"></script>
-
+<script>
+  //Код jQuery, установливающий маску для ввода телефона элементу input
+  //1. После загрузки страницы,  когда все элементы будут доступны выполнить...
+  $(function(){
+    //2. Получить элемент, к которому необходимо добавить маску
+    $("#phone").mask("89999999999");
+  });
+</script>
 </body>
 </html>
