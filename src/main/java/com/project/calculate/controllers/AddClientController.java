@@ -33,25 +33,39 @@ public class AddClientController {
     public String saveClient(HttpServletRequest request, Model model, //
                              @ModelAttribute("clientForm") ClientForm clientForm) {
         //Получаем значения из формы
-        String first_name = clientForm.getFirst_name();
-        String last_name = clientForm.getLast_name();
-        String second_name = clientForm.getSecond_name();
-        String email = clientForm.getEmail();
-        String adress = clientForm.getAdress();
-        Long phone = Long.parseLong(clientForm.getPhone());
-
+        String first_name = null;
+        String last_name = null;
+        String second_name = null;
+        String email = null;
+        String adress = null;
+        Long phone = 0L;
+        try {
+            first_name = clientForm.getFirst_name();
+            last_name = clientForm.getLast_name();
+            second_name = clientForm.getSecond_name();
+            email = clientForm.getEmail();
+            adress = clientForm.getAdress();
+            phone = Long.parseLong(clientForm.getPhone());
+        } catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
         //Создаем нового клиента
-        Customer customer = new Customer();
-        customer.setFirstName(first_name);
-        customer.setLastName(last_name);
-        customer.setSecondName(second_name);
-        customer.setAdress(adress);
-        customer.setEmail(email);
-        customer.setPhone(phone);
-        customer.setManager(userRepository.findByLogin(request.getUserPrincipal().getName()));
-        //Сохраняем в БД
-        customerRepository.save(customer);
-
-        return "redirect:/home";
+        try {
+            Customer customer = new Customer();
+            customer.setFirstName(first_name);
+            customer.setLastName(last_name);
+            customer.setSecondName(second_name);
+            customer.setAdress(adress);
+            customer.setEmail(email);
+            customer.setPhone(phone);
+            customer.setManager(userRepository.findByLogin(request.getUserPrincipal().getName()));
+            //Сохраняем в БД
+            customerRepository.save(customer);
+            return "redirect:/home";
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 }
