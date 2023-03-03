@@ -1,0 +1,8 @@
+.modal-btn{
+    width: 100%;
+    color: #fff;
+    background: #F05F05;
+}
+.modal-btn:hover{
+    background: #ffAD4B;
+}

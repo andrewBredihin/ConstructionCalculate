@@ -7,22 +7,22 @@
 
 @font-face {
     font-family: Poppins-Regular;
-    src: url('../templates/fonts/poppins/Poppins-Regular.ttf');
+    src: url('/static/fonts/poppins/Poppins-Regular.ttf');
 }
 
 @font-face {
     font-family: Poppins-Bold;
-    src: url('../templates/fonts/poppins/Poppins-Bold.ttf');
+    src: url('/static/fonts/poppins/Poppins-Bold.ttf');
 }
 
 @font-face {
     font-family: Poppins-Medium;
-    src: url('../templates/fonts/poppins/Poppins-Medium.ttf');
+    src: url('/static/fonts/poppins/Poppins-Medium.ttf');
 }
 
 @font-face {
     font-family: Montserrat-Bold;
-    src: url('../templates/fonts/montserrat/Montserrat-Bold.ttf');
+    src: url('/static/fonts/montserrat/Montserrat-Bold.ttf');
 }
 
 /*//////////////////////////////////////////////////////////////////
@@ -168,16 +168,12 @@ iframe {
     justify-content: center;
     align-items: center;
     padding: 15px;
-    background: #9053c7;
-    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    background: #184e8e linear-gradient(135deg, #172a74, #21a9af);
 }
 
 .wrap-login100 {
     width: 960px;
-    background: #FFEEDA;
+    background: #FFF9F1;
     border-radius: 10px;
     overflow: hidden;
 

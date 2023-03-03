@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/modalCss.css}">
     <script src="https://kit.fontawesome.com/d5efc829a1.js" crossorigin="anonymous"></script>
 </head>
 
@@ -19,10 +20,15 @@
             <div class="container">
                 <a class="navbar-brand" href="#">Строительный калькулятор</a>
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                    <h1 style="font-size: 30px">Клиент:</h1>
-                    <h5 style="font-size: 16px" class="text-decoration-underline">Тестовый Тест Тестович</h5>
-                    <h5 style="font-size: 16px" class="text-decoration-underline">г. Ульяновск, ул. Тестовая, д.35-45</h5>
-                    <div class=phone>тел: <a href="tel:+74951234567"> +7 (495) 123-45-67</a></div>
+                    <h1 style="font-size: 25px">Клиент:</h1>
+                    <div class="phone">
+                        <a href="" style="font-size: 16px" class="text-decoration-underline">
+                            Тестовый Тест Тестович
+                            <br>
+                            г. Ульяновск, ул. Тестовая, д.35-45
+                        </a>
+                    </div>
+                    <div class="phone">тел: <a href="tel:+74951234567"> +7 (495) 123-45-67</a></div>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <div class="form-inline mr-auto">
@@ -43,13 +49,34 @@
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                    <button class="btn btn-light btn-lg action-button" type="button">Создать Расчет</button>
+                    <button class="btn btn-light btn-lg action-button" type="button" data-toggle="modal" data-target="#exampleModalPopovers">Создать Расчет</button>
+                </div>
+            </div>
+            <div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel">
+                <div class="modal-dialog" style="background-color: #FFF9F1" role="document">
+                    <div class="modal-content" style="background-color: #FFF9F1">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalPopoversLabel">Выбор конструкторского элемента</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Каркас</a>
+                            <hr>
+                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Фундамент</a>
+                            <hr>
+                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Крыша</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
-            <div class="container" style="background-color: #FFEEDA;width: 100%">
+            <div class="container" style="background-color: #FFF9F1;width: 100%;border-radius: 10px;">
                 <div class="col-lg-8 col-md-10 ml-auto mr-auto" style="width: 100%">
-                    <h4><small>Simple With Actions</small></h4>
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
