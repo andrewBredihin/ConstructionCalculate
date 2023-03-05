@@ -11,7 +11,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -102,15 +102,35 @@ public class Customer {
         this.firstName = firstName;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getFirstLastName(){
         return firstName + " " + lastName;
+    }
+
+    public String getFullName(){
+        return lastName + " " + firstName + " " + secondName;
+    }
+
+    public String getPhoneMask(){
+        String phoneToString = Long.toString(phone);
+        String phone = "";
+        for (int i = 0; i < 11; i++){
+            if (i == 1)
+                phone += " (" + phoneToString.charAt(i);
+            else if (i == 4)
+                phone += ") " + phoneToString.charAt(i);
+            else if (i == 7 || i == 9)
+                phone += "-" + phoneToString.charAt(i);
+            else
+                phone += phoneToString.charAt(i);
+        }
+        return phone;
     }
 }

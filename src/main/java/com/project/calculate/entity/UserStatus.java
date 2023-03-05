@@ -13,7 +13,7 @@ public class UserStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -22,7 +22,7 @@ public class UserStatus {
     private Set<User> users = new LinkedHashSet<>();
 
 
-    public UserStatus(Integer id) {
+    public UserStatus(Long id) {
         this.id = id;
     }
 
@@ -46,11 +46,11 @@ public class UserStatus {
         this.title = title;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

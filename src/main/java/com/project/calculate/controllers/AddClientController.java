@@ -62,7 +62,8 @@ public class AddClientController {
             customer.setManager(userRepository.findByLogin(request.getUserPrincipal().getName()));
             //Сохраняем в БД
             customerRepository.save(customer);
-            return "redirect:/home";
+            String id = Long.toString(customerRepository.getMaxId());
+            return "redirect:/clientCard?id=" + id;
         } catch (Exception e){
             System.out.println(e);
         }

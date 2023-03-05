@@ -40,26 +40,26 @@
         <div class="row mb-4">
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example1" class="form-control" th:field="*{first_name}" maxlength="10"/>
+              <input type="text" id="form6Example1" class="form-control" th:field="*{first_name}" minlength="2"/>
               <label class="form-label" for="form6Example1">Имя</label>
             </div>
           </div>
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example2" class="form-control" th:field="*{last_name}" maxlength="15"/>
+              <input type="text" id="form6Example2" class="form-control" th:field="*{last_name}" minlength="2"/>
               <label class="form-label" for="form6Example2">Фамилия</label>
             </div>
           </div>
           <div class="col">
             <div class="form-outline">
-              <input type="text" id="form6Example" class="form-control" th:field="*{second_name}" maxlength="15"/>
+              <input type="text" id="form6Example" class="form-control" th:field="*{second_name}" minlength="2"/>
               <label class="form-label" for="form6Example2">Отчество</label>
             </div>
           </div>
         </div>
         <!-- Text input -->
         <div class="form-outline mb-4">
-          <input type="text" id="form6Example4" class="form-control" th:field="*{adress}" maxlength="20"/>
+          <input type="text" id="form6Example4" class="form-control" th:field="*{adress}" minlength="20"/>
           <label class="form-label" for="form6Example4">Адрес</label>
         </div>
 
@@ -71,7 +71,7 @@
 
         <!-- Number input -->
         <div class="form-outline mb-4">
-          <input type="tel" id="phone" name="tel" class="form-control" th:field="*{phone}" maxlength="11" />
+          <input type="tel" id="phone" name="tel" class="form-control" th:field="*{phone}" minlength="11" maxlength="11" />
           <label class="form-label" for="phone">Телефон</label>
         </div>
         <!-- Submit button -->

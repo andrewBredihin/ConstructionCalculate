@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setUserGroups(Collections.singleton(userGroupRepository.getById(1L)));
-        user.setState(userStatusRepository.findById(1));
+        user.setState(userStatusRepository.findById(1L).get());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
