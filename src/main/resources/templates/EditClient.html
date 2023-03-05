@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" th:href="@{/images/icons/favicon.ico}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modalCss.css}">
+    <!-- Подключение библиотеки jQuery -->
+    <script th:src="@{jquery.js}"></script>
+</head>
+<body>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="card-body cardbody-color p-lg-4 " th:action="@{/addClient}" th:object="${clientForm}" method="POST">
+                <span class="login100-form-title">
+                    Добавить клиента
+                </span>
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-outline">
+                            <input type="text" id="form6Example1" class="form-control"minlength="2" disabled/>
+                            <label class="form-label" for="form6Example1">Имя</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-outline">
+                            <input type="text" id="form6Example2" class="form-control"minlength="2" disabled/>
+                            <label class="form-label" for="form6Example2">Фамилия</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-outline">
+                            <input type="text" id="form6Example" class="form-control"minlength="2" disabled/>
+                            <label class="form-label" for="form6Example2">Отчество</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="form6Example4" class="form-control"minlength="20" disabled/>
+                    <label class="form-label" for="form6Example4">Адрес</label>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input type="email" id="form6Example5" class="form-control" disabled/>
+                    <label class="form-label" for="form6Example5">Email</label>
+                </div>
+
+                <!-- Number input -->
+                <div class="form-outline mb-4">
+                    <input type="tel" id="phone" name="tel" class="form-control" minlength="11" maxlength="11" disabled/>
+                    <label class="form-label" for="phone">Телефон</label>
+                </div>
+                <!-- Submit button -->
+                <div class="row" style="margin-left: 120px">
+                    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                        <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn">Редактировать</button>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                        <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn" disabled>Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--===============================================================================================-->
+<script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+<!--===============================================================================================-->
+<script th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<!--===============================================================================================-->
+<script th:src="@{/vendor/select2/select2.min.js}"></script>
+<!--===============================================================================================-->
+<script th:src="@{/vendor/tilt/tilt.jquery.min.js}"></script>
+<script th:src="@{/vendor/jquery/jquery.maskedinput.js}"></script>
+<script th:src="@{/vendor/jquery/jquery.maskedinput.min.js}"></script>
+<script >
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
+<!--===============================================================================================-->
+<script th:src="@{/js/main.js}"></script>
+<script>
+    //Код jQuery, установливающий маску для ввода телефона элементу input
+    //1. После загрузки страницы,  когда все элементы будут доступны выполнить...
+    $(function(){
+        //2. Получить элемент, к которому необходимо добавить маску
+        $("#phone").mask("89999999999");
+    });
+</script>
+</body>
+</html>

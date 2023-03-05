@@ -1,0 +1,17 @@
+.Container-skeleton {
+    width: 960px;
+    margin: auto;
+    background: #FFF9F1;
+    border-radius: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.Input_adress{
+    width: 100%;
+}

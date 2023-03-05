@@ -42,6 +42,8 @@ public class ClientCardController {
 
         //Отображение данных о клиенте
         Customer customer = customerRepository.findById(id).get();
+        String Customers_info = customer.getFullName()+"<br/>"+customer.getAdress();
+        model.addAttribute("Customers_info", Customers_info);
         model.addAttribute("customer_name", customer.getFullName());
         model.addAttribute("customer_adress", customer.getAdress());
         model.addAttribute("customer_phone", customer.getPhone());
