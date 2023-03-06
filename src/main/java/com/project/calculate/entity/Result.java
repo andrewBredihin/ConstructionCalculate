@@ -13,30 +13,32 @@ public class Result {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "material_characteristics_id", nullable = false)
-    private MaterialCharacteristic materialCharacteristics;
-
-    @Column(name = "material", nullable = false)
-    private String material;
 
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Column(name = "full_price", nullable = false)
+    private Double fullPrice;
+
+    @Column(name = "material", nullable = false)
+    private String material;
 
     @Column(name = "measurement_unit", nullable = false)
     private String measurementUnit;
 
-    @Column(name = "full_price", nullable = false)
-    private Double fullPrice;
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "material_characteristics_id", nullable = false)
+    private MaterialCharacteristic materialCharacteristics;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "calculation_id", nullable = false)
+    private Calculation calculation;
 
     @OneToMany(mappedBy = "results")
     private Set<StructuralElementBasement> structuralElementBasements = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "results")
-    private Set<Calculation> calculations = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "results")
     private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
@@ -49,14 +51,6 @@ public class Result {
         this.structuralElementFrames = structuralElementFrames;
     }
 
-    public Set<Calculation> getCalculations() {
-        return calculations;
-    }
-
-    public void setCalculations(Set<Calculation> calculations) {
-        this.calculations = calculations;
-    }
-
     public Set<StructuralElementBasement> getStructuralElementBasements() {
         return structuralElementBasements;
     }
@@ -65,44 +59,12 @@ public class Result {
         this.structuralElementBasements = structuralElementBasements;
     }
 
-    public Double getFullPrice() {
-        return fullPrice;
+    public Calculation getCalculation() {
+        return calculation;
     }
 
-    public void setFullPrice(Double fullPrice) {
-        this.fullPrice = fullPrice;
-    }
-
-    public String getMeasurementUnit() {
-        return measurementUnit;
-    }
-
-    public void setMeasurementUnit(String measurementUnit) {
-        this.measurementUnit = measurementUnit;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
+    public void setCalculation(Calculation calculation) {
+        this.calculation = calculation;
     }
 
     public MaterialCharacteristic getMaterialCharacteristics() {
@@ -113,12 +75,43 @@ public class Result {
         this.materialCharacteristics = materialCharacteristics;
     }
 
-    public Long getId() {
-        return id;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
+    public String getMeasurementUnit() {
+        return measurementUnit;
+    }
+
+    public void setMeasurementUnit(String measurementUnit) {
+        this.measurementUnit = measurementUnit;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public Double getFullPrice() {
+        return fullPrice;
+    }
+
+    public void setFullPrice(Double fullPrice) {
+        this.fullPrice = fullPrice;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 }
