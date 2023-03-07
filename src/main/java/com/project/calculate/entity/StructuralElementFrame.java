@@ -12,21 +12,10 @@ public class StructuralElementFrame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "results_id")
-    private Result results;
+
 
     @Column(name = "amount_floor", nullable = false)
     private Integer amountFloor;
-
-    @Column(name = "floor_number", nullable = false)
-    private Integer floorNumber;
-
-    @Column(name = "floor_height", nullable = false)
-    private Integer floorHeight;
-
-    @Column(name = "perimeter_of_external_walls", nullable = false)
-    private Double perimeterOfExternalWalls;
 
     @Column(name = "base_area", nullable = false)
     private Double baseArea;
@@ -34,41 +23,53 @@ public class StructuralElementFrame {
     @Column(name = "external_wall_thickness", nullable = false)
     private Double externalWallThickness;
 
+    @Column(name = "floor_height", nullable = false)
+    private Integer floorHeight;
+
+    @Column(name = "floor_number", nullable = false)
+    private Integer floorNumber;
+
+    @Column(name = "insulation_external_wall", nullable = false)
+    private String insulationExternalWall;
+
+    @Column(name = "insulation__thickness", nullable = false)
+    private String insulationThickness;
+
     @Column(name = "internal_wall_length", nullable = false)
     private Double internalWallLength;
 
     @Column(name = "internal_wall_thickness", nullable = false)
     private Double internalWallThickness;
 
-    @Column(name = "\"OSB_external_wall\"", nullable = false)
+    @Column(name = "osb_external_wall", nullable = false)
     private String osbExternalWall;
 
-    @Column(name = "\"steam_waterproofing_external _wall\"", nullable = false)
-    private String steamWaterproofingExternalWall;
+    @Column(name = "osb_internal_wal", nullable = false)
+    private String osbInternalWal;
 
-    @Column(name = "windscreen_external_wall", nullable = false)
-    private String windscreenExternalWall;
-
-    @Column(name = "insulation_external_wall", nullable = false)
-    private String insulationExternalWall;
+    @Column(name = "osb_thickness", nullable = false)
+    private String osbThickness;
 
     @Column(name = "overlap_thickness", nullable = false)
     private String overlapThickness;
 
-    @Column(name = "\"OSB_thickness\"", nullable = false)
-    private String osbThickness;
+    @Column(name = "perimeter_of_external_walls", nullable = false)
+    private Double perimeterOfExternalWalls;
+
+    @Column(name = "\"steam_waterproofing_external _wall\"", nullable = false)
+    private String steamWaterproofingExternalWall;
 
     @Column(name = "steam_waterproofing_thicknes", nullable = false)
     private String steamWaterproofingThicknes;
 
+    @Column(name = "windscreen_external_wall", nullable = false)
+    private String windscreenExternalWall;
+
     @Column(name = "windscreen_thickness", nullable = false)
     private String windscreenThickness;
 
-    @Column(name = "insulation__thickness", nullable = false)
-    private String insulationThickness;
-
-    @Column(name = "\"OSB_internal_wal\"", nullable = false)
-    private String osbInternalWal;
+    @OneToMany(mappedBy = "structuralElementFrame")
+    private Set<Result> results = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "structuralElementFrame")
     private Set<OpeningsInStructuralElementFrame> openingsInStructuralElementFrames = new LinkedHashSet<>();
@@ -81,20 +82,12 @@ public class StructuralElementFrame {
         this.openingsInStructuralElementFrames = openingsInStructuralElementFrames;
     }
 
-    public String getOsbInternalWal() {
-        return osbInternalWal;
+    public Set<Result> getResults() {
+        return results;
     }
 
-    public void setOsbInternalWal(String osbInternalWal) {
-        this.osbInternalWal = osbInternalWal;
-    }
-
-    public String getInsulationThickness() {
-        return insulationThickness;
-    }
-
-    public void setInsulationThickness(String insulationThickness) {
-        this.insulationThickness = insulationThickness;
+    public void setResults(Set<Result> results) {
+        this.results = results;
     }
 
     public String getWindscreenThickness() {
@@ -105,6 +98,14 @@ public class StructuralElementFrame {
         this.windscreenThickness = windscreenThickness;
     }
 
+    public String getWindscreenExternalWall() {
+        return windscreenExternalWall;
+    }
+
+    public void setWindscreenExternalWall(String windscreenExternalWall) {
+        this.windscreenExternalWall = windscreenExternalWall;
+    }
+
     public String getSteamWaterproofingThicknes() {
         return steamWaterproofingThicknes;
     }
@@ -113,12 +114,20 @@ public class StructuralElementFrame {
         this.steamWaterproofingThicknes = steamWaterproofingThicknes;
     }
 
-    public String getOsbThickness() {
-        return osbThickness;
+    public String getSteamWaterproofingExternalWall() {
+        return steamWaterproofingExternalWall;
     }
 
-    public void setOsbThickness(String osbThickness) {
-        this.osbThickness = osbThickness;
+    public void setSteamWaterproofingExternalWall(String steamWaterproofingExternalWall) {
+        this.steamWaterproofingExternalWall = steamWaterproofingExternalWall;
+    }
+
+    public Double getPerimeterOfExternalWalls() {
+        return perimeterOfExternalWalls;
+    }
+
+    public void setPerimeterOfExternalWalls(Double perimeterOfExternalWalls) {
+        this.perimeterOfExternalWalls = perimeterOfExternalWalls;
     }
 
     public String getOverlapThickness() {
@@ -129,28 +138,20 @@ public class StructuralElementFrame {
         this.overlapThickness = overlapThickness;
     }
 
-    public String getInsulationExternalWall() {
-        return insulationExternalWall;
+    public String getOsbThickness() {
+        return osbThickness;
     }
 
-    public void setInsulationExternalWall(String insulationExternalWall) {
-        this.insulationExternalWall = insulationExternalWall;
+    public void setOsbThickness(String osbThickness) {
+        this.osbThickness = osbThickness;
     }
 
-    public String getWindscreenExternalWall() {
-        return windscreenExternalWall;
+    public String getOsbInternalWal() {
+        return osbInternalWal;
     }
 
-    public void setWindscreenExternalWall(String windscreenExternalWall) {
-        this.windscreenExternalWall = windscreenExternalWall;
-    }
-
-    public String getSteamWaterproofingExternalWall() {
-        return steamWaterproofingExternalWall;
-    }
-
-    public void setSteamWaterproofingExternalWall(String steamWaterproofingExternalWall) {
-        this.steamWaterproofingExternalWall = steamWaterproofingExternalWall;
+    public void setOsbInternalWal(String osbInternalWal) {
+        this.osbInternalWal = osbInternalWal;
     }
 
     public String getOsbExternalWall() {
@@ -177,6 +178,38 @@ public class StructuralElementFrame {
         this.internalWallLength = internalWallLength;
     }
 
+    public String getInsulationThickness() {
+        return insulationThickness;
+    }
+
+    public void setInsulationThickness(String insulationThickness) {
+        this.insulationThickness = insulationThickness;
+    }
+
+    public String getInsulationExternalWall() {
+        return insulationExternalWall;
+    }
+
+    public void setInsulationExternalWall(String insulationExternalWall) {
+        this.insulationExternalWall = insulationExternalWall;
+    }
+
+    public Integer getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(Integer floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public Integer getFloorHeight() {
+        return floorHeight;
+    }
+
+    public void setFloorHeight(Integer floorHeight) {
+        this.floorHeight = floorHeight;
+    }
+
     public Double getExternalWallThickness() {
         return externalWallThickness;
     }
@@ -193,30 +226,6 @@ public class StructuralElementFrame {
         this.baseArea = baseArea;
     }
 
-    public Double getPerimeterOfExternalWalls() {
-        return perimeterOfExternalWalls;
-    }
-
-    public void setPerimeterOfExternalWalls(Double perimeterOfExternalWalls) {
-        this.perimeterOfExternalWalls = perimeterOfExternalWalls;
-    }
-
-    public Integer getFloorHeight() {
-        return floorHeight;
-    }
-
-    public void setFloorHeight(Integer floorHeight) {
-        this.floorHeight = floorHeight;
-    }
-
-    public Integer getFloorNumber() {
-        return floorNumber;
-    }
-
-    public void setFloorNumber(Integer floorNumber) {
-        this.floorNumber = floorNumber;
-    }
-
     public Integer getAmountFloor() {
         return amountFloor;
     }
@@ -224,21 +233,4 @@ public class StructuralElementFrame {
     public void setAmountFloor(Integer amountFloor) {
         this.amountFloor = amountFloor;
     }
-
-    public Result getResults() {
-        return results;
-    }
-
-    public void setResults(Result results) {
-        this.results = results;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 }

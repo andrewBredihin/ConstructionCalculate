@@ -29,7 +29,7 @@ public class ClientCardController {
     @Autowired
     private ResultRepository resultRepository;
 
-    @RequestMapping(value = "/clientCard" , method = RequestMethod.GET)
+    @RequestMapping(value = "/clientCard", method = RequestMethod.GET)
     public String getClient(@RequestParam(name = "id", defaultValue = "") Long id, Model model, HttpServletRequest request) {
         //Отображение ФИ:должность пользователя
         String principal = request.getUserPrincipal().getName();
@@ -48,7 +48,7 @@ public class ClientCardController {
 
         //Отображение данных о клиенте
         Customer customer = customerRepository.findById(id).get();
-        String Customers_info = customer.getFullName()+"<br/>"+customer.getAdress();
+        String Customers_info = customer.getFullName() + "<br/>" + customer.getAdress();
         model.addAttribute("Customers_info", Customers_info);
         model.addAttribute("customer_name", customer.getFullName());
         model.addAttribute("customer_adress", customer.getAdress());
@@ -58,9 +58,8 @@ public class ClientCardController {
         return "/clientCard";
     }
 
-    @RequestMapping(value = "/clientCard" , method = RequestMethod.POST)
+    @RequestMapping(value = "/clientCard", method = RequestMethod.POST)
     public String createCalculation(@RequestParam(name = "id", defaultValue = "") Long id, Model model, HttpServletRequest request) {
-
 
 
         return null;

@@ -37,26 +37,28 @@ public class Result {
     @JoinColumn(name = "calculation_id", nullable = false)
     private Calculation calculation;
 
-    @OneToMany(mappedBy = "results")
-    private Set<StructuralElementBasement> structuralElementBasements = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "structural_element_frame_id", nullable = false)
+    private StructuralElementFrame structuralElementFrame;
 
-    @OneToMany(mappedBy = "results")
-    private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "structural_element_basement_id", nullable = false)
+    private StructuralElementBasement structuralElementBasement;
 
-    public Set<StructuralElementFrame> getStructuralElementFrames() {
-        return structuralElementFrames;
+    public StructuralElementBasement getStructuralElementBasement() {
+        return structuralElementBasement;
     }
 
-    public void setStructuralElementFrames(Set<StructuralElementFrame> structuralElementFrames) {
-        this.structuralElementFrames = structuralElementFrames;
+    public void setStructuralElementBasement(StructuralElementBasement structuralElementBasement) {
+        this.structuralElementBasement = structuralElementBasement;
     }
 
-    public Set<StructuralElementBasement> getStructuralElementBasements() {
-        return structuralElementBasements;
+    public StructuralElementFrame getStructuralElementFrame() {
+        return structuralElementFrame;
     }
 
-    public void setStructuralElementBasements(Set<StructuralElementBasement> structuralElementBasements) {
-        this.structuralElementBasements = structuralElementBasements;
+    public void setStructuralElementFrame(StructuralElementFrame structuralElementFrame) {
+        this.structuralElementFrame = structuralElementFrame;
     }
 
     public Calculation getCalculation() {

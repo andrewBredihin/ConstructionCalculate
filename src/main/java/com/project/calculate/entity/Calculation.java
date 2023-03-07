@@ -34,6 +34,18 @@ public class Calculation {
     @OneToMany(mappedBy = "calculation")
     private Set<Result> results = new LinkedHashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"сalculation_state_id\"", nullable = false)
+    private CalculationStatus сalculationState1;
+
+    public CalculationStatus getСalculationState1() {
+        return сalculationState1;
+    }
+
+    public void setСalculationState1(CalculationStatus сalculationState1) {
+        this.сalculationState1 = сalculationState1;
+    }
+
     public Set<Result> getResults() {
         return results;
     }

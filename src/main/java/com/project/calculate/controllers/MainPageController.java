@@ -2,7 +2,6 @@ package com.project.calculate.controllers;
 
 import com.project.calculate.entity.Customer;
 import com.project.calculate.entity.User;
-import com.project.calculate.repository.CustomerRepository;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
