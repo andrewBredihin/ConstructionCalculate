@@ -281,4 +281,30 @@
 
     background: #C4C4C4;
 }
-
+#InteriorWallCoverings_div {
+    display: none;
+}
+#InteriorWallCoverings_div.hidden{
+    display: block;
+}
+#WindowOpenings_div{
+    display: none;
+}
+#WindowOpenings_div.hidden{
+    display: block;
+}
+#CalculationOfOverlaps_div{
+    display: none;
+}
+#CalculationOfOverlaps_div.hidden{
+    display: block;
+}
+#rmWindowOpenings_btn{
+    display: none;
+}
+#rmWindowOpenings_btn1{
+    display: none;
+}
+#rmWindowOpenings_btn2{
+    display: none;
+}
