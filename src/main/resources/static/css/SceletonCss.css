@@ -3,6 +3,7 @@
     margin: auto;
     background: #FFF9F1;
     border-radius: 10px;
+    height: 100%;
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;

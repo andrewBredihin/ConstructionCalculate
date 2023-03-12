@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modalCss.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/SceletonCss.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://kit.fontawesome.com/d5efc829a1.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="header-blue">
+<div style="height: 100%" >
+    <div>
+        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container">
+                <a class="navbar-brand" href="#">Строительный калькулятор</a>
+                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                    <h1 style="font-size: 30px">Клиент:</h1>
+                    <h5 style="font-size: 16px" class="text-decoration-underline">Тестовый Тест Тестович</h5>
+                    <h5 style="font-size: 16px" class="text-decoration-underline">г. Ульяновск, ул. Тестовая, д.35-45</h5>
+                    <div class=phone>тел: <a href="tel:+74951234567"> +7 (495) 123-45-67</a></div>
+                </div>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <div class="form-inline mr-auto">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <span class="navbar-text">
+                            Имя Фамилия: должность
+                    </span>
+                </div>
+            </div>
+        </nav>
+        <div class="container hero">
+            <div class="row justify-content-center">
+                <div class="col-sm-3 text-center" >
+                    <span style="font-size: 40px;color: white">
+                        Расчет
+                    </span>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-sm-3" >
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Статус
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#">Актуализировать</a>
+                            <a class="dropdown-item" role="presentation" href="#">Заключен договор</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel">
+                <div class="modal-dialog" style="background-color: #FFF9F1" role="document">
+                    <div class="modal-content" style="background-color: #FFF9F1">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalPopoversLabel">Выбор конструкторского элемента</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Каркас</a>
+                            <hr>
+                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Фундамент</a>
+                            <hr>
+                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Крыша</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="limiter">
+                <div class="Container-skeleton">
+                    <div class="container" style="width: 75%;margin-left: 2px;">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <p class="fw-weight-bold" style="font-weight:400; ">Дата: 22.03.2021
+                                    Адрес объекта: г. Такой, ул.Такая, д.25</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-secondary btn-circle btn-circle-sm m-1" id="WindowOpenings_btn"><i class="fa fa-plus" id="WindowOpenings_btn_ico"></i></button>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <p class="fw-weight-bold" style="font-weight:400; ">Результат расчета каркаса</p>
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-just-icon btn-sm" data-original-title="" title="">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 25px"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalPopovers">Добавить конструктивный элемент</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+</body>
+</html>
