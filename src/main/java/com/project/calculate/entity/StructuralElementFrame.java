@@ -51,7 +51,7 @@ public class StructuralElementFrame {
     private String osbThickness;
 
     @Column(name = "overlap_thickness", nullable = false)
-    private String overlapThickness;
+    private int overlapThickness;
 
     @Column(name = "perimeter_of_external_walls", nullable = false)
     private Double perimeterOfExternalWalls;
@@ -81,6 +81,8 @@ public class StructuralElementFrame {
     public void setOpeningsInStructuralElementFrames(Set<OpeningsInStructuralElementFrame> openingsInStructuralElementFrames) {
         this.openingsInStructuralElementFrames = openingsInStructuralElementFrames;
     }
+
+    public StructuralElementFrame(){}
 
     public Set<Result> getResults() {
         return results;
@@ -130,11 +132,11 @@ public class StructuralElementFrame {
         this.perimeterOfExternalWalls = perimeterOfExternalWalls;
     }
 
-    public String getOverlapThickness() {
+    public int getOverlapThickness() {
         return overlapThickness;
     }
 
-    public void setOverlapThickness(String overlapThickness) {
+    public void setOverlapThickness(int overlapThickness) {
         this.overlapThickness = overlapThickness;
     }
 

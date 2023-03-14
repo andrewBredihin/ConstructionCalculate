@@ -13,28 +13,29 @@ public class MaterialCharacteristic {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "measurement_unit_id", nullable = false)
-    private MeasurementUnit measurementUnit;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "materials_id", nullable = false)
-    private Material materials;
 
     @Column(name = "length", nullable = false)
     private Double length;
 
-    @Column(name = "wedth", nullable = false)
-    private Double wedth;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "thickness", nullable = false)
     private Double thickness;
 
     @Column(name = "volume", nullable = false)
     private Double volume;
+
+    @Column(name = "wedth", nullable = false)
+    private Double wedth;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "materials_id", nullable = false)
+    private Material materials;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "measurement_unit_id", nullable = false)
+    private MeasurementUnit measurementUnit;
 
     @OneToMany(mappedBy = "materialCharacteristics")
     private Set<Result> results = new LinkedHashSet<>();
@@ -58,6 +59,30 @@ public class MaterialCharacteristic {
         this.results = results;
     }
 
+    public MeasurementUnit getMeasurementUnit() {
+        return measurementUnit;
+    }
+
+    public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+        this.measurementUnit = measurementUnit;
+    }
+
+    public Material getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(Material materials) {
+        this.materials = materials;
+    }
+
+    public Double getWedth() {
+        return wedth;
+    }
+
+    public void setWedth(Double wedth) {
+        this.wedth = wedth;
+    }
+
     public Double getVolume() {
         return volume;
     }
@@ -74,12 +99,12 @@ public class MaterialCharacteristic {
         this.thickness = thickness;
     }
 
-    public Double getWedth() {
-        return wedth;
+    public String getName() {
+        return name;
     }
 
-    public void setWedth(Double wedth) {
-        this.wedth = wedth;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getLength() {
@@ -89,37 +114,4 @@ public class MaterialCharacteristic {
     public void setLength(Double length) {
         this.length = length;
     }
-
-    public Material getMaterials() {
-        return materials;
-    }
-
-    public void setMaterials(Material materials) {
-        this.materials = materials;
-    }
-
-    public MeasurementUnit getMeasurementUnit() {
-        return measurementUnit;
-    }
-
-    public void setMeasurementUnit(MeasurementUnit measurementUnit) {
-        this.measurementUnit = measurementUnit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 }

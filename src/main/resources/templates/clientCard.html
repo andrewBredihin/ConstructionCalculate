@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
     <meta charset="utf-8">
@@ -58,7 +59,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                            <a th:href="'/framePage'" role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
                                data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Каркас</a>
                             <hr>
                             <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."

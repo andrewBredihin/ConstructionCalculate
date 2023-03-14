@@ -13,15 +13,11 @@ public class Material {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "\"mаterial_caracteristics_id\"", nullable = false)
-    private MaterialCharacteristic mаterialCaracteristics;
-
     @Column(name = "material_type", nullable = false)
     private String materialType;
+
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "structural_element_type", nullable = false)
     private String structuralElementType;
@@ -45,22 +41,6 @@ public class Material {
         this.structuralElementType = structuralElementType;
     }
 
-    public String getMaterialType() {
-        return materialType;
-    }
-
-    public void setMaterialType(String materialType) {
-        this.materialType = materialType;
-    }
-
-    public MaterialCharacteristic getMаterialCaracteristics() {
-        return mаterialCaracteristics;
-    }
-
-    public void setMаterialCaracteristics(MaterialCharacteristic mаterialCaracteristics) {
-        this.mаterialCaracteristics = mаterialCaracteristics;
-    }
-
     public String getName() {
         return name;
     }
@@ -69,12 +49,11 @@ public class Material {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public String getMaterialType() {
+        return materialType;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMaterialType(String materialType) {
+        this.materialType = materialType;
     }
-
 }
