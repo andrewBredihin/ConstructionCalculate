@@ -96,8 +96,8 @@ public class StructuralElementFrameController {
         int overlap_thickness = frameForm.getOverlap_thickness();
         int floor_number = frameForm.getFloor_number();
 
-        Double externalWallSquare = perimeter_of_external_walls * height * 2;
-        Double internalWallSquare = internal_wall_length * height * 2;
+        Double externalWallSquare = perimeter_of_external_walls * height;
+        Double internalWallSquare = internal_wall_length * height;
 
         StructuralElementFrame frame = new StructuralElementFrame();
         try {
@@ -137,66 +137,57 @@ public class StructuralElementFrameController {
             error = true;
         }
 
-        Long newResultsId = 1L;
-        try {
-            newResultsId = resultRepository.getMaxId() + 1;
-        } catch (Exception e){
-            System.out.println(e);
-        }
-
         Set<Result> results = new HashSet<>();
         Set<StructuralElementFrame> frames = new HashSet<>();
         frames.add(frame);
 
-        Result resultOsbExternalWall = new Result();
-        try {
-            resultOsbExternalWall.setStructuralElementFrames(frames);
-            resultOsbExternalWall.setId(newResultsId);
-            resultOsbExternalWall.setCalculation(calculation);
-            resultOsbExternalWall.setMaterial(OSB_external_wall);
-            MaterialCharacteristic materialCharacteristic = materialsRepository.findByName(OSB_external_wall).getMaterialCharacteristics().iterator().next();
-            resultOsbExternalWall.setMaterialCharacteristics(materialCharacteristic);
-            Integer osbExternalWallAmount = getMaterialAmount(externalWallSquare, materialCharacteristic.getLength() * materialCharacteristic.getWedth());
-            resultOsbExternalWall.setAmount(osbExternalWallAmount);
-            PriceList priceList = materialCharacteristic.getPriceLists().iterator().next();
-            resultOsbExternalWall.setPrice(priceList.getPurchasePrice() * osbExternalWallAmount);
-            resultOsbExternalWall.setFullPrice(priceList.getSellingPrice() * osbExternalWallAmount);
-            resultOsbExternalWall.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
-            results.add(resultOsbExternalWall);
-            newResultsId++;
-        } catch (Exception e){
-            System.out.println(e);
-            LoggerFactory.getLogger(CalculateApplication.class).error("RESULTS ERROR: " + e.getMessage());
-            error = true;
+        //ОСБ внешних стен
+        Result resultOsbExternalWall = createResult(frames, calculation, OSB_external_wall, externalWallSquare * 2);
+        results.add(resultOsbExternalWall);
+        //Парогидроизоляция внешних стен
+        Result resultSteamWaterproofingExternal = createResult(frames, calculation, steam_waterproofing_external, externalWallSquare);
+        results.add(resultSteamWaterproofingExternal);
+        //Ветрозащита внешних стен
+        Result windscreenExternalWall = createResult(frames, calculation, windscreen_external_wall, externalWallSquare);
+        results.add(windscreenExternalWall);
+        //Утеплитель внешних стен
+        Result insulationExternalWall = createResult(frames, calculation, insulation_external_wall, externalWallSquare);
+        results.add(insulationExternalWall);
+        //ОСБ внутренних стен
+        if (!OSB_internal_wal.equals(null) || OSB_internal_wal != ""){
+            Result OsbInternalWal = createResult(frames, calculation, OSB_internal_wal, internalWallSquare * 2);
+            results.add(OsbInternalWal);
         }
-        Result resultSteamWaterproofingExternal = new Result();
-        try {
-            resultSteamWaterproofingExternal.setStructuralElementFrames(frames);
-            resultSteamWaterproofingExternal.setId(newResultsId);
-            resultSteamWaterproofingExternal.setCalculation(calculation);
-            resultSteamWaterproofingExternal.setMaterial(steam_waterproofing_external);
-            MaterialCharacteristic materialCharacteristic = materialsRepository.findByName(steam_waterproofing_external).getMaterialCharacteristics().iterator().next();
-            resultSteamWaterproofingExternal.setMaterialCharacteristics(materialCharacteristic);
-            Integer steamWaterproofingExternalAmount = getMaterialAmount(externalWallSquare, materialCharacteristic.getLength() * materialCharacteristic.getWedth());
-            resultSteamWaterproofingExternal.setAmount(steamWaterproofingExternalAmount);
-            PriceList priceList = materialCharacteristic.getPriceLists().iterator().next();
-            resultSteamWaterproofingExternal.setPrice(priceList.getPurchasePrice() * steamWaterproofingExternalAmount);
-            resultSteamWaterproofingExternal.setFullPrice(priceList.getSellingPrice() * steamWaterproofingExternalAmount);
-            resultSteamWaterproofingExternal.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
-            results.add(resultSteamWaterproofingExternal);
-            newResultsId++;
-        } catch (Exception e){
-            System.out.println(e);
-            error = true;
+        //ОСБ перекрытия
+        if (!OSB_thickness.equals(null) || OSB_thickness != ""){
+            Result OsbThickness = createResult(frames, calculation, OSB_thickness, base_area);
+            results.add(OsbThickness);
         }
+        //Парогидроизоляция перекрытия
+        if (!steam_waterproofing_thicknes.equals(null) || steam_waterproofing_thicknes != ""){
+            Result steamWaterproofingThicknes = createResult(frames, calculation, steam_waterproofing_thicknes, base_area);
+            results.add(steamWaterproofingThicknes);
+        }
+        //Ветрозащита перекрытия
+        if (!windscreen_thickness.equals(null) || windscreen_thickness != ""){
+            Result windscreenThickness = createResult(frames, calculation, windscreen_thickness, base_area);
+            results.add(windscreenThickness);
+        }
+        //Утеплитель перекрытия
+        if (!insulation__thickness.equals(null) || insulation__thickness != ""){
+            Result insulationThickness = createResult(frames, calculation, insulation__thickness, base_area);
+            results.add(insulationThickness);
+        }
+
 
         try{
             if (!error){
                 structuralElementFrameRepository.save(frame);
                 calculationRepository.save(calculation);
 
-                resultRepository.save(resultOsbExternalWall);
-                resultRepository.save(resultSteamWaterproofingExternal);
+                for (Result x : results){
+                    resultRepository.save(x);
+                }
             }
         } catch (Exception e){
             System.out.println(e);
@@ -208,5 +199,33 @@ public class StructuralElementFrameController {
     private Integer getMaterialAmount(Double allSquare, Double materialSquare){
         Double amount = allSquare / materialSquare;
         return (int)Math.ceil(amount);
+    }
+
+    private Result createResult(Set<StructuralElementFrame> frame, Calculation calculation, String material, Double square){
+        Long id = 1L;
+        Result result = new Result();
+        try {
+            id = resultRepository.getMaxId() + 1;
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        try {
+            result.setStructuralElementFrames(frame);
+            result.setId(id);
+            result.setCalculation(calculation);
+            result.setMaterial(material);
+            MaterialCharacteristic materialCharacteristic = materialsRepository.findByName(material).getMaterialCharacteristics().iterator().next();
+            result.setMaterialCharacteristics(materialCharacteristic);
+            Integer amount = getMaterialAmount(square, materialCharacteristic.getLength() * materialCharacteristic.getWedth());
+            result.setAmount(amount);
+            PriceList priceList = materialCharacteristic.getPriceLists().iterator().next();
+            result.setPrice(priceList.getPurchasePrice() * amount);
+            result.setFullPrice(priceList.getSellingPrice() * amount);
+            result.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        return result;
     }
 }
