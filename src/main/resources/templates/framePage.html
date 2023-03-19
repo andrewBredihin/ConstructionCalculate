@@ -64,30 +64,33 @@
                 <div class="Container-skeleton">
                     <form class="card-body cardbody-color p-lg-4 " th:action="@{/framePage}" method="POST">
                         <!-- 2 column grid layout with text inputs for the first and last names -->
-                        <div class="row mb-4">
-                            <div class="col-sm-9 p-3">
-                                <div class="form-outline">
-                                    <input type="text" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                        <div th:object="${calculationInfo}">
+                            <div class="row mb-4">
+                                <div class="col-sm-9 p-3">
+                                    <div class="form-outline">
+                                        <input type="text" name="adress" th:field="*{adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-outline">
+                                        <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn" style="margin-top: 16px">Сохранить</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="form-outline">
-                                    <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn" style="margin-top: 16px">Сохранить</button>
+
+                            <div class="container" style="width: 75%;margin-left: 2px">
+                                <p class="fw-weight-bold" style="font-weight:600; ">Исходные данные</p>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Количество этажей</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" th:field="*{amountFloor}" class="form-control Input_adress" maxlength="1"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="container" style="width: 75%;margin-left: 2px">
-                            <p class="fw-weight-bold" style="font-weight:600; ">Исходные данные</p>
-                            <div class="row">
-                                <div class="col-sm-8 text-center">
-                                    <p class="fw-weight-bold" style="font-weight:400; ">Количество этажей</p>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="number"class="form-control Input_adress" maxlength="1"/>
-                                </div>
-                            </div>
-                        </div>
                         <div th:object="${frameForm}">
                             <div class="container" style="width: 75%;margin-left: 2px">
                                 <p class="fw-weight-bold" style="font-weight:600; ">1 этаж</p>
@@ -450,7 +453,7 @@
                         </div>
 
                         <!-- Text input -->
-                        <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
+                        <button type="submit" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
                     </form>
                 </div>
             </div>
