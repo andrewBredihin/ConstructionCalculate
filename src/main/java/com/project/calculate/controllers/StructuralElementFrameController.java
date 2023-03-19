@@ -118,18 +118,26 @@ public class StructuralElementFrameController {
             frame.setInsulationThickness(insulation__thickness);
             frame.setOverlapThickness(overlap_thickness);
             frame.setFloorNumber(floor_number);
-            frame.setAmountFloor(1);
+            frame.setAmountFloor(calculationInfo.getAmountFloor());
         } catch (Exception e){
             System.out.println(e);
             LoggerFactory.getLogger(CalculateApplication.class).error("FRAME ERROR: " + e.getMessage());
             error = true;
         }
+
+        int calculationNumber = 1;
+        Customer customer = customerRepository.findById(customerId).get();
+        try {
+            calculationNumber = customer.getCalculations().size();
+        } catch (Exception e){
+            System.out.println(e);
+        }
         Calculation calculation = new Calculation();
         try {
             calculation.setAddressObjectConstractions(calculationInfo.getAdress());
             calculation.setCreatedDate(LocalDate.now());
-            calculation.setNumber(calculationInfo.getAmountFloor());
-            calculation.setCustomer(customerRepository.findById(customerId).get());
+            calculation.setNumber(calculationNumber);
+            calculation.setCustomer(customer);
             calculation.setСalculationState(calculationStatusRepository.findById(1L).get());
         } catch (Exception e){
             System.out.println(e);
