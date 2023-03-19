@@ -26,17 +26,6 @@ public class StructuralElementBasement {
     @Column(name = "perimeter_of_external_walls", nullable = false)
     private Double perimeterOfExternalWalls;
 
-    @OneToMany(mappedBy = "structuralElementBasement")
-    private Set<Result> results = new LinkedHashSet<>();
-
-    public Set<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(Set<Result> results) {
-        this.results = results;
-    }
-
     public Double getPerimeterOfExternalWalls() {
         return perimeterOfExternalWalls;
     }

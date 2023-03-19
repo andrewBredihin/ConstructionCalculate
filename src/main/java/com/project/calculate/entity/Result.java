@@ -37,29 +37,20 @@ public class Result {
     @JoinColumn(name = "calculation_id", nullable = false)
     private Calculation calculation;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "structural_element_frame_id", nullable = false)
-    private StructuralElementFrame structuralElementFrame;
+    @ManyToMany
+    @JoinTable(name = "frame_results",
+            joinColumns = @JoinColumn(name = "result_id"),
+            inverseJoinColumns = @JoinColumn(name = "frame_id"))
+    private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "structural_element_basement_id", nullable = false)
-    private StructuralElementBasement structuralElementBasement;
-
-    public StructuralElementBasement getStructuralElementBasement() {
-        return structuralElementBasement;
+    public Set<StructuralElementFrame> getStructuralElementFrames() {
+        return structuralElementFrames;
     }
 
-    public void setStructuralElementBasement(StructuralElementBasement structuralElementBasement) {
-        this.structuralElementBasement = structuralElementBasement;
+    public void setStructuralElementFrames(Set<StructuralElementFrame> structuralElementFrames) {
+        this.structuralElementFrames = structuralElementFrames;
     }
 
-    public StructuralElementFrame getStructuralElementFrame() {
-        return structuralElementFrame;
-    }
-
-    public void setStructuralElementFrame(StructuralElementFrame structuralElementFrame) {
-        this.structuralElementFrame = structuralElementFrame;
-    }
 
     public Calculation getCalculation() {
         return calculation;
@@ -115,5 +106,13 @@ public class Result {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
