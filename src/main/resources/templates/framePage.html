@@ -25,7 +25,7 @@
     <div class="header-blue">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
             <div class="container">
-                <a class="navbar-brand" href="#">Строительный калькулятор</a>
+                <a class="navbar-brand" href="/home">Строительный калькулятор</a>
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
@@ -56,7 +56,7 @@
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1" style="margin-left: 500px">
-                    <button class="btn btn-light btn-lg action-button pull-right" type="button" data-toggle="modal" data-target="#exampleModalPopovers">Очистить Расчет</button>
+                    <button class="btn btn-light btn-lg action-button pull-right" type="button">Очистить Расчет</button>
                 </div>
             </div>
             <br>
@@ -267,19 +267,19 @@
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="win_height">Высота</label>
-                                            <input type="number" id="win_height" class="form-control"/>
+                                            <input type="number" id="win_height" value="" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="win_width">Ширина</label>
-                                            <input type="number" id="win_width" class="form-control"/>
+                                            <input type="number" id="win_width" value="" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="win_count">Количество</label>
-                                            <input type="number" id="win_count" class="form-control"/>
+                                            <input type="number" id="win_count" value="" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -454,6 +454,7 @@
 
                         <!-- Text input -->
                         <button type="submit" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
+                        <input name="request_value" id="request_value" th:value="${request_value}"/>
                     </form>
                 </div>
             </div>
@@ -514,9 +515,24 @@
             '                                </div>';
         document.getElementById("rmWindowOpenings_btn").style.display = "block";
         $('#WindowOpenings_div_add').append(html);
+        var width = document.getElementById('win_width').value;
+        var height = document.getElementById('win_height').value;
+        var count = document.getElementById('win_count').value;
+        var baseInput = document.getElementById('request_value').value;
+        var newInput = baseInput + '&winHeight' + '=' + height + '|winWidth' + '=' + width + '|winCount' + '=' + count;
+        document.getElementById('win_width'+i).value = width;
+        document.getElementById('win_height'+i).value = height;
+        document.getElementById('win_count'+i).value = count;
+        document.getElementById('win_width').value = '';
+        document.getElementById('win_height').value = '';
+        document.getElementById('win_count').value = '';
+        document.getElementById('request_value').value = newInput;
     });
     document.querySelector('#rmWindowOpenings_btn').addEventListener('click',function () {
         const DelOrAddWindowOpenings = "#DelOrAddWindowOpenings" + i.toString();
+        var baseInput = document.getElementById('request_value').value;
+        var newInput = baseInput.replace('&winHeight' + i + '=' + document.getElementById('win_height'+i).value + '&winWidth' + i + '=' + document.getElementById('win_width'+i).value + '&winCount' + i + '=' + document.getElementById('win_count'+i).value, '');
+        document.getElementById('request_value').value = newInput;
         i--;
         $(DelOrAddWindowOpenings).remove();
         if(i===0)
@@ -550,9 +566,15 @@
             '                            </div>';
         document.getElementById("rmWindowOpenings_btn1").style.display = "block";
         $('#WindowOpenings_div_add1').append(html);
+        var baseUrl = window.location.href;
+        var newUrl = baseUrl + '?test2=awesome' + j;
+        history.pushState(null, null, newUrl);
     });
     document.querySelector('#rmWindowOpenings_btn1').addEventListener('click',function () {
         const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings" + j.toString();
+        var baseUrl = window.location.href;
+        var newUrl = baseUrl.replace('?test2=awesome' + j, '');
+        history.pushState(null, null, newUrl);
         j--;
         $(DelOrAddWindowOpenings).remove();
         if(j===0)

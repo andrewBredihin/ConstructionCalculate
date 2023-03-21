@@ -6,6 +6,7 @@ import com.project.calculate.entity.*;
 import com.project.calculate.form.CalculationInfo;
 import com.project.calculate.form.ClientForm;
 import com.project.calculate.form.FrameForm;
+import com.project.calculate.form.OpeningsForm;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import net.minidev.json.JSONObject;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -46,6 +48,7 @@ public class StructuralElementFrameController {
         model.addAttribute("frameForm", new FrameForm());
         model.addAttribute("calculationInfo", new CalculationInfo());
         model.addAttribute("customerId", customerId);
+        model.addAttribute("id", customerId);
 
         List<Material> materialList = materialsRepository.findAll();
         List<Material> OsbList = new ArrayList<>();
@@ -73,9 +76,18 @@ public class StructuralElementFrameController {
     public String saveFrame(HttpServletRequest request, Model model,
                             @ModelAttribute("frameForm") FrameForm frameForm,
                             @ModelAttribute("calculationInfo") CalculationInfo calculationInfo,
-                            @RequestParam("calculateButton") Long customerId) {
+                            @RequestParam("calculateButton") Long customerId,
+                            @RequestParam("request_value") String requestValue) {
 
         boolean error = false;
+
+        if (!requestValue.equals("")){
+            String[] openingsList = requestValue.split("&");
+            for (int i = 1; i < openingsList.length; i++){
+                LoggerFactory.getLogger(CalculateApplication.class).error("TEST: " + openingsList[i]);
+            }
+        }
+
 
         //Получаем значения из формы
         int height = frameForm.getHeight();
@@ -95,9 +107,6 @@ public class StructuralElementFrameController {
         String insulation__thickness = frameForm.getInsulation__thickness();
         int overlap_thickness = frameForm.getOverlap_thickness();
         int floor_number = frameForm.getFloor_number();
-
-        Double externalWallSquare = perimeter_of_external_walls * height;
-        Double internalWallSquare = internal_wall_length * height;
 
         StructuralElementFrame frame = new StructuralElementFrame();
         try {
@@ -148,6 +157,9 @@ public class StructuralElementFrameController {
         Set<Result> results = new HashSet<>();
         Set<StructuralElementFrame> frames = new HashSet<>();
         frames.add(frame);
+
+        Double externalWallSquare = perimeter_of_external_walls * height;
+        Double internalWallSquare = internal_wall_length * height;
 
         //ОСБ внешних стен
         Result resultOsbExternalWall = createResult(frames, calculation, OSB_external_wall, externalWallSquare * 2);

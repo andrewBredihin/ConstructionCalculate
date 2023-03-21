@@ -25,6 +25,17 @@ public class Opening {
     @OneToMany(mappedBy = "openings")
     private Set<OpeningsInStructuralElementFrame> openingsInStructuralElementFrames = new LinkedHashSet<>();
 
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
     public Set<OpeningsInStructuralElementFrame> getOpeningsInStructuralElementFrames() {
         return openingsInStructuralElementFrames;
     }
