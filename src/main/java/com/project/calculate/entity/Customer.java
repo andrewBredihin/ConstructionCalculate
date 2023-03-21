@@ -5,6 +5,17 @@ import jakarta.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Entity объект таблицы Customers.
+ * firstName - имя клиента,
+ * lastName - фамилия клиента,
+ * secondName - отчество клиента,
+ * phone - телефон клиента,
+ * email - почта клиента,
+ * adress - адрес клиента,
+ * calculations - расчеты клиента,
+ * manager - менеджер клиента.
+ */
 @Entity
 @Table(name = "Customers")
 public class Customer {

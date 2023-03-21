@@ -1,26 +1,23 @@
 package com.project.calculate.controllers;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.project.calculate.CalculateApplication;
 import com.project.calculate.entity.*;
 import com.project.calculate.form.CalculationInfo;
-import com.project.calculate.form.ClientForm;
 import com.project.calculate.form.FrameForm;
-import com.project.calculate.form.OpeningsForm;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
-import net.minidev.json.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Контроллер страницы расчета каркаса (/framePage)
+ */
 @Controller
 public class StructuralElementFrameController {
 
@@ -38,12 +35,14 @@ public class StructuralElementFrameController {
     private CustomerRepository customerRepository;
     @Autowired
     private MeasurementUnitRepository measurementUnitRepository;
-    @Autowired
-    private MaterialCharacteristicsRepository materialCharacteristicsRepository;
-    @Autowired
-    private PriceListRepository priceListRepository;
     @Autowired OpeningRepository openingRepository;
 
+    /**
+     * GET запрос. Принимает id клиента.
+     * @param request
+     * @param model
+     * @param customerId
+     */
     @RequestMapping(value = "/framePage", method = RequestMethod.GET)
     public String structuralElementFramePage(HttpServletRequest request, Model model, @RequestParam(name = "customerId", defaultValue = "") Long customerId) {
         model.addAttribute("frameForm", new FrameForm());
@@ -73,6 +72,16 @@ public class StructuralElementFrameController {
         return "framePage";
     }
 
+    /**
+     * POST запрос. Включает в себя расчет каркаса по заданным параметрам. В БД добавляются записи в таблицы:
+     * structural_element_frame, calculation, results, openings, frame_results, structural_element_frame.
+     * @param request
+     * @param model
+     * @param frameForm
+     * @param calculationInfo
+     * @param customerId
+     * @param requestValue
+     */
     @RequestMapping(value = { "/framePage" }, method = RequestMethod.POST)
     public String saveFrame(HttpServletRequest request, Model model,
                             @ModelAttribute("frameForm") FrameForm frameForm,
@@ -147,34 +156,7 @@ public class StructuralElementFrameController {
         Set<StructuralElementFrame> frames = new HashSet<>();
         frames.add(frame);
 
-        Set<Opening> openings = new HashSet<>();
-        if (!requestValue.equals("")){
-            String[] openingsList = requestValue.split("&");
-            for (int i = 1; i < openingsList.length; i++){
-                String[] opening = openingsList[i].split("\\|");
-                Opening openingObject = new Opening();
-                openingObject.setStructuralElementFrames(frames);
-                String openingType = opening[0].split("=")[0];
-                if (openingType.equals("winHeight"))
-                    openingObject.setType("Окно");
-                else if (openingType.equals("externalDoorHeight"))
-                    openingObject.setType("Внешняя дверь");
-                else if (openingType.equals("internalDoorHeight"))
-                    openingObject.setType("Внутренняя дверь");
-                for (int j = 0; j < opening.length; j++) {
-                    String value = opening[j].split("=")[1];
-                    if (j == 0)
-                        openingObject.setHeight(Double.valueOf(value));
-                    else if (j == 1)
-                        openingObject.setWidth(Double.valueOf(value));
-                    else if (j == 2)
-                        openingObject.setAmount(Integer.valueOf(value));
-                }
-                openings.add(openingObject);
-                LoggerFactory.getLogger(CalculateApplication.class).error("TEST: " + openingObject.toString());
-            }
-        }
-
+        Set<Opening> openings = createOpenings(requestValue, frames);
         Set<Result> results = new HashSet<>();
 
         Double externalWallSquare = perimeter_of_external_walls * height;
@@ -240,11 +222,26 @@ public class StructuralElementFrameController {
         return "redirect:/home";
     }
 
+    /**
+     * Возвращает количество материалов, рассчитываемое по площади поверхности и площади материала в количестве 1шт
+     * @param allSquare
+     * @param materialSquare
+     * @return Integer
+     */
     private Integer getMaterialAmount(Double allSquare, Double materialSquare){
         Double amount = allSquare / materialSquare;
         return (int)Math.ceil(amount);
     }
 
+
+    /**
+     * Создает Entity объект типа Result с заданными параметрами
+     * @param frame
+     * @param calculation
+     * @param material
+     * @param square
+     * @return Result
+     */
     private Result createResult(Set<StructuralElementFrame> frame, Calculation calculation, String material, Double square){
         Long id = 1L;
         Result result = new Result();
@@ -271,5 +268,42 @@ public class StructuralElementFrameController {
         }
 
         return result;
+    }
+
+
+    /**
+     * Создает коллекцию оконных проемов и дверей по входной строке, содержащей их параметры
+     * @param requestValue
+     * @param frames
+     * @return Set
+     */
+    private Set<Opening> createOpenings(String requestValue, Set<StructuralElementFrame> frames){
+        Set<Opening> openings = new HashSet<>();
+        if (!requestValue.equals("")){
+            String[] openingsList = requestValue.split("&");
+            for (int i = 1; i < openingsList.length; i++){
+                String[] opening = openingsList[i].split("\\|");
+                Opening openingObject = new Opening();
+                openingObject.setStructuralElementFrames(frames);
+                String openingType = opening[0].split("=")[0];
+                if (openingType.equals("winHeight"))
+                    openingObject.setType("Окно");
+                else if (openingType.equals("externalDoorHeight"))
+                    openingObject.setType("Внешняя дверь");
+                else if (openingType.equals("internalDoorHeight"))
+                    openingObject.setType("Внутренняя дверь");
+                for (int j = 0; j < opening.length; j++) {
+                    String value = opening[j].split("=")[1];
+                    if (j == 0)
+                        openingObject.setHeight(Double.valueOf(value));
+                    else if (j == 1)
+                        openingObject.setWidth(Double.valueOf(value));
+                    else if (j == 2)
+                        openingObject.setAmount(Integer.valueOf(value));
+                }
+                openings.add(openingObject);
+            }
+        }
+        return openings;
     }
 }

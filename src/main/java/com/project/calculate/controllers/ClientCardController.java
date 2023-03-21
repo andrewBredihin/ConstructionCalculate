@@ -4,9 +4,7 @@ import com.project.calculate.entity.Calculation;
 import com.project.calculate.entity.Customer;
 import com.project.calculate.entity.User;
 import com.project.calculate.form.CalculationForCustomerInfo;
-import com.project.calculate.repository.CalculationRepository;
 import com.project.calculate.repository.CustomerRepository;
-import com.project.calculate.repository.ResultRepository;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Контроллер страницы карточки клиента /clientCard
+ */
 @Controller
 public class ClientCardController {
 
@@ -28,11 +29,13 @@ public class ClientCardController {
     private CustomerRepository customerRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private CalculationRepository calculationRepository;
-    @Autowired
-    private ResultRepository resultRepository;
 
+    /**
+     * GET запрос. Заполняет страницу расчетами выбранного клиента
+     * @param id
+     * @param model
+     * @param request
+     */
     @RequestMapping(value = "/clientCard", method = RequestMethod.GET)
     public String getClient(@RequestParam(name = "id", defaultValue = "") Long id, Model model, HttpServletRequest request) {
         //Отображение ФИ:должность пользователя
@@ -68,12 +71,5 @@ public class ClientCardController {
         model.addAttribute("calculations", calculations);
 
         return "/clientCard";
-    }
-
-    @RequestMapping(value = "/clientCard", method = RequestMethod.POST)
-    public String createCalculation(@RequestParam(name = "id", defaultValue = "") Long id, Model model, HttpServletRequest request) {
-
-
-        return null;
     }
 }

@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Entity объект таблицы Calculation_status.
+ * title - название статуса.
+ */
 @Entity
 @Table(name = "Calculation_status")
 public class CalculationStatus {

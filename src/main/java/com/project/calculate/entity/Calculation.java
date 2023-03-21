@@ -7,6 +7,15 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Entity объект таблицы Calculation.
+ * addressObjectConstractions - адрес,
+ * createdDate - дата создания расчета,
+ * number - номер расчета,
+ * customer - пользователь, которому принадлежит данный расчет,
+ * сalculationState - статус расчета,
+ * results - результаты данного расчета.
+ */
 @Entity
 @Table(name = "Calculation")
 public class Calculation {
@@ -14,7 +23,6 @@ public class Calculation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
 
     @Column(name = "address_object_constractions", nullable = false)
     private String addressObjectConstractions;

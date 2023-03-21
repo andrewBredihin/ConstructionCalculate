@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Контроллер страницы добавления клиента /addClient
+ */
 @Controller
 public class AddClientController {
 
@@ -28,6 +31,13 @@ public class AddClientController {
         return "addClient";
     }
 
+    /**
+     * POST запрос. Создает нового клиента с заданными параметрами.
+     * Добавляет запись в таблице customers
+     * @param request
+     * @param model
+     * @param clientForm
+     */
     //Сохранение клиента
     @RequestMapping(value = { "/addClient" }, method = RequestMethod.POST)
     public String saveClient(HttpServletRequest request, Model model, //
