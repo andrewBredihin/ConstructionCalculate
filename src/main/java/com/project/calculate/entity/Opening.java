@@ -31,6 +31,17 @@ public class Opening {
             inverseJoinColumns = @JoinColumn(name = "frame_id"))
     private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "Opening{" +
+                ", type='" + type + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", amount=" + amount +
+                ", structuralElementFrames=" + structuralElementFrames +
+                '}';
+    }
+
     public Set<StructuralElementFrame> getStructuralElementFrames() {
         return structuralElementFrames;
     }

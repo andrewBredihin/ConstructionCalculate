@@ -42,6 +42,7 @@ public class StructuralElementFrameController {
     private MaterialCharacteristicsRepository materialCharacteristicsRepository;
     @Autowired
     private PriceListRepository priceListRepository;
+    @Autowired OpeningRepository openingRepository;
 
     @RequestMapping(value = "/framePage", method = RequestMethod.GET)
     public String structuralElementFramePage(HttpServletRequest request, Model model, @RequestParam(name = "customerId", defaultValue = "") Long customerId) {
@@ -78,14 +79,6 @@ public class StructuralElementFrameController {
                             @ModelAttribute("calculationInfo") CalculationInfo calculationInfo,
                             @RequestParam("calculateButton") Long customerId,
                             @RequestParam("request_value") String requestValue) {
-        if (!requestValue.equals("")){
-            String[] openingsList = requestValue.split("&");
-            for (int i = 1; i < openingsList.length; i++){
-                LoggerFactory.getLogger(CalculateApplication.class).error("TEST: " + openingsList[i]);
-            }
-        }
-
-
         //Получаем значения из формы
         int height = frameForm.getHeight();
         double perimeter_of_external_walls = frameForm.getPerimeter_of_external_walls();
@@ -151,9 +144,38 @@ public class StructuralElementFrameController {
             return null;
         }
 
-        Set<Result> results = new HashSet<>();
         Set<StructuralElementFrame> frames = new HashSet<>();
         frames.add(frame);
+
+        Set<Opening> openings = new HashSet<>();
+        if (!requestValue.equals("")){
+            String[] openingsList = requestValue.split("&");
+            for (int i = 1; i < openingsList.length; i++){
+                String[] opening = openingsList[i].split("\\|");
+                Opening openingObject = new Opening();
+                openingObject.setStructuralElementFrames(frames);
+                String openingType = opening[0].split("=")[0];
+                if (openingType.equals("winHeight"))
+                    openingObject.setType("Окно");
+                else if (openingType.equals("externalDoorHeight"))
+                    openingObject.setType("Внешняя дверь");
+                else if (openingType.equals("internalDoorHeight"))
+                    openingObject.setType("Внутренняя дверь");
+                for (int j = 0; j < opening.length; j++) {
+                    String value = opening[j].split("=")[1];
+                    if (j == 0)
+                        openingObject.setHeight(Double.valueOf(value));
+                    else if (j == 1)
+                        openingObject.setWidth(Double.valueOf(value));
+                    else if (j == 2)
+                        openingObject.setAmount(Integer.valueOf(value));
+                }
+                openings.add(openingObject);
+                LoggerFactory.getLogger(CalculateApplication.class).error("TEST: " + openingObject.toString());
+            }
+        }
+
+        Set<Result> results = new HashSet<>();
 
         Double externalWallSquare = perimeter_of_external_walls * height;
         Double internalWallSquare = internal_wall_length * height;
@@ -198,11 +220,17 @@ public class StructuralElementFrameController {
 
 
         try{
+            frame.setResults(results);
+            frame.setOpenings(openings);
+
             structuralElementFrameRepository.save(frame);
             calculationRepository.save(calculation);
 
             for (Result x : results){
                 resultRepository.save(x);
+            }
+            for (Opening x : openings){
+                openingRepository.save(x);
             }
         } catch (Exception e){
             System.out.println(e);
