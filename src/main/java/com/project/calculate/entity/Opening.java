@@ -22,11 +22,22 @@ public class Opening {
     @Column(name = "height", nullable = false)
     private Double height;
 
-    @OneToMany(mappedBy = "openings")
-    private Set<OpeningsInStructuralElementFrame> openingsInStructuralElementFrames = new LinkedHashSet<>();
-
     @Column(name = "amount", nullable = false)
     private Integer amount;
+
+    @ManyToMany
+    @JoinTable(name = "openings_in_structural_element_frame",
+            joinColumns = @JoinColumn(name = "opening_id"),
+            inverseJoinColumns = @JoinColumn(name = "frame_id"))
+    private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
+
+    public Set<StructuralElementFrame> getStructuralElementFrames() {
+        return structuralElementFrames;
+    }
+
+    public void setStructuralElementFrames(Set<StructuralElementFrame> structuralElementFrames) {
+        this.structuralElementFrames = structuralElementFrames;
+    }
 
     public Integer getAmount() {
         return amount;
@@ -34,14 +45,6 @@ public class Opening {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
-    }
-
-    public Set<OpeningsInStructuralElementFrame> getOpeningsInStructuralElementFrames() {
-        return openingsInStructuralElementFrames;
-    }
-
-    public void setOpeningsInStructuralElementFrames(Set<OpeningsInStructuralElementFrame> openingsInStructuralElementFrames) {
-        this.openingsInStructuralElementFrames = openingsInStructuralElementFrames;
     }
 
     public Double getHeight() {

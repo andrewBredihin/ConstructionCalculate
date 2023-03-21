@@ -78,9 +78,6 @@ public class StructuralElementFrameController {
                             @ModelAttribute("calculationInfo") CalculationInfo calculationInfo,
                             @RequestParam("calculateButton") Long customerId,
                             @RequestParam("request_value") String requestValue) {
-
-        boolean error = false;
-
         if (!requestValue.equals("")){
             String[] openingsList = requestValue.split("&");
             for (int i = 1; i < openingsList.length; i++){
@@ -131,7 +128,7 @@ public class StructuralElementFrameController {
         } catch (Exception e){
             System.out.println(e);
             LoggerFactory.getLogger(CalculateApplication.class).error("FRAME ERROR: " + e.getMessage());
-            error = true;
+            return null;
         }
 
         int calculationNumber = 1;
@@ -151,7 +148,7 @@ public class StructuralElementFrameController {
         } catch (Exception e){
             System.out.println(e);
             LoggerFactory.getLogger(CalculateApplication.class).error("CALCULATION ERROR: " + e.getMessage());
-            error = true;
+            return null;
         }
 
         Set<Result> results = new HashSet<>();
@@ -201,17 +198,16 @@ public class StructuralElementFrameController {
 
 
         try{
-            if (!error){
-                structuralElementFrameRepository.save(frame);
-                calculationRepository.save(calculation);
+            structuralElementFrameRepository.save(frame);
+            calculationRepository.save(calculation);
 
-                for (Result x : results){
-                    resultRepository.save(x);
-                }
+            for (Result x : results){
+                resultRepository.save(x);
             }
         } catch (Exception e){
             System.out.println(e);
             LoggerFactory.getLogger(CalculateApplication.class).error("RESULTS ERROR: " + e.getMessage());
+            return null;
         }
         return "redirect:/home";
     }
