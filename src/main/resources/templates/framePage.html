@@ -454,7 +454,7 @@
 
                         <!-- Text input -->
                         <button type="submit" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
-                        <input name="request_value" id="request_value" th:value="${request_value}"/>
+                        <input type="hidden" name="request_value" id="request_value" th:value="${request_value}"/>
                     </form>
                 </div>
             </div>
