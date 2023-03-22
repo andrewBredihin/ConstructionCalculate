@@ -43,6 +43,17 @@ public class Result {
             inverseJoinColumns = @JoinColumn(name = "frame_id"))
     private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
 
+    @Column(name = "element_type", nullable = false, length = Integer.MAX_VALUE)
+    private String elementType;
+
+    public String getElementType() {
+        return elementType;
+    }
+
+    public void setElementType(String elementType) {
+        this.elementType = elementType;
+    }
+
     public Set<StructuralElementFrame> getStructuralElementFrames() {
         return structuralElementFrames;
     }

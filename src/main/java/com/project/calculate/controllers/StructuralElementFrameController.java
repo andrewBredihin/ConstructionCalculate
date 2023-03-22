@@ -125,7 +125,7 @@ public class StructuralElementFrameController {
             frame.setWindscreenThickness(windscreen_thickness);
             frame.setInsulationThickness(insulation__thickness);
             frame.setOverlapThickness(overlap_thickness);
-            frame.setFloorNumber(floor_number);
+            frame.setFloorNumber(1);
             frame.setAmountFloor(calculationInfo.getAmountFloor());
         } catch (Exception e){
             System.out.println(e);
@@ -133,10 +133,10 @@ public class StructuralElementFrameController {
             return null;
         }
 
-        int calculationNumber = 1;
         Customer customer = customerRepository.findById(customerId).get();
+        int calculationNumber = 1;
         try {
-            calculationNumber = customer.getCalculations().size();
+            calculationNumber = calculationRepository.getMaxNumber(customerId) + 1;
         } catch (Exception e){
             System.out.println(e);
         }
@@ -156,54 +156,57 @@ public class StructuralElementFrameController {
         Set<StructuralElementFrame> frames = new HashSet<>();
         frames.add(frame);
 
-        Set<Opening> openings = createOpenings(requestValue, frames);
+        Set<Opening> externalOpenings = createOpenings(requestValue, frames);
         Set<Result> results = new HashSet<>();
+        String external = "Внешние стены";
+        String internal = "Внутренние стены";
+        String overlap = "Перекрытие";
 
-        Double externalWallSquare = perimeter_of_external_walls * height;
+        Double externalWallSquare = perimeter_of_external_walls * height - getExternalOpeningsSquare(externalOpenings);
         Double internalWallSquare = internal_wall_length * height;
 
         //ОСБ внешних стен
-        Result resultOsbExternalWall = createResult(frames, calculation, OSB_external_wall, externalWallSquare * 2);
+        Result resultOsbExternalWall = createResult(frames, calculation, OSB_external_wall, externalWallSquare * 2, external);
         results.add(resultOsbExternalWall);
         //Парогидроизоляция внешних стен
-        Result resultSteamWaterproofingExternal = createResult(frames, calculation, steam_waterproofing_external, externalWallSquare);
+        Result resultSteamWaterproofingExternal = createResult(frames, calculation, steam_waterproofing_external, externalWallSquare, external);
         results.add(resultSteamWaterproofingExternal);
         //Ветрозащита внешних стен
-        Result windscreenExternalWall = createResult(frames, calculation, windscreen_external_wall, externalWallSquare);
+        Result windscreenExternalWall = createResult(frames, calculation, windscreen_external_wall, externalWallSquare, external);
         results.add(windscreenExternalWall);
         //Утеплитель внешних стен
-        Result insulationExternalWall = createResult(frames, calculation, insulation_external_wall, externalWallSquare);
+        Result insulationExternalWall = createResult(frames, calculation, insulation_external_wall, externalWallSquare, external);
         results.add(insulationExternalWall);
         //ОСБ внутренних стен
         if (!OSB_internal_wal.equals(null) || OSB_internal_wal != ""){
-            Result OsbInternalWal = createResult(frames, calculation, OSB_internal_wal, internalWallSquare * 2);
+            Result OsbInternalWal = createResult(frames, calculation, OSB_internal_wal, internalWallSquare * 2, internal);
             results.add(OsbInternalWal);
         }
         //ОСБ перекрытия
         if (!OSB_thickness.equals(null) || OSB_thickness != ""){
-            Result OsbThickness = createResult(frames, calculation, OSB_thickness, base_area);
+            Result OsbThickness = createResult(frames, calculation, OSB_thickness, base_area, overlap);
             results.add(OsbThickness);
         }
         //Парогидроизоляция перекрытия
         if (!steam_waterproofing_thicknes.equals(null) || steam_waterproofing_thicknes != ""){
-            Result steamWaterproofingThicknes = createResult(frames, calculation, steam_waterproofing_thicknes, base_area);
+            Result steamWaterproofingThicknes = createResult(frames, calculation, steam_waterproofing_thicknes, base_area, overlap);
             results.add(steamWaterproofingThicknes);
         }
         //Ветрозащита перекрытия
         if (!windscreen_thickness.equals(null) || windscreen_thickness != ""){
-            Result windscreenThickness = createResult(frames, calculation, windscreen_thickness, base_area);
+            Result windscreenThickness = createResult(frames, calculation, windscreen_thickness, base_area, overlap);
             results.add(windscreenThickness);
         }
         //Утеплитель перекрытия
         if (!insulation__thickness.equals(null) || insulation__thickness != ""){
-            Result insulationThickness = createResult(frames, calculation, insulation__thickness, base_area);
+            Result insulationThickness = createResult(frames, calculation, insulation__thickness, base_area, overlap);
             results.add(insulationThickness);
         }
 
 
         try{
             frame.setResults(results);
-            frame.setOpenings(openings);
+            frame.setOpenings(externalOpenings);
 
             structuralElementFrameRepository.save(frame);
             calculationRepository.save(calculation);
@@ -211,7 +214,7 @@ public class StructuralElementFrameController {
             for (Result x : results){
                 resultRepository.save(x);
             }
-            for (Opening x : openings){
+            for (Opening x : externalOpenings){
                 openingRepository.save(x);
             }
         } catch (Exception e){
@@ -242,7 +245,7 @@ public class StructuralElementFrameController {
      * @param square
      * @return Result
      */
-    private Result createResult(Set<StructuralElementFrame> frame, Calculation calculation, String material, Double square){
+    private Result createResult(Set<StructuralElementFrame> frame, Calculation calculation, String material, Double square, String elementType){
         Long id = 1L;
         Result result = new Result();
         try {
@@ -263,6 +266,7 @@ public class StructuralElementFrameController {
             result.setPrice(priceList.getPurchasePrice() * amount);
             result.setFullPrice(priceList.getSellingPrice() * amount);
             result.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
+            result.setElementType(elementType);
         } catch (Exception e){
             System.out.println(e);
         }
@@ -305,5 +309,18 @@ public class StructuralElementFrameController {
             }
         }
         return openings;
+    }
+
+    /**
+     * Возвращает площадь окон и внешних дверных проемов
+     * @param openings
+     * @return double
+     */
+    private double getExternalOpeningsSquare(Set<Opening> openings){
+        double squareResult = 0;
+        for (Opening x : openings) {
+            squareResult += x.getHeight() * x.getWidth() * x.getAmount();
+        }
+        return squareResult;
     }
 }

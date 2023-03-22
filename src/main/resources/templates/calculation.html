@@ -53,13 +53,12 @@
             <div class="row justify-content-end">
                 <div class="col-sm-3" >
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            Статус
-                        </button>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="#">Актуализировать</a>
-                            <a class="dropdown-item" role="presentation" href="#">Заключен договор</a>
-                        </div>
+                        <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" th:text="${calculationStatus}"></button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <div th:each ="calculationState : ${calculationStates}">
+                                <li><a class="dropdown-item" role="presentation" href="#" th:text="${calculationState.title}"></a></li>
+                            </div>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -91,8 +90,8 @@
                     <div class="container" style="width: 100%;margin-left: 2px;">
                         <div class="row">
                             <div class="col-sm-6 text-left">
-                                <p class="fw-weight-bold" style="font-weight:400; ">Дата: 22.03.2021
-                                    Адрес объекта: г. Такой, ул.Такая, д.25</p>
+                                <p class="fw-weight-bold" style="font-weight:400;  " th:text="'Дата: ' + ${calculationDate}"></p>
+                                <p class="fw-weight-bold" style="font-weight:400;  " th:text="'Адрес: ' + ${calculationAdres}"></p>
                             </div>
                         </div>
                         <div class="row">
@@ -114,7 +113,7 @@
                         <div class="container" style="width: 100%;margin-left: 2px;">
                             <div class="row">
                                 <div class="col-sm-6 text-left">
-                                    <p class="fw-weight-bold" style="font-weight:700; ">Результат расчета 1 этажа</p>
+                                    <p class="fw-weight-bold" style="font-weight:700; " th:text="'Результат расчета 1 этажа'"></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -135,49 +134,55 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center">3456753</th>
+                                            <th class="text-center" th:text="${externalPrice}"></th>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Andrew Mike</td>
-                                            <td>Develop</td>
-                                            <td>2013</td>
-                                            <td class="text-right">€ 99,225</td>
-                                        </tr>
+                                        <div th:each ="resultExternal : ${resultsExternal}">
+                                            <tr>
+                                                <td class="text-center"></td>
+                                                <td th:text="${resultExternal.material}"></td>
+                                                <td th:text="${resultExternal.measurementUnit}"></td>
+                                                <td th:text="${resultExternal.amount}"></td>
+                                                <td class="text-right" th:text="${resultExternal.price}"></td>
+                                            </tr>
+                                        </div>
                                         <tr>
                                             <th>Внутренние стены</th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center">3456753</th>
+                                            <th class="text-center" th:text="${internalPrice}"></th>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Andrew Mike</td>
-                                            <td>Develop</td>
-                                            <td>2013</td>
-                                            <td class="text-right">€ 99,225</td>
-                                        </tr>
+                                        <div th:each ="resultInternal : ${resultsInternal}">
+                                            <tr>
+                                                <td class="text-center"></td>
+                                                <td th:text="${resultInternal.material}"></td>
+                                                <td th:text="${resultInternal.measurementUnit}"></td>
+                                                <td th:text="${resultInternal.amount}"></td>
+                                                <td class="text-right" th:text="${resultInternal.price}"></td>
+                                            </tr>
+                                        </div>
                                         <tr>
                                             <th>Перекрытия</th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center">3456753</th>
+                                            <th class="text-center" th:text="${overlapPrice}"></th>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Andrew Mike</td>
-                                            <td>Develop</td>
-                                            <td>2013</td>
-                                            <td class="text-right">€ 99,225</td>
-                                        </tr>
+                                        <div th:each ="resultOverlap : ${resultsOverlap}">
+                                            <tr>
+                                                <td class="text-center"></td>
+                                                <td th:text="${resultOverlap.material}"></td>
+                                                <td th:text="${resultOverlap.measurementUnit}"></td>
+                                                <td th:text="${resultOverlap.amount}"></td>
+                                                <td class="text-right" th:text="${resultOverlap.price}"></td>
+                                            </tr>
+                                        </div>
                                         <tr>
                                             <th>Итого стоимость материлов</th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center">3456753</th>
+                                            <th class="text-center" th:text="${allPrice}"></th>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -189,7 +194,7 @@
                                 <p class="fw-weight-bold" style="font-weight:700; ">Итого стоимость материлов</p>
                             </div>
                             <div class="col-sm-3 text-center">
-                                <p class="fw-weight-bold" style="font-weight:700; ">45438544</p>
+                                <p class="fw-weight-bold" style="font-weight:700; "  th:text="${allPrice}"></p>
                             </div>
                         </div>
                     </div>

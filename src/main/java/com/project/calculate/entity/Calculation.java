@@ -91,4 +91,12 @@ public class Calculation {
     public void setAddressObjectConstractions(String addressObjectConstractions) {
         this.addressObjectConstractions = addressObjectConstractions;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

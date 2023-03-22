@@ -23,6 +23,12 @@ public class CalculationStatus {
     @OneToMany(mappedBy = "сalculationState")
     private Set<Calculation> calculations = new LinkedHashSet<>();
 
+    public CalculationStatus(){}
+    public CalculationStatus(Long id, String title){
+        this.id = id;
+        this.title = title;
+    }
+
     public Set<Calculation> getCalculations() {
         return calculations;
     }

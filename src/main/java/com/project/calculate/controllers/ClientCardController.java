@@ -3,7 +3,7 @@ package com.project.calculate.controllers;
 import com.project.calculate.entity.Calculation;
 import com.project.calculate.entity.Customer;
 import com.project.calculate.entity.User;
-import com.project.calculate.form.CalculationForCustomerInfo;
+import com.project.calculate.form.CalculationForm;
 import com.project.calculate.repository.CustomerRepository;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,12 +63,12 @@ public class ClientCardController {
         model.addAttribute("customer_phone", customer.getPhone());
         model.addAttribute("customer_phone_str", customer.getPhoneMask());
 
-        Set<Calculation> customerCalculations = customer.getCalculations();
-        Set<CalculationForCustomerInfo> calculations = new HashSet<>();
-        for (Calculation x : customerCalculations) {
-            calculations.add(new CalculationForCustomerInfo(x.getCreatedDate().toString(), x.getNumber().toString(), x.getAddressObjectConstractions(), x.getСalculationState().getTitle()));
+        Set<Calculation> calculations = customer.getCalculations();
+        Set<CalculationForm> calculationForms = new HashSet<>();
+        for (Calculation x : calculations) {
+            calculationForms.add(new CalculationForm(x.getId(), x.getCreatedDate().toString(), x.getСalculationState().getTitle(), x.getAddressObjectConstractions(), x.getNumber()));
         }
-        model.addAttribute("calculations", calculations);
+        model.addAttribute("calculations", calculationForms);
 
         return "/clientCard";
     }
