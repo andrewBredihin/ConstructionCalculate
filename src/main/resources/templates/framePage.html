@@ -92,7 +92,71 @@
                         </div>
 
                         <div th:object="${frameForm}">
-                            <div class="container" id="count_floor" style="width: 75%;margin-left: 2px"></div>
+                            <div class="container" id="count_floor" style="width: 75%;margin-left: 2px">
+                                <p class="fw-weight-bold" style="font-weight:600; ">1 этаж</p>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Высота этажа</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" class="form-control Input_adress" th:field="*{height}" placeholder="м/см/мм"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Периметр внешних стен</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" class="form-control Input_adress" th:field="*{perimeter_of_external_walls}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Площадь основания</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" class="form-control Input_adress" th:field="*{base_area}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Толщина внешних стен</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="external_wall_thickness" th:field="*{external_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" onclick="document.getElementById('external_wall_thickness').value='100'">100 мм</a></li>
+                                                <li><a class="dropdown-item" onclick="document.getElementById('external_wall_thickness').value='200'">200 мм</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Длина внутренних стен</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" class="form-control Input_adress" th:field="*{internal_wall_length}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 text-center">
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Толщина внутренних стен</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="inputinnerwall" th:field="*{internal_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" onclick="document.getElementById('inputinnerwall').value='100'">100 мм</a></li>
+                                                <li><a class="dropdown-item" onclick="document.getElementById('inputinnerwall').value='200'">200 мм</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="container" style="width: 75%;margin-left: 2px">
                                 <p class="fw-weight-bold" style="font-weight:600; ">Обшивки внешних стен</p>
                                 <div class="row">
@@ -223,7 +287,6 @@
                                     <div class="col-sm-9">
                                     </div>
                                     <div class="col-sm-3">
-                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="rmWindowOpenings_btn"><i class="fa fa-minus"></i></button>
                                         <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="addWindowOpenings_btn"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
@@ -255,7 +318,6 @@
                                     <div class="col-sm-9">
                                     </div>
                                     <div class="col-sm-3">
-                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="rmWindowOpenings_btn1"><i class="fa fa-minus"></i></button>
                                         <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="addWindowOpenings_btn1"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
@@ -287,7 +349,6 @@
                                     <div class="col-sm-9">
                                     </div>
                                     <div class="col-sm-3">
-                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="rmWindowOpenings_btn2"><i class="fa fa-minus"></i></button>
                                         <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="addWindowOpenings_btn2"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
@@ -387,9 +448,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row justify-content-center">
+                            <div class="col-sm-4">
+                                <button type="submit" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</button>
+                            </div>
+                        </div>
                         <!-- Text input -->
-                        <button type="submit" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
                         <input type="hidden" name="request_value" id="request_value" th:value="${request_value}"/>
                     </form>
                 </div>
@@ -402,17 +469,11 @@
     function myFunk(text, id){
         document.getElementById(id).value=text;
     }
-    document.querySelector('#countFloor').addEventListener('change',function () {
+   /*document.querySelector('#countFloor').addEventListener('change',function () {
         let F=parseInt(document.getElementById('countFloor').value,10);
-        if(F!==0)
-        {
-            if(document.getElementById('count_floor').innerHTML !== "")
-            {
-                document.getElementById('count_floor').innerHTML = "";
-            }
-            for(let f=1;f<=F;f++)
-            {
-                const floorHtml ='<p class="fw-weight-bold" style="font-weight:600; ">'+f+' этаж</p>\n' +
+        if(F!==0) {
+            for (let f = 1; f <= F; f++) {
+                const floorHtml = '<p class="fw-weight-bold" style="font-weight:600; ">' + f + ' этаж</p>\n' +
                     '                                <div class="row">\n' +
                     '                                    <div class="col-sm-8 text-center">\n' +
                     '                                        <p class="fw-weight-bold" style="font-weight:400; ">Высота этажа</p>\n' +
@@ -478,7 +539,7 @@
                 $('#count_floor').append(floorHtml);
             }
         }
-    });
+    });*/
 </script>
 <script>
     let i =0;
@@ -512,23 +573,29 @@
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_height'+i+'">Высота</label>\n' +
-            '                                            <input type="number" id="win_height'+i+'" class="form-control"/>\n' +
+            '                                            <input type="number" id="win_height'+i+'" value="" class="form-control" disabled/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_width'+i+'">Ширина</label>\n' +
-            '                                            <input type="number" id="win_width'+i+'" class="form-control"/>\n' +
+            '                                            <input type="number" id="win_width'+i+'" value="" class="form-control" disabled/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_count'+i+'">Количество</label>\n' +
-            '                                            <input type="number" id="win_count'+i+'" class="form-control"/>\n' +
+            '                                            <input type="number" id="win_count'+i+'" value="" class="form-control" disabled/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
+            '                                </div>\n' +
+            '                                <div class="row mb-4"id="DelOrAddWindowOpenings_btn'+i+'">\n' +
+            '                                    <div class="col-sm-9">\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col-sm-3">\n' +
+            '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+i+'" onclick="delfunkWin(this.id)"><i class="fa fa-minus"></i></button>\n' +
+            '                                    </div>\n' +
             '                                </div>';
-        document.getElementById("rmWindowOpenings_btn").style.display = "block";
         $('#WindowOpenings_div_add').append(html);
         var width = document.getElementById('win_width').value;
         var height = document.getElementById('win_height').value;
@@ -543,96 +610,101 @@
         document.getElementById('win_count').value = '';
         document.getElementById('request_value').value = newInput;
     });
-    document.querySelector('#rmWindowOpenings_btn').addEventListener('click',function () {
-        const DelOrAddWindowOpenings = "#DelOrAddWindowOpenings" + i.toString();
+    function delfunkWin(i)
+    {
+        const DelOrAddWindowOpenings = "#DelOrAddWindowOpenings" + i;
+        const DelOrAddWindowOpenings_btn ="#DelOrAddWindowOpenings_btn"+i;
         var baseInput = document.getElementById('request_value').value;
         var newInput = baseInput.replace('&winHeight' + i + '=' + document.getElementById('win_height'+i).value + '&winWidth' + i + '=' + document.getElementById('win_width'+i).value + '&winCount' + i + '=' + document.getElementById('win_count'+i).value, '');
         document.getElementById('request_value').value = newInput;
-        i--;
         $(DelOrAddWindowOpenings).remove();
-        if(i===0)
-        {
-            document.getElementById("rmWindowOpenings_btn").style.display = "none";
-        }
-    });
-
+        $(DelOrAddWindowOpenings_btn).remove();
+    }
 
     document.querySelector('#addWindowOpenings_btn1').addEventListener('click',function () {
         j++;
         const html='<div class="row mb-4" id="DelOrAddDoorOpenings'+j+'">\n' +
-            '                                <div class="col">\n' +
-            '                                    <div class="form-outline">\n' +
-            '                                        <label class="form-label" for="door_height'+j+'">Высота</label>\n' +
-            '                                        <input type="number" id="door_height'+j+'" class="form-control"/>\n' +
+            '                                    <div class="col">\n' +
+            '                                        <div class="form-outline">\n' +
+            '                                            <label class="form-label" for="door_height'+j+'">Высота</label>\n' +
+            '                                            <input type="number" id="door_height'+j+'" class="form-control" disabled/>\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col">\n' +
+            '                                        <div class="form-outline">\n' +
+            '                                            <label class="form-label" for="door_width'+j+'">Ширина</label>\n' +
+            '                                            <input type="number" id="door_width'+j+'" class="form-control" disabled/>\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col">\n' +
+            '                                        <div class="form-outline">\n' +
+            '                                            <label class="form-label" for="door_count'+j+'">Количество</label>\n' +
+            '                                            <input type="number" id="door_count'+j+'" class="form-control" disabled/>\n' +
+            '                                        </div>\n' +
             '                                    </div>\n' +
             '                                </div>\n' +
-            '                                <div class="col">\n' +
-            '                                    <div class="form-outline">\n' +
-            '                                        <label class="form-label" for="door_width'+j+'">Ширина</label>\n' +
-            '                                        <input type="number" id="door_width'+j+'" class="form-control"/>\n' +
+            '                                <div class="row mb-4" id="DelOrAddDoorOpenings_btn'+j+'">\n' +
+            '                                    <div class="col-sm-9">\n' +
             '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div class="col">\n' +
-            '                                    <div class="form-outline">\n' +
-            '                                        <label class="form-label" for="door_count'+j+'">Количество</label>\n' +
-            '                                        <input type="number" id="door_count'+j+'" class="form-control"/>\n' +
+            '                                    <div class="col-sm-3">\n' +
+            '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+j+'" onclick="delfunkDoor(this.id)"><i class="fa fa-minus"></i></button>\n' +
             '                                    </div>\n' +
-            '                                </div>\n' +
-            '                            </div>';
-        document.getElementById("rmWindowOpenings_btn1").style.display = "block";
+            '                                </div>';
         $('#WindowOpenings_div_add1').append(html);
         var baseUrl = window.location.href;
         var newUrl = baseUrl + '?test2=awesome' + j;
         history.pushState(null, null, newUrl);
     });
-    document.querySelector('#rmWindowOpenings_btn1').addEventListener('click',function () {
-        const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings" + j.toString();
+    function delfunkDoor(j)
+    {
+        const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings" + j;
+        const DelOrAddDoorOpenings_btn="#DelOrAddDoorOpenings_btn"+j;
         var baseUrl = window.location.href;
         var newUrl = baseUrl.replace('?test2=awesome' + j, '');
         history.pushState(null, null, newUrl);
-        j--;
         $(DelOrAddWindowOpenings).remove();
-        if(j===0)
-        {
-            document.getElementById("rmWindowOpenings_btn1").style.display = "none";
-        }
-    });
+        $(DelOrAddDoorOpenings_btn).remove();
 
+    }
     document.querySelector('#addWindowOpenings_btn2').addEventListener('click',function () {
         g++;
-        const html=' <div class="row mb-4" id="DelOrAddDoorOpenings_i'+g+'">\n' +
-            '                                <div class="col">\n' +
-            '                                    <div class="form-outline">\n' +
-            '                                        <label class="form-label" for="door_height_i'+g+'">Высота</label>\n' +
-            '                                        <input type="number" id="door_height_i'+g+'" class="form-control"/>\n' +
+        const html='<div class="row mb-4" id="DelOrAddDoorOpenings_i'+g+'">\n' +
+            '                                    <div class="col">\n' +
+            '                                        <div class="form-outline">\n' +
+            '                                            <label class="form-label" for="door_height_i'+g+'">Высота</label>\n' +
+            '                                            <input type="number" id="door_height_i'+g+'" class="form-control" disabled/>\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col">\n' +
+            '                                        <div class="form-outline">\n' +
+            '                                            <label class="form-label" for="door_width_i'+g+'">Ширина</label>\n' +
+            '                                            <input type="number" id="door_width_i'+g+'" class="form-control" disabled/>\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col">\n' +
+            '                                        <div class="form-outline">\n' +
+            '                                            <label class="form-label" for="door_count_i'+g+'">Количество</label>\n' +
+            '                                            <input type="number" id="door_count_i'+g+'" class="form-control" disabled/>\n' +
+            '                                        </div>\n' +
             '                                    </div>\n' +
             '                                </div>\n' +
-            '                                <div class="col">\n' +
-            '                                    <div class="form-outline">\n' +
-            '                                        <label class="form-label" for="door_width_i'+g+'">Ширина</label>\n' +
-            '                                        <input type="number" id="door_width_i'+g+'" class="form-control"/>\n' +
+            '                                <div class="row mb-4"id="DelOrAddDoorOpenings_i_btn'+g+'">\n' +
+            '                                    <div class="col-sm-9">\n' +
             '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div class="col">\n' +
-            '                                    <div class="form-outline">\n' +
-            '                                        <label class="form-label" for="door_count_i'+g+'">Количество</label>\n' +
-            '                                        <input type="number" id="door_count_i'+g+'" class="form-control"/>\n' +
+            '                                    <div class="col-sm-3">\n' +
+            '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+g+'" onclick="delfunkDoorI(this.id)"><i class="fa fa-minus"></i></button>\n' +
             '                                    </div>\n' +
-            '                                </div>\n' +
-            '                            </div>';
-        document.getElementById("rmWindowOpenings_btn2").style.display = "block";
+            '                                </div>';
         $('#WindowOpenings_div_add2').append(html);
     });
-    document.querySelector('#rmWindowOpenings_btn2').addEventListener('click',function () {
-        const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings_i" + g.toString();
-        g--;
+    function delfunkDoorI(g)
+    {
+        const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings_i" + g;
+        const DelOrAddDoorOpenings_i_btn = "#DelOrAddDoorOpenings_i_btn" + g;
+        $(DelOrAddDoorOpenings_i_btn).remove();
         $(DelOrAddWindowOpenings).remove();
-        if(g===0)
-        {
-            document.getElementById("rmWindowOpenings_btn2").style.display = "none";
-        }
-    });
 
+    }
 
 </script>
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
