@@ -458,6 +458,8 @@
                         </div>
                         <!-- Text input -->
                         <input type="hidden" name="request_value" id="request_value" th:value="${request_value}"/>
+                        <input type="hidden" name="overlapCheck" id="overlapCheck" th:value="${overlapCheck}"/>
+                        <input type="hidden" name="internalCheck" id="internalCheck" th:value="${internalCheck}"/>
                     </form>
                 </div>
             </div>
@@ -552,6 +554,11 @@
         InteriorWallCoverings_btn_ico.toggle('fa-plus');
         InteriorWallCoverings_btn_ico.toggle('fa-minus');
         InteriorWallCoverings_div.toggle('hidden');
+        if (document.getElementById('internalCheck').value === '1'){
+            document.getElementById('internalCheck').value = '0';
+        } else {
+            document.getElementById('internalCheck').value = '1';
+        }
     });
     document.querySelector('#WindowOpenings_btn').addEventListener('click',function () {
         const InteriorWallCoverings_div = document.querySelector('#WindowOpenings_div').classList;
@@ -566,6 +573,11 @@
         InteriorWallCoverings_btn_ico.toggle('fa-plus');
         InteriorWallCoverings_btn_ico.toggle('fa-minus');
         InteriorWallCoverings_div.toggle('hidden');
+        if (document.getElementById('overlapCheck').value === '1'){
+            document.getElementById('overlapCheck').value = '0';
+        } else {
+            document.getElementById('overlapCheck').value = '1';
+        }
     });
     document.querySelector('#addWindowOpenings_btn').addEventListener('click',function () {
         i++;
@@ -573,19 +585,19 @@
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_height'+i+'">Высота</label>\n' +
-            '                                            <input type="number" id="win_height'+i+'" value="" class="form-control" disabled/>\n' +
+            '                                            <input type="number" id="win_height'+i+'" value="" class="form-control"/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_width'+i+'">Ширина</label>\n' +
-            '                                            <input type="number" id="win_width'+i+'" value="" class="form-control" disabled/>\n' +
+            '                                            <input type="number" id="win_width'+i+'" value="" class="form-control"/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_count'+i+'">Количество</label>\n' +
-            '                                            <input type="number" id="win_count'+i+'" value="" class="form-control" disabled/>\n' +
+            '                                            <input type="number" id="win_count'+i+'" value="" class="form-control"/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                </div>\n' +
@@ -615,7 +627,7 @@
         const DelOrAddWindowOpenings = "#DelOrAddWindowOpenings" + i;
         const DelOrAddWindowOpenings_btn ="#DelOrAddWindowOpenings_btn"+i;
         var baseInput = document.getElementById('request_value').value;
-        var newInput = baseInput.replace('&winHeight' + i + '=' + document.getElementById('win_height'+i).value + '&winWidth' + i + '=' + document.getElementById('win_width'+i).value + '&winCount' + i + '=' + document.getElementById('win_count'+i).value, '');
+        var newInput = baseInput.replace('&winHeight=' + document.getElementById('win_height'+i).value + '|winWidth=' + document.getElementById('win_width'+i).value + '|winCount=' + document.getElementById('win_count'+i).value, '');
         document.getElementById('request_value').value = newInput;
         $(DelOrAddWindowOpenings).remove();
         $(DelOrAddWindowOpenings_btn).remove();

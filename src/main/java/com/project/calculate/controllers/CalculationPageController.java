@@ -70,7 +70,6 @@ public class CalculationPageController {
         else if (calculationState.getId() == 2){
             statuses.add(new CalculationStatus(1l, "Актуален"));
         }
-        LoggerFactory.getLogger(CalculateApplication.class).error("CALCULATION ERROR: " + statuses.size());
 
         model.addAttribute("calculationDate", calculation.getCreatedDate().toString());
         model.addAttribute("calculationAdres", calculation.getAddressObjectConstractions());

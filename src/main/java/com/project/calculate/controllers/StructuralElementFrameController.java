@@ -87,7 +87,9 @@ public class StructuralElementFrameController {
                             @ModelAttribute("frameForm") FrameForm frameForm,
                             @ModelAttribute("calculationInfo") CalculationInfo calculationInfo,
                             @RequestParam("calculateButton") Long customerId,
-                            @RequestParam("request_value") String requestValue) {
+                            @RequestParam("request_value") String requestValue,
+                            @RequestParam(name = "internalCheck", defaultValue = "0") String internalCheck,
+                            @RequestParam(name = "overlapCheck", defaultValue = "0") String overlapCheck) {
         //Получаем значения из формы
         int height = frameForm.getHeight();
         double perimeter_of_external_walls = frameForm.getPerimeter_of_external_walls();
@@ -177,32 +179,28 @@ public class StructuralElementFrameController {
         //Утеплитель внешних стен
         Result insulationExternalWall = createResult(frames, calculation, insulation_external_wall, externalWallSquare, external);
         results.add(insulationExternalWall);
+
         //ОСБ внутренних стен
-        if (!OSB_internal_wal.equals(null) || OSB_internal_wal != ""){
+        if (internalCheck.equals("1")){
             Result OsbInternalWal = createResult(frames, calculation, OSB_internal_wal, internalWallSquare * 2, internal);
             results.add(OsbInternalWal);
         }
-        //ОСБ перекрытия
-        if (!OSB_thickness.equals(null) || OSB_thickness != ""){
+
+        //Перекрытие
+        if (overlapCheck.equals("1")){
+            //ОСБ перекрытия
             Result OsbThickness = createResult(frames, calculation, OSB_thickness, base_area, overlap);
             results.add(OsbThickness);
-        }
-        //Парогидроизоляция перекрытия
-        if (!steam_waterproofing_thicknes.equals(null) || steam_waterproofing_thicknes != ""){
+            //Парогидроизоляция перекрытия
             Result steamWaterproofingThicknes = createResult(frames, calculation, steam_waterproofing_thicknes, base_area, overlap);
             results.add(steamWaterproofingThicknes);
-        }
-        //Ветрозащита перекрытия
-        if (!windscreen_thickness.equals(null) || windscreen_thickness != ""){
+            //Ветрозащита перекрытия
             Result windscreenThickness = createResult(frames, calculation, windscreen_thickness, base_area, overlap);
             results.add(windscreenThickness);
-        }
-        //Утеплитель перекрытия
-        if (!insulation__thickness.equals(null) || insulation__thickness != ""){
+            //Утеплитель перекрытия
             Result insulationThickness = createResult(frames, calculation, insulation__thickness, base_area, overlap);
             results.add(insulationThickness);
         }
-
 
         try{
             frame.setResults(results);
@@ -282,6 +280,7 @@ public class StructuralElementFrameController {
      * @return Set
      */
     private Set<Opening> createOpenings(String requestValue, Set<StructuralElementFrame> frames){
+        LoggerFactory.getLogger(CalculateApplication.class).error("TEST: " + requestValue);
         Set<Opening> openings = new HashSet<>();
         if (!requestValue.equals("")){
             String[] openingsList = requestValue.split("&");
