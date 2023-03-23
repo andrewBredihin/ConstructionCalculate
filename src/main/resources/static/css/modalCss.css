@@ -6,3 +6,6 @@
 .modal-btn:hover{
     background: #ffAD4B;
 }
+.modal-btn:disabled{
+    background: #ffAD4B;
+}

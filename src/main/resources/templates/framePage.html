@@ -29,7 +29,7 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a href="/editClient" style="font-size: 16px" class="text-decoration-underline">
+                        <a href="/editClient" style="font-size: 16px">
                             Тестовый Тест Тестович
                             <br/>
                             г. Ульяновск, ул. Тестовая, д.35-45
@@ -471,77 +471,6 @@
     function myFunk(text, id){
         document.getElementById(id).value=text;
     }
-   /*document.querySelector('#countFloor').addEventListener('change',function () {
-        let F=parseInt(document.getElementById('countFloor').value,10);
-        if(F!==0) {
-            for (let f = 1; f <= F; f++) {
-                const floorHtml = '<p class="fw-weight-bold" style="font-weight:600; ">' + f + ' этаж</p>\n' +
-                    '                                <div class="row">\n' +
-                    '                                    <div class="col-sm-8 text-center">\n' +
-                    '                                        <p class="fw-weight-bold" style="font-weight:400; ">Высота этажа</p>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="col-sm-4">\n' +
-                    '                                        <input type="number" class="form-control Input_adress" th:field="*{height}" placeholder="м/см/мм"/>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>\n' +
-                    '                                <div class="row">\n' +
-                    '                                    <div class="col-sm-8 text-center">\n' +
-                    '                                        <p class="fw-weight-bold" style="font-weight:400; ">Периметр внешних стен</p>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="col-sm-4">\n' +
-                    '                                        <input type="number" class="form-control Input_adress" th:field="*{perimeter_of_external_walls}"/>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>\n' +
-                    '                                <div class="row">\n' +
-                    '                                    <div class="col-sm-8 text-center">\n' +
-                    '                                        <p class="fw-weight-bold" style="font-weight:400; ">Площадь основания</p>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="col-sm-4">\n' +
-                    '                                        <input type="number" class="form-control Input_adress" th:field="*{base_area}"/>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>\n' +
-                    '                                <div class="row">\n' +
-                    '                                    <div class="col-sm-8 text-center">\n' +
-                    '                                        <p class="fw-weight-bold" style="font-weight:400; ">Толщина внешних стен</p>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="col-sm-4">\n' +
-                    '                                        <div class="input-group mb-3">\n' +
-                    '                                            <input type="text" class="form-control" id="external_wall_thickness" th:field="*{external_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">\n' +
-                    '                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>\n' +
-                    '                                            <ul class="dropdown-menu dropdown-menu-end">\n' +
-                    '                                                <li><a class="dropdown-item" onclick="document.getElementById(\'external_wall_thickness\').value=\'100\'">100 мм</a></li>\n' +
-                    '                                                <li><a class="dropdown-item" onclick="document.getElementById(\'external_wall_thickness\').value=\'200\'">200 мм</a></li>\n' +
-                    '                                            </ul>\n' +
-                    '                                        </div>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>\n' +
-                    '                                <div class="row">\n' +
-                    '                                    <div class="col-sm-8 text-center">\n' +
-                    '                                        <p class="fw-weight-bold" style="font-weight:400; ">Длина внутренних стен</p>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="col-sm-4">\n' +
-                    '                                        <input type="number" class="form-control Input_adress" th:field="*{internal_wall_length}"/>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>\n' +
-                    '                                <div class="row">\n' +
-                    '                                    <div class="col-sm-8 text-center">\n' +
-                    '                                        <p class="fw-weight-bold" style="font-weight:400; ">Толщина внутренних стен</p>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="col-sm-4">\n' +
-                    '                                        <div class="input-group mb-3">\n' +
-                    '                                            <input type="text" class="form-control" id="inputinnerwall" th:field="*{internal_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">\n' +
-                    '                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>\n' +
-                    '                                            <ul class="dropdown-menu dropdown-menu-end">\n' +
-                    '                                                <li><a class="dropdown-item" onclick="document.getElementById(\'inputinnerwall\').value=\'100\'">100 мм</a></li>\n' +
-                    '                                                <li><a class="dropdown-item" onclick="document.getElementById(\'inputinnerwall\').value=\'200\'">200 мм</a></li>\n' +
-                    '                                            </ul>\n' +
-                    '                                        </div>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>';
-                $('#count_floor').append(floorHtml);
-            }
-        }
-    });*/
 </script>
 <script>
     let i =0;
@@ -585,19 +514,19 @@
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_height'+i+'">Высота</label>\n' +
-            '                                            <input type="number" id="win_height'+i+'" value="" class="form-control"/>\n' +
+            '                                            <input type="number" id="win_height'+i+'" value="" class="form-control" disabled/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_width'+i+'">Ширина</label>\n' +
-            '                                            <input type="number" id="win_width'+i+'" value="" class="form-control"/>\n' +
+            '                                            <input type="number" id="win_width'+i+'" value="" class="form-control" disabled/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                    <div class="col">\n' +
             '                                        <div class="form-outline">\n' +
             '                                            <label class="form-label" for="win_count'+i+'">Количество</label>\n' +
-            '                                            <input type="number" id="win_count'+i+'" value="" class="form-control"/>\n' +
+            '                                            <input type="number" id="win_count'+i+'" value="" class="form-control" disabled/>\n' +
             '                                        </div>\n' +
             '                                    </div>\n' +
             '                                </div>\n' +

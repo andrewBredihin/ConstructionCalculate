@@ -14,9 +14,9 @@
     <script src="https://kit.fontawesome.com/d5efc829a1.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="header-blue">
 <div>
-    <div class="header-blue">
+    <div>
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
             <div class="container">
                 <a class="navbar-brand" href="/home">Строительный калькулятор</a>
@@ -73,30 +73,44 @@
             </div>
             <br>
             <div class="container" style="background-color: #FFF9F1;width: 100%;border-radius: 10px;">
-                <div class="col-lg-8 col-md-10 ml-auto mr-auto" style="width: 100%">
-                    <div class="table-responsive">
-                        <table class="table"  th:each ="calculation : ${calculations}">
-                            <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <a type="button" th:href="'/calculation?calculationId=' + ${calculation.id}" class="btn btn-sm" style="background-color: #ffAD4B"  th:text="'Расчет №' + ${calculation.number}">
-                                        <span class="glyphicon glyphicon-remove-circle"></span>
-                                    </a>
-                                </td>
-                                <td th:text="${calculation.date}"></td>
-                                <td th:text="${calculation.status}"></td>
-                                <td class="text-center" th:text="${calculation.adress}"></td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" class="btn btn-info btn-just-icon btn-sm" data-original-title="" title="">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 25px;color: white"></i>
-                                    </button>
-                                    <button type="button" rel="tooltip" class="btn btn-danger btn-just-icon btn-sm" data-original-title="" title="">
-                                        <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 25px"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="table-responsive">
+                    <table class="table"  th:each ="calculation : ${calculations}">
+                        <tbody style="font-size: 20px">
+                        <tr>
+                            <td class="text-center">
+                                <a type="button" th:href="'/calculation?calculationId=' + ${calculation.id}" class="btn btn-sm modal-btn" style="color: white;font-size: 20px"  th:text="'Расчет №' + ${calculation.number}">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                </a>
+                            </td>
+                            <td th:text="${calculation.date}"></td>
+                            <td th:text="${calculation.status}"></td>
+                            <td class="text-center" th:text="${calculation.adress}"></td>
+                            <td class="td-actions text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-just-icon btn-sm" data-original-title="" title="">
+                                    <i class="fa fa-copy" aria-hidden="true" style="font-size: 25px;color: white"></i>
+                                </button>
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-just-icon btn-sm" data-toggle="modal" data-target="#DeleteCalc">
+                                    <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 25px"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal fade" id="DeleteCalc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Удалить расчет?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                            <button type="button" class="btn btn-primary">Да</button>
+                        </div>
                     </div>
                 </div>
             </div>
