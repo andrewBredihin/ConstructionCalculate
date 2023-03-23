@@ -24,7 +24,7 @@ public class StructuralElementFrame {
     private Double externalWallThickness;
 
     @Column(name = "floor_height", nullable = false)
-    private Integer floorHeight;
+    private Double floorHeight;
 
     @Column(name = "floor_number", nullable = false)
     private Integer floorNumber;
@@ -51,7 +51,7 @@ public class StructuralElementFrame {
     private String osbThickness;
 
     @Column(name = "overlap_thickness", nullable = false)
-    private int overlapThickness;
+    private double overlapThickness;
 
     @Column(name = "perimeter_of_external_walls", nullable = false)
     private Double perimeterOfExternalWalls;
@@ -132,11 +132,11 @@ public class StructuralElementFrame {
         this.perimeterOfExternalWalls = perimeterOfExternalWalls;
     }
 
-    public int getOverlapThickness() {
+    public double getOverlapThickness() {
         return overlapThickness;
     }
 
-    public void setOverlapThickness(int overlapThickness) {
+    public void setOverlapThickness(double overlapThickness) {
         this.overlapThickness = overlapThickness;
     }
 
@@ -204,11 +204,11 @@ public class StructuralElementFrame {
         this.floorNumber = floorNumber;
     }
 
-    public Integer getFloorHeight() {
+    public Double getFloorHeight() {
         return floorHeight;
     }
 
-    public void setFloorHeight(Integer floorHeight) {
+    public void setFloorHeight(Double floorHeight) {
         this.floorHeight = floorHeight;
     }
 

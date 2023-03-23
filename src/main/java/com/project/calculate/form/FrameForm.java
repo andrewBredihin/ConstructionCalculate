@@ -2,7 +2,7 @@ package com.project.calculate.form;
 
 public class FrameForm {
 
-    private int height;                             //Высота этажа
+    private double height;                             //Высота этажа
     private double perimeter_of_external_walls;     //Периметр внешних стен
     private double base_area;                       //Площидь основания
     private double external_wall_thickness;         //Толщина внешних стен
@@ -17,12 +17,12 @@ public class FrameForm {
     private String steam_waterproofing_thickness;   //Парогидроизоляция перекрытия
     private String windscreen_thickness;            //Ветрозащита перекрытия
     private String insulation__thickness;           //Утеплитель перекрытия
-    private int overlap_thickness;               //Толщина перекрытия
+    private double overlap_thickness;               //Толщина перекрытия
     private int floor_number;                       //Номер этажа
 
     public FrameForm(){}
 
-    public FrameForm(int height, double perimeter_of_external_walls, double base_area, double external_wall_thickness, double internal_wall_length, double internal_wall_thickness, String OSB_external_wall, String steam_waterproofing_external, String windscreen_external_wall, String insulation_external_wall, String OSB_internal_wal, String OSB_thickness, String steam_waterproofing_thickness, String windscreen_thickness, String insulation__thickness, int overlap_thickness, int floor_number) {
+    public FrameForm(double height, double perimeter_of_external_walls, double base_area, double external_wall_thickness, double internal_wall_length, double internal_wall_thickness, String OSB_external_wall, String steam_waterproofing_external, String windscreen_external_wall, String insulation_external_wall, String OSB_internal_wal, String OSB_thickness, String steam_waterproofing_thickness, String windscreen_thickness, String insulation__thickness, double overlap_thickness, int floor_number) {
         this.height = height;
         this.perimeter_of_external_walls = perimeter_of_external_walls;
         this.base_area = base_area;
@@ -42,11 +42,11 @@ public class FrameForm {
         this.floor_number = floor_number;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
@@ -162,11 +162,11 @@ public class FrameForm {
         this.insulation__thickness = insulation__thickness;
     }
 
-    public int getOverlap_thickness() {
+    public double getOverlap_thickness() {
         return overlap_thickness;
     }
 
-    public void setOverlap_thickness(int overlap_thickness) {
+    public void setOverlap_thickness(double overlap_thickness) {
         this.overlap_thickness = overlap_thickness;
     }
 

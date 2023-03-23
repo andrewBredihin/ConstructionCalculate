@@ -460,6 +460,7 @@
                         <input type="hidden" name="request_value" id="request_value" th:value="${request_value}"/>
                         <input type="hidden" name="overlapCheck" id="overlapCheck" th:value="${overlapCheck}"/>
                         <input type="hidden" name="internalCheck" id="internalCheck" th:value="${internalCheck}"/>
+                        <input type="hidden" name="windowsAndDoorsCheck" id="windowsAndDoorsCheck" th:value="${windowsAndDoorsCheck}"/>
                     </form>
                 </div>
             </div>
@@ -495,6 +496,11 @@
         InteriorWallCoverings_btn_ico.toggle('fa-plus');
         InteriorWallCoverings_btn_ico.toggle('fa-minus');
         InteriorWallCoverings_div.toggle('hidden');
+        if (document.getElementById('windowsAndDoorsCheck').value === '1'){
+            document.getElementById('windowsAndDoorsCheck').value = '0';
+        } else {
+            document.getElementById('windowsAndDoorsCheck').value = '1';
+        }
     });
     document.querySelector('#CalculationOfOverlaps_btn').addEventListener('click',function () {
         const InteriorWallCoverings_div = document.querySelector('#CalculationOfOverlaps_div').classList;
@@ -592,17 +598,26 @@
             '                                    </div>\n' +
             '                                </div>';
         $('#WindowOpenings_div_add1').append(html);
-        var baseUrl = window.location.href;
-        var newUrl = baseUrl + '?test2=awesome' + j;
-        history.pushState(null, null, newUrl);
+        var width = document.getElementById('door_height').value;
+        var height = document.getElementById('door_height').value;
+        var count = document.getElementById('door_count').value;
+        var baseInput = document.getElementById('request_value').value;
+        var newInput = baseInput + '&doorHeight' + '=' + height + '|doorWidth' + '=' + width + '|doorCount' + '=' + count;
+        document.getElementById('door_width'+j).value = width;
+        document.getElementById('door_height'+j).value = height;
+        document.getElementById('door_count'+j).value = count;
+        document.getElementById('door_width').value = '';
+        document.getElementById('door_height').value = '';
+        document.getElementById('door_count').value = '';
+        document.getElementById('request_value').value = newInput;
     });
     function delfunkDoor(j)
     {
         const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings" + j;
         const DelOrAddDoorOpenings_btn="#DelOrAddDoorOpenings_btn"+j;
-        var baseUrl = window.location.href;
-        var newUrl = baseUrl.replace('?test2=awesome' + j, '');
-        history.pushState(null, null, newUrl);
+        var baseInput = document.getElementById('request_value').value;
+        var newInput = baseInput.replace('&doorHeight=' + document.getElementById('door_height'+j).value + '|doorWidth=' + document.getElementById('door_width'+j).value + '|doorCount=' + document.getElementById('door_count'+j).value, '');
+        document.getElementById('request_value').value = newInput;
         $(DelOrAddWindowOpenings).remove();
         $(DelOrAddDoorOpenings_btn).remove();
 
@@ -637,14 +652,28 @@
             '                                    </div>\n' +
             '                                </div>';
         $('#WindowOpenings_div_add2').append(html);
+        var width = document.getElementById('door_height_i').value;
+        var height = document.getElementById('door_height_i').value;
+        var count = document.getElementById('door_count_i').value;
+        var baseInput = document.getElementById('request_value').value;
+        var newInput = baseInput + '&doorHeightI' + '=' + height + '|doorWidthI' + '=' + width + '|doorCountI' + '=' + count;
+        document.getElementById('door_width_i'+j).value = width;
+        document.getElementById('door_height_i'+j).value = height;
+        document.getElementById('door_count_i'+j).value = count;
+        document.getElementById('door_width_i').value = '';
+        document.getElementById('door_height_i').value = '';
+        document.getElementById('door_count_i').value = '';
+        document.getElementById('request_value').value = newInput;
     });
     function delfunkDoorI(g)
     {
         const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings_i" + g;
         const DelOrAddDoorOpenings_i_btn = "#DelOrAddDoorOpenings_i_btn" + g;
+        var baseInput = document.getElementById('request_value').value;
+        var newInput = baseInput.replace('&doorHeightI=' + document.getElementById('door_height_i'+j).value + '|doorWidthI=' + document.getElementById('door_width_i'+j).value + '|doorCountI=' + document.getElementById('door_count_i'+j).value, '');
+        document.getElementById('request_value').value = newInput;
         $(DelOrAddDoorOpenings_i_btn).remove();
         $(DelOrAddWindowOpenings).remove();
-
     }
 
 </script>
