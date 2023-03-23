@@ -41,7 +41,7 @@ public class Calculation {
     @JoinColumn(name = "\"сalculation_state_id\"", nullable = false)
     private CalculationStatus сalculationState;
 
-    @OneToMany(mappedBy = "calculation")
+    @OneToMany(mappedBy = "calculation", cascade = {CascadeType.ALL})
     private Set<Result> results = new LinkedHashSet<>();
 
     public Set<Result> getResults() {

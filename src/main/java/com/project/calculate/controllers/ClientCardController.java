@@ -1,16 +1,21 @@
 package com.project.calculate.controllers;
 
+import com.project.calculate.CalculateApplication;
 import com.project.calculate.entity.Calculation;
 import com.project.calculate.entity.Customer;
 import com.project.calculate.entity.User;
 import com.project.calculate.form.CalculationForm;
+import com.project.calculate.form.ClientForm;
+import com.project.calculate.repository.CalculationRepository;
 import com.project.calculate.repository.CustomerRepository;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +34,8 @@ public class ClientCardController {
     private CustomerRepository customerRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CalculationRepository calculationRepository;
 
     /**
      * GET запрос. Заполняет страницу расчетами выбранного клиента
@@ -71,5 +78,17 @@ public class ClientCardController {
         model.addAttribute("calculations", calculationForms);
 
         return "/clientCard";
+    }
+
+    @RequestMapping(value = { "/clientCard" }, method = RequestMethod.POST)
+    public String deleteCalculation(HttpServletRequest request, Model model, //
+                                    @RequestParam(name = "deleteCalculation", defaultValue = "") Long calculationId,
+                                    @RequestParam(name = "customer", defaultValue = "") Long customerId) {
+        try{
+            calculationRepository.deleteById(calculationId);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/clientCard?id=" + customerId;
     }
 }

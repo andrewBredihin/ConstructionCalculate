@@ -657,9 +657,9 @@
         var count = document.getElementById('door_count_i').value;
         var baseInput = document.getElementById('request_value').value;
         var newInput = baseInput + '&doorHeightI' + '=' + height + '|doorWidthI' + '=' + width + '|doorCountI' + '=' + count;
-        document.getElementById('door_width_i'+j).value = width;
-        document.getElementById('door_height_i'+j).value = height;
-        document.getElementById('door_count_i'+j).value = count;
+        document.getElementById('door_width_i'+g).value = width;
+        document.getElementById('door_height_i'+g).value = height;
+        document.getElementById('door_count_i'+g).value = count;
         document.getElementById('door_width_i').value = '';
         document.getElementById('door_height_i').value = '';
         document.getElementById('door_count_i').value = '';
@@ -670,7 +670,7 @@
         const DelOrAddWindowOpenings = "#DelOrAddDoorOpenings_i" + g;
         const DelOrAddDoorOpenings_i_btn = "#DelOrAddDoorOpenings_i_btn" + g;
         var baseInput = document.getElementById('request_value').value;
-        var newInput = baseInput.replace('&doorHeightI=' + document.getElementById('door_height_i'+j).value + '|doorWidthI=' + document.getElementById('door_width_i'+j).value + '|doorCountI=' + document.getElementById('door_count_i'+j).value, '');
+        var newInput = baseInput.replace('&doorHeightI=' + document.getElementById('door_height_i'+g).value + '|doorWidthI=' + document.getElementById('door_width_i'+g).value + '|doorCountI=' + document.getElementById('door_count_i'+g).value, '');
         document.getElementById('request_value').value = newInput;
         $(DelOrAddDoorOpenings_i_btn).remove();
         $(DelOrAddWindowOpenings).remove();

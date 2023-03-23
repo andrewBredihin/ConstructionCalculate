@@ -68,10 +68,10 @@ public class StructuralElementFrame {
     @Column(name = "windscreen_thickness", nullable = false)
     private String windscreenThickness;
 
-    @ManyToMany(mappedBy = "structuralElementFrames")
+    @ManyToMany(mappedBy = "structuralElementFrames", cascade = {CascadeType.ALL})
     private Set<Result> results = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "structuralElementFrames")
+    @ManyToMany(mappedBy = "structuralElementFrames", cascade = {CascadeType.ALL})
     private Set<Opening> openings = new LinkedHashSet<>();
 
     public Set<Opening> getOpenings() {

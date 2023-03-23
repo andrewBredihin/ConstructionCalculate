@@ -151,7 +151,6 @@ public class StructuralElementFrameController {
             frame.setAmountFloor(calculationInfo.getAmountFloor());
         } catch (Exception e){
             System.out.println(e);
-            LoggerFactory.getLogger(CalculateApplication.class).error("FRAME ERROR: " + e.getMessage());
             return "redirect:/framePage?customerId=" + customerId;
         }
 
@@ -183,7 +182,6 @@ public class StructuralElementFrameController {
                 openings = createOpenings(openingsStr, frames);
             } catch (WrongHeightExeption e){
                 System.out.println(e);
-                return "redirect:/framePage?customerId=" + customerId;
             }
         Set<Result> results = new HashSet<>();
 
@@ -270,7 +268,6 @@ public class StructuralElementFrameController {
             }
         } catch (Exception e){
             System.out.println(e);
-            return "redirect:/framePage?customerId=" + customerId;
         }
         return "redirect:/home";
     }
@@ -337,16 +334,9 @@ public class StructuralElementFrameController {
      * @return Result
      */
     private Result createBoardResult(Set<StructuralElementFrame> frame, Set<Opening> openings, Calculation calculation, Material material, MaterialCharacteristic materialCharacteristic, double length, double height, double square, String elementType){
-        //Long id = 1L;
         Result result = new Result();
-        /*try {
-            id = resultRepository.getMaxId() + 1;
-        } catch (Exception e){
-            System.out.println(e);
-        }*/
         try {
             result.setStructuralElementFrames(frame);
-            //result.setId(id);
             result.setCalculation(calculation);
             result.setMaterial(material.getName());
             result.setMaterialCharacteristics(materialCharacteristic);
@@ -354,8 +344,8 @@ public class StructuralElementFrameController {
             Integer amount = getMaterialAmount(boardsLength, materialCharacteristic.getLength());
             result.setAmount(amount);
             PriceList priceList = materialCharacteristic.getPriceLists().iterator().next();
-            result.setPrice(priceList.getPurchasePrice() * amount);
-            result.setFullPrice(priceList.getSellingPrice() * amount);
+            result.setPrice(Double.valueOf(String.format("%.2f", priceList.getPurchasePrice() * amount)));
+            result.setFullPrice(Double.valueOf(String.format("%.2f", priceList.getSellingPrice() * amount)));
             result.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
             result.setElementType(elementType);
         } catch (Exception e){
@@ -456,6 +446,14 @@ public class StructuralElementFrameController {
         return  length;
     }
 
+    /**
+     * Возвращает длину досок для выбранного элемента каркаса
+     * @param length
+     * @param height
+     * @param square
+     * @param elementType
+     * @return double
+     */
     private double getBoardLength(double length, double height, double square, String elementType){
         if (elementType.equals(EXTERNAL))
             return length * 2 + height * 8 + length / 0.6 * height;

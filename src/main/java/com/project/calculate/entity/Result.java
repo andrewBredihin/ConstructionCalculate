@@ -33,11 +33,11 @@ public class Result {
     @JoinColumn(name = "material_characteristics_id", nullable = false)
     private MaterialCharacteristic materialCharacteristics;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.ALL})
     @JoinColumn(name = "calculation_id", nullable = false)
     private Calculation calculation;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "frame_results",
             joinColumns = @JoinColumn(name = "result_id"),
             inverseJoinColumns = @JoinColumn(name = "frame_id"))

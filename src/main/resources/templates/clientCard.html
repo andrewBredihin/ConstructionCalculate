@@ -38,83 +38,87 @@
                 </div>
             </div>
         </nav>
-        <div class="container hero">
-            <div class="col-12 col-lg-6 col-xl-5" style="margin-left: 420px">
-                <span class="navbar-text" style="font-size: 40px;color: white">
-                    Карточка клиента
-                </span>
-            </div>
-            <div class="row">
-                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                    <button class="btn btn-light btn-lg action-button" type="button" data-toggle="modal" data-target="#exampleModalPopovers">Создать Расчет</button>
+        <form th:action="@{/clientCard}" method="post">
+            <div class="container hero">
+                <div class="col-12 col-lg-6 col-xl-5" style="margin-left: 420px">
+                    <span class="navbar-text" style="font-size: 40px;color: white">
+                        Карточка клиента
+                    </span>
                 </div>
-            </div>
-            <div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel">
-                <div class="modal-dialog" style="background-color: #FFF9F1" role="document">
-                    <div class="modal-content" style="background-color: #FFF9F1">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalPopoversLabel">Выбор конструкторского элемента</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+                <div class="row">
+                    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                        <button class="btn btn-light btn-lg action-button" type="button" data-toggle="modal" data-target="#exampleModalPopovers">Создать Расчет</button>
+                    </div>
+                </div>
+                <div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel">
+                    <div class="modal-dialog" style="background-color: #FFF9F1" role="document">
+                        <div class="modal-content" style="background-color: #FFF9F1">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalPopoversLabel">Выбор конструкторского элемента</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <a th:href="'/framePage?customerId=' + ${customerId}" role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                                   data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Каркас</a>
+                                <hr>
+                                <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                                   data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Фундамент</a>
+                                <hr>
+                                <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                                   data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Крыша</a>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <a th:href="'/framePage?customerId=' + ${customerId}" role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
-                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Каркас</a>
-                            <hr>
-                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
-                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Фундамент</a>
-                            <hr>
-                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
-                               data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Крыша</a>
+                    </div>
+                </div>
+                <br>
+                <div class="container" style="background-color: #FFF9F1;width: 100%;border-radius: 10px;">
+                        <div class="table-responsive">
+                            <input type="hidden" name="deleteCalculation" id="deleteCalculation"/>
+                            <input type="hidden" name="customer" id="customer" th:value="${customerId}"/>
+                            <table class="table"  th:each ="calculation : ${calculations}">
+                                <tbody style="font-size: 20px">
+                                <tr>
+                                    <td class="text-center">
+                                        <a type="button" th:href="'/calculation?calculationId=' + ${calculation.id}" class="btn btn-sm modal-btn" style="color: white;font-size: 20px"  th:text="'Расчет №' + ${calculation.number}">
+                                            <span class="glyphicon glyphicon-remove-circle"></span>
+                                        </a>
+                                    </td>
+                                    <td th:text="${calculation.date}"></td>
+                                    <td th:text="${calculation.status}"></td>
+                                    <td class="text-center" th:text="${calculation.adress}"></td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-just-icon btn-sm" data-original-title="" title="">
+                                            <i class="fa fa-copy" aria-hidden="true" style="font-size: 25px;color: white"></i>
+                                        </button>
+                                        <button type="button" th:value="${calculation.id}" onclick="myFunction(this.value)" rel="tooltip" class="btn btn-danger btn-just-icon btn-sm" data-toggle="modal" data-target="#DeleteCalc">
+                                            <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 25px"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+                <div class="modal fade" id="DeleteCalc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Удалить расчет?</h5>
+                                <button type="button" class="close" dasmiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                                <button type="submit" class="btn btn-primary">Да</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <br>
-            <div class="container" style="background-color: #FFF9F1;width: 100%;border-radius: 10px;">
-                <div class="table-responsive">
-                    <table class="table"  th:each ="calculation : ${calculations}">
-                        <tbody style="font-size: 20px">
-                        <tr>
-                            <td class="text-center">
-                                <a type="button" th:href="'/calculation?calculationId=' + ${calculation.id}" class="btn btn-sm modal-btn" style="color: white;font-size: 20px"  th:text="'Расчет №' + ${calculation.number}">
-                                    <span class="glyphicon glyphicon-remove-circle"></span>
-                                </a>
-                            </td>
-                            <td th:text="${calculation.date}"></td>
-                            <td th:text="${calculation.status}"></td>
-                            <td class="text-center" th:text="${calculation.adress}"></td>
-                            <td class="td-actions text-right">
-                                <button type="button" rel="tooltip" class="btn btn-info btn-just-icon btn-sm" data-original-title="" title="">
-                                    <i class="fa fa-copy" aria-hidden="true" style="font-size: 25px;color: white"></i>
-                                </button>
-                                <button type="button" rel="tooltip" class="btn btn-danger btn-just-icon btn-sm" data-toggle="modal" data-target="#DeleteCalc">
-                                    <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 25px"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal fade" id="DeleteCalc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Удалить расчет?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
-                            <button type="button" class="btn btn-primary">Да</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -123,9 +127,8 @@
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function() {
-    $('body').bootstrapMaterialDesign();
-    $('[data-toggle="tooltip"], [rel="tooltip"]').tooltip();
-});</script>
+function myFunction(id){
+    document.getElementById('deleteCalculation').value = id;
+}</script>
 </body>
-</html>
+</html>ta-di

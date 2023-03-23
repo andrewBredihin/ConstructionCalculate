@@ -25,7 +25,7 @@ public class Opening {
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "openings_in_structural_element_frame",
             joinColumns = @JoinColumn(name = "opening_id"),
             inverseJoinColumns = @JoinColumn(name = "frame_id"))
