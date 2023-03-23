@@ -23,7 +23,7 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a href="/editClient" style="font-size: 16px" class="text-decoration-underline" th:utext="${Customers_info}"></a>
+                        <a href="/editClient" style="font-size: 16px" th:utext="${Customers_info}"></a>
                     </div>
                     <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
                 </div>
@@ -131,4 +131,4 @@ function myFunction(id){
     document.getElementById('deleteCalculation').value = id;
 }</script>
 </body>
-</html>ta-di
+</html>

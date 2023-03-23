@@ -9,6 +9,7 @@ import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,8 @@ public class StructuralElementFrameController {
     @Autowired
     private MaterialCharacteristicsRepository materialCharacteristicsRepository;
     @Autowired OpeningRepository openingRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * GET запрос. Принимает id клиента.
@@ -76,6 +79,29 @@ public class StructuralElementFrameController {
         model.addAttribute("Insulations", InsulationList);
         model.addAttribute("Waterproofings", WaterproofingsList);
         model.addAttribute("Windscreens", WindscreensList);
+
+        //Отображение данных о клиенте
+        Customer customer = customerRepository.findById(customerId).get();
+        model.addAttribute("customerId", customerId);
+        String Customers_info = customer.getFullName() + "<br/>" + customer.getAdress();
+        model.addAttribute("Customers_info", Customers_info);
+        model.addAttribute("customer_phone", customer.getPhone());
+        model.addAttribute("customer_phone_str", customer.getPhoneMask());
+
+        //Отображение ФИ:должность пользователя
+        String principal = request.getUserPrincipal().getName();
+        User user = userRepository.findByLogin(principal);
+        String user_name = user.getUserName();
+        String user_role = "";
+        Collection<? extends GrantedAuthority> roles = user.getAuthorities();
+        for (GrantedAuthority x : roles) {
+            if (x.getAuthority().equals("USER"))
+                user_role = "Менеджер";
+            else if (x.getAuthority().equals("ADMIN"))
+                user_role = "Администратор";
+        }
+        String user_info = user_name + ": " + user_role;
+        model.addAttribute("user_name", user_info);
         return "framePage";
     }
 

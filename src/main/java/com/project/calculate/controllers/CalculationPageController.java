@@ -4,33 +4,26 @@ import com.project.calculate.CalculateApplication;
 import com.project.calculate.entity.*;
 import com.project.calculate.form.CalculationInfo;
 import com.project.calculate.form.FrameForm;
-import com.project.calculate.repository.CalculationRepository;
-import com.project.calculate.repository.MaterialsRepository;
-import com.project.calculate.repository.ResultRepository;
-import com.project.calculate.repository.StructuralElementFrameRepository;
+import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class CalculationPageController {
 
     @Autowired
-    private StructuralElementFrameRepository structuralElementFrameRepository;
+    private UserRepository userRepository;
     @Autowired
-    private MaterialsRepository materialsRepository;
-    @Autowired
-    private ResultRepository resultRepository;
+    private CustomerRepository customerRepository;
     @Autowired
     private CalculationRepository calculationRepository;
 
@@ -82,6 +75,28 @@ public class CalculationPageController {
         model.addAttribute("resultsExternal", resultsExternal);
         model.addAttribute("resultsInternal", resultsInternal);
         model.addAttribute("resultsOverlap", resultsOverlap);
+
+        //Отображение ФИ:должность пользователя
+        String principal = request.getUserPrincipal().getName();
+        User user = userRepository.findByLogin(principal);
+        String user_name = user.getUserName();
+        String user_role = "";
+        Collection<? extends GrantedAuthority> roles = user.getAuthorities();
+        for (GrantedAuthority x : roles) {
+            if (x.getAuthority().equals("USER"))
+                user_role = "Менеджер";
+            else if (x.getAuthority().equals("ADMIN"))
+                user_role = "Администратор";
+        }
+        String user_info = user_name + ": " + user_role;
+        model.addAttribute("user_name", user_info);
+
+        //Отображение данных о клиенте
+        Customer customer = calculation.getCustomer();
+        String Customers_info = customer.getFullName() + "<br/>" + customer.getAdress();
+        model.addAttribute("Customers_info", Customers_info);
+        model.addAttribute("customer_phone", customer.getPhone());
+        model.addAttribute("customer_phone_str", customer.getPhoneMask());
         return "calculation";
     }
 

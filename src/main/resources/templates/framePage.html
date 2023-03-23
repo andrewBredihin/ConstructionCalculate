@@ -29,13 +29,9 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a href="/editClient" style="font-size: 16px">
-                            Тестовый Тест Тестович
-                            <br/>
-                            г. Ульяновск, ул. Тестовая, д.35-45
-                        </a>
+                        <a href="/editClient" style="font-size: 16px" th:utext="${Customers_info}"></a>
                     </div>
-                    <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}">8-900-000-00-00</a></div>
+                    <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <div class="form-inline mr-auto">
@@ -43,7 +39,7 @@
                         </div>
                     </div>
                     <span class="navbar-text">
-                            <p>Тестовый Тест Тестович:менеджер</p>
+                            <p th:utext="${user_name}"></p>
                     </span>
                 </div>
             </div>
