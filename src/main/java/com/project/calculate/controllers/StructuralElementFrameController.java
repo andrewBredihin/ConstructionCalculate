@@ -3,7 +3,6 @@ package com.project.calculate.controllers;
 import com.project.calculate.CalculateApplication;
 import com.project.calculate.entity.*;
 import com.project.calculate.exeptions.WrongHeightExeption;
-import com.project.calculate.form.CalculationInfo;
 import com.project.calculate.form.FrameForm;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,11 +53,20 @@ public class StructuralElementFrameController {
      * @param customerId
      */
     @RequestMapping(value = "/framePage", method = RequestMethod.GET)
-    public String structuralElementFramePage(HttpServletRequest request, Model model, @RequestParam(name = "customerId", defaultValue = "") Long customerId) {
+    public String structuralElementFramePage(HttpServletRequest request, Model model,
+                                             @RequestParam(name = "customerId", defaultValue = "") Long customerId,
+                                             @RequestParam(name = "amountFloor") int amountFloor,
+                                             @RequestParam(name = "calculationId", defaultValue = "", required = false) Long calculationId) {
         model.addAttribute("frameForm", new FrameForm());
-        model.addAttribute("calculationInfo", new CalculationInfo());
         model.addAttribute("customerId", customerId);
         model.addAttribute("id", customerId);
+        model.addAttribute("amountFloor", amountFloor);
+        if (calculationId != null) {
+            model.addAttribute("calculationId", calculationId);
+            model.addAttribute("adress", calculationRepository.getReferenceById(calculationId).getAddressObjectConstractions());
+        } else {
+            model.addAttribute("adress", "");
+        }
 
         List<Material> materialList = materialsRepository.findAll();
         List<Material> OsbList = new ArrayList<>();
@@ -111,19 +119,27 @@ public class StructuralElementFrameController {
      * @param request
      * @param model
      * @param frameForm
-     * @param calculationInfo
      * @param customerId
      * @param openingsStr
      */
     @RequestMapping(value = { "/framePage" }, method = RequestMethod.POST)
     public String saveFrame(HttpServletRequest request, Model model,
                             @ModelAttribute("frameForm") FrameForm frameForm,
-                            @ModelAttribute("calculationInfo") CalculationInfo calculationInfo,
-                            @RequestParam("calculateButton") Long customerId,
+                            @RequestParam(value = "calculateButton", required = false) Long customerId,
                             @RequestParam("request_value") String openingsStr,
                             @RequestParam(name = "windowsAndDoorsCheck", defaultValue = "0") String windowsAndDoorsCheck,
                             @RequestParam(name = "internalCheck", defaultValue = "0") String internalCheck,
-                            @RequestParam(name = "overlapCheck", defaultValue = "0") String overlapCheck) {
+                            @RequestParam(name = "overlapCheck", defaultValue = "0") String overlapCheck,
+                            @RequestParam(name = "amountFloor") int amountFloor,
+                            @RequestParam(name = "calculationId", defaultValue = "") Long calculationId,
+                            @RequestParam(name = "exitButton", required = false) String exitButton,
+                            @RequestParam(name = "adress", defaultValue = "") String adress) {
+
+        LoggerFactory.getLogger(CalculateApplication.class).error("CALC BUTTON: " + customerId);
+        LoggerFactory.getLogger(CalculateApplication.class).error("EXIT BUTTON: " + exitButton);
+
+        if (exitButton != null)
+            return "redirect:/home";
         //Получаем значения из формы
         double height = frameForm.getHeight();
         double perimeter_of_external_walls = frameForm.getPerimeter_of_external_walls();
@@ -141,7 +157,7 @@ public class StructuralElementFrameController {
         String windscreen_thickness = frameForm.getWindscreen_thickness();
         String insulation__thickness = frameForm.getInsulation__thickness();
         double overlap_thickness = frameForm.getOverlap_thickness();
-        int floor_number = frameForm.getFloor_number();
+        int floor_number = amountFloor;
 
         StructuralElementFrame frame = new StructuralElementFrame();
         try {
@@ -173,8 +189,8 @@ public class StructuralElementFrameController {
                 frame.setInsulationThickness("");
                 frame.setOverlapThickness(0);
             }
-            frame.setFloorNumber(calculationInfo.getAmountFloor());
-            frame.setAmountFloor(calculationInfo.getAmountFloor());
+            frame.setFloorNumber(floor_number);
+            frame.setAmountFloor(floor_number);
         } catch (Exception e){
             System.out.println(e);
             return "redirect:/framePage?customerId=" + customerId;
@@ -188,15 +204,19 @@ public class StructuralElementFrameController {
             System.out.println(e);
         }
         Calculation calculation = new Calculation();
-        try {
-            calculation.setAddressObjectConstractions(calculationInfo.getAdress());
-            calculation.setCreatedDate(LocalDate.now());
-            calculation.setNumber(calculationNumber);
-            calculation.setCustomer(customer);
-            calculation.setСalculationState(calculationStatusRepository.findById(1L).get());
-        } catch (Exception e){
-            System.out.println(e);
-            return "redirect:/framePage?customerId=" + customerId;
+        if (calculationId != null)
+            calculation = calculationRepository.getReferenceById(calculationId);
+        else {
+            try {
+                calculation.setAddressObjectConstractions(adress);
+                calculation.setCreatedDate(LocalDate.now());
+                calculation.setNumber(calculationNumber);
+                calculation.setCustomer(customer);
+                calculation.setСalculationState(calculationStatusRepository.findById(1L).get());
+            } catch (Exception e){
+                System.out.println(e);
+                return "redirect:/framePage?customerId=" + customerId + "&amountFloor=" + amountFloor;
+            }
         }
 
         Set<StructuralElementFrame> frames = new HashSet<>();
@@ -284,7 +304,8 @@ public class StructuralElementFrameController {
             frame.setOpenings(openings);
 
             structuralElementFrameRepository.save(frame);
-            calculationRepository.save(calculation);
+            if (calculationId == null)
+                calculationRepository.save(calculation);
 
             for (Result x : results){
                 resultRepository.save(x);
@@ -295,7 +316,11 @@ public class StructuralElementFrameController {
         } catch (Exception e){
             System.out.println(e);
         }
-        return "redirect:/home";
+        //return "redirect:/home";
+        amountFloor += 1;
+        if (calculationId == null)
+            calculationId = calculationRepository.getMaxId();
+        return "redirect:/framePage?customerId=" + customerId + "&amountFloor=" + amountFloor + "&calculationId=" + calculationId;
     }
 
     /**
@@ -370,8 +395,8 @@ public class StructuralElementFrameController {
             Integer amount = getMaterialAmount(boardsLength, materialCharacteristic.getLength());
             result.setAmount(amount);
             PriceList priceList = materialCharacteristic.getPriceLists().iterator().next();
-            result.setPrice(Double.valueOf(String.format("%.2f", priceList.getPurchasePrice() * amount)));
-            result.setFullPrice(Double.valueOf(String.format("%.2f", priceList.getSellingPrice() * amount)));
+            result.setPrice(priceList.getPurchasePrice() * amount);
+            result.setFullPrice(priceList.getSellingPrice() * amount);
             result.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
             result.setElementType(elementType);
         } catch (Exception e){

@@ -235,4 +235,12 @@ public class StructuralElementFrame {
     public void setAmountFloor(Integer amountFloor) {
         this.amountFloor = amountFloor;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

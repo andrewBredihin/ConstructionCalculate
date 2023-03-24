@@ -29,7 +29,7 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a href="/editClient" style="font-size: 16px" th:utext="${Customers_info}"></a>
+                        <a th:href="'/clientCard?id=' + ${customerId}" style="font-size: 16px" th:utext="${Customers_info}"></a>
                     </div>
                     <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
                 </div>
@@ -60,11 +60,12 @@
                 <div class="Container-skeleton">
                     <form class="card-body cardbody-color p-lg-4 " th:action="@{/framePage}" method="POST">
                         <!-- 2 column grid layout with text inputs for the first and last names -->
-                        <div th:object="${calculationInfo}">
+                        <div>
                             <div class="row mb-4">
                                 <div class="col-sm-9 p-3">
                                     <div class="form-outline">
-                                        <input type="text" name="adress" th:field="*{adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                                        <input th:if="${amountFloor == 1}" type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                                        <input th:if="${amountFloor > 1}" disabled type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -74,22 +75,24 @@
                                 </div>
                             </div>
 
-                            <div class="container" style="width: 75%;margin-left: 2px">
+                            <!--<div class="container" style="width: 75%;margin-left: 2px">
                                 <p class="fw-weight-bold" style="font-weight:600; ">Исходные данные</p>
                                 <div class="row">
                                     <div class="col-sm-8 text-center">
-                                        <p class="fw-weight-bold" style="font-weight:400; ">Количество этажей</p>
+                                        <p class="fw-weight-bold" style="font-weight:400; ">Номер этажа</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" th:field="*{amountFloor}" id="countFloor" class="form-control Input_adress" maxlength="1"/>
+                                        <input disabled type="number" th:text="${amountFloor}" id="countFloor" class="form-control Input_adress" maxlength="1"/>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div th:object="${frameForm}">
+                            <input type="hidden" th:value="${calculationId}" id="calculationId" name="calculationId"/>
+                            <input type="hidden" th:value="${amountFloor}" id="amountFloor" name="amountFloor"/>
                             <div class="container" id="count_floor" style="width: 75%;margin-left: 2px">
-                                <p class="fw-weight-bold" style="font-weight:600; ">1 этаж</p>
+                                <p class="fw-weight-bold" style="font-weight:600; " th:text="'Этаж ' + ${amountFloor}"></p>
                                 <div class="row">
                                     <div class="col-sm-8 text-center">
                                         <p class="fw-weight-bold" style="font-weight:400; ">Высота этажа</p>
@@ -446,10 +449,10 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-sm-4">
-                                <button type="submit" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
+                                <button type="submit" id="calculateButton" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
                             </div>
                             <div class="col-sm-4">
-                                <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</button>
+                                <button type="submit" id="exitButton" name="exitButton" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</button>
                             </div>
                         </div>
                         <!-- Text input -->

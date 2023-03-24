@@ -23,7 +23,7 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a href="/editClient" style="font-size: 16px" th:utext="${Customers_info}"></a>
+                        <a th:href="'/clientCard?id=' + ${id}" style="font-size: 16px" th:utext="${Customers_info}"></a>
                     </div>
                     <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
                 </div>
@@ -111,10 +111,10 @@
                                 <button type="button" class="btn btn-info" style="color: white;" data-toggle="modal" data-target="#exampleModalPopovers">Добавить конструктивный элемент</button>
                             </div>
                         </div>
-                        <div class="container" style="width: 100%;margin-left: 2px;">
+                        <div class="container" style="width: 100%;margin-left: 2px;" th:each ="frame : ${frames}">
                             <div class="row">
                                 <div class="col-sm-6 text-left">
-                                    <p class="fw-weight-bold" style="font-weight:700; " th:text="'Результат расчета 1 этажа'"></p>
+                                    <p class="fw-weight-bold" style="font-weight:700; " th:text="'Результат расчета ' + ${frame.floorNumber} + ' этажа'"></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -135,9 +135,9 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center" th:text="${externalPrice}"></th>
+                                            <th class="text-center" th:text="${frame.getExternalPrice()}"></th>
                                         </tr>
-                                        <div th:each ="resultExternal : ${resultsExternal}">
+                                        <div th:each ="resultExternal : ${frame.getResultsExternal()}">
                                             <tr>
                                                 <td class="text-center"></td>
                                                 <td th:text="${resultExternal.material}"></td>
@@ -151,9 +151,9 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center" th:text="${internalPrice}"></th>
+                                            <th class="text-center" th:text="${frame.getInternalPrice()}"></th>
                                         </tr>
-                                        <div th:each ="resultInternal : ${resultsInternal}">
+                                        <div th:each ="resultInternal : ${frame.resultsInternal}">
                                             <tr>
                                                 <td class="text-center"></td>
                                                 <td th:text="${resultInternal.material}"></td>
@@ -167,9 +167,9 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center" th:text="${overlapPrice}"></th>
+                                            <th class="text-center" th:text="${frame.getOverlapPrice()}"></th>
                                         </tr>
-                                        <div th:each ="resultOverlap : ${resultsOverlap}">
+                                        <div th:each ="resultOverlap : ${frame.resultsOverlap}">
                                             <tr>
                                                 <td class="text-center"></td>
                                                 <td th:text="${resultOverlap.material}"></td>
@@ -183,7 +183,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th class="text-center" th:text="${allPrice}"></th>
+                                            <th class="text-center" th:text="${frame.fullPriceMoneyFormat}"></th>
                                         </tr>
                                         </tbody>
                                     </table>

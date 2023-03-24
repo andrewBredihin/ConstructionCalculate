@@ -1,6 +1,7 @@
 package com.project.calculate.controllers;
 
 import com.project.calculate.entity.*;
+import com.project.calculate.form.FrameFormToCalculationPage;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,33 +23,67 @@ public class CalculationPageController {
     private CalculationRepository calculationRepository;
     @Autowired
     private CalculationStatusRepository calculationStatusRepository;
+    @Autowired
+    private StructuralElementFrameRepository structuralElementFrameRepository;
 
     @RequestMapping(value = "/calculation", method = RequestMethod.GET)
     public String calculationPage(HttpServletRequest request, Model model,
                                   @RequestParam(name = "calculationId", defaultValue = "") Long calculationId) {
         Calculation calculation = calculationRepository.getReferenceById(calculationId);
         Set<Result> results = calculation.getResults();
-        Set<Result> resultsExternal = new HashSet<>();
-        Set<Result> resultsInternal = new HashSet<>();
-        Set<Result> resultsOverlap = new HashSet<>();
-        double externalPrice = 0;
-        double internalPrice = 0;
-        double overlapPrice = 0;
 
-        for (Result x : results) {
-            if (x.getElementType().equals("Внешние стены")){
-                resultsExternal.add(x);
-                externalPrice += x.getPrice();
-            }
-            else if (x.getElementType().equals("Внутренние стены")){
-                resultsInternal.add(x);
-                internalPrice += x.getPrice();
-            }
-            else if (x.getElementType().equals("Перекрытие")){
-                resultsOverlap.add(x);
-                overlapPrice += x.getPrice();
+        Set<StructuralElementFrame> frames = new HashSet<>();
+        Long frameId = -1l;
+        for (Result x : results){
+            Long id = x.getStructuralElementFrames().iterator().next().getId();
+            if (id != frameId){
+                frames.add(structuralElementFrameRepository.getReferenceById(id));
+                frameId = id;
             }
         }
+
+        Set<FrameFormToCalculationPage> frameForms = new HashSet<>();
+
+        for (StructuralElementFrame x : frames){
+            FrameFormToCalculationPage frameForm = new FrameFormToCalculationPage();
+            frameForm.setFloorNumber(x.getFloorNumber());
+            Set<Result> frameResults = x.getResults();
+            Set<Result> resultsExternal = new HashSet<>();
+            Set<Result> resultsInternal = new HashSet<>();
+            Set<Result> resultsOverlap = new HashSet<>();
+            double externalPrice = 0;
+            double internalPrice = 0;
+            double overlapPrice = 0;
+            for (Result result : frameResults) {
+                if (result.getElementType().equals("Внешние стены")){
+                    resultsExternal.add(result);
+                    externalPrice += result.getPrice();
+                }
+                else if (result.getElementType().equals("Внутренние стены")){
+                    resultsInternal.add(result);
+                    internalPrice += result.getPrice();
+                }
+                else if (result.getElementType().equals("Перекрытие")){
+                    resultsOverlap.add(result);
+                    overlapPrice += result.getPrice();
+                }
+            }
+            frameForm.setExternalPrice(getPriceToStringFormat(externalPrice));
+            frameForm.setInternalPrice(getPriceToStringFormat(internalPrice));
+            frameForm.setOverlapPrice(getPriceToStringFormat(overlapPrice));
+            frameForm.setFullPriceMoneyFormat(getPriceToStringFormat(externalPrice + internalPrice + overlapPrice));
+            frameForm.setFullPrice(externalPrice + internalPrice + overlapPrice);
+            frameForm.setResultsExternal(resultsExternal);
+            frameForm.setResultsInternal(resultsInternal);
+            frameForm.setResultsOverlap(resultsOverlap);
+            frameForms.add(frameForm);
+        }
+
+        double allPrice = 0;
+        for (FrameFormToCalculationPage x : frameForms){
+            allPrice += x.getFullPrice();
+        }
+
         CalculationStatus calculationState = calculation.getСalculationState();
         List<CalculationStatus> statuses = new ArrayList<>();
         if (calculationState.getId() == 1){
@@ -59,18 +94,13 @@ public class CalculationPageController {
             statuses.add(new CalculationStatus(1l, "Актуален"));
         }
 
+        model.addAttribute("frames", frameForms);
+        model.addAttribute("allPrice", getPriceToStringFormat(allPrice));
         model.addAttribute("calculationId", calculation.getId());
         model.addAttribute("calculationDate", calculation.getCreatedDate().toString());
         model.addAttribute("calculationAdres", calculation.getAddressObjectConstractions());
         model.addAttribute("calculationStatus", calculationState.getTitle());
         model.addAttribute("calculationStates", statuses);
-        model.addAttribute("externalPrice", getPriceToStringFormat(externalPrice));
-        model.addAttribute("internalPrice", getPriceToStringFormat(internalPrice));
-        model.addAttribute("overlapPrice", getPriceToStringFormat(overlapPrice));
-        model.addAttribute("allPrice", getPriceToStringFormat(externalPrice + internalPrice + overlapPrice));
-        model.addAttribute("resultsExternal", resultsExternal);
-        model.addAttribute("resultsInternal", resultsInternal);
-        model.addAttribute("resultsOverlap", resultsOverlap);
 
         //Отображение ФИ:должность пользователя
         String principal = request.getUserPrincipal().getName();
@@ -93,6 +123,7 @@ public class CalculationPageController {
         model.addAttribute("Customers_info", Customers_info);
         model.addAttribute("customer_phone", customer.getPhone());
         model.addAttribute("customer_phone_str", customer.getPhoneMask());
+        model.addAttribute("id", customer.getId());
         return "calculation";
     }
 
