@@ -48,14 +48,19 @@
             </div>
             <div class="row justify-content-end">
                 <div class="col-sm-3" >
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-lg dropdown-toggle action-button" data-toggle="dropdown" aria-expanded="false" th:text="${calculationStatus}"></button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <div th:each ="calculationState : ${calculationStates}">
-                                <li><a class="dropdown-item" role="presentation" href="#" th:text="${calculationState.title}"></a></li>
-                            </div>
-                        </ul>
-                    </div>
+                    <form method="POST" th:action="@{/calculation}">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-lg dropdown-toggle action-button" data-toggle="dropdown" aria-expanded="false" th:text="${calculationStatus}"></button>
+                            <span th:unless="${calculationStates.size() == 0}">
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <input type="hidden" th:value="${calculationId}" id="calculationId" name="calculationId"/>
+                                    <div th:each ="calculationState : ${calculationStates}">
+                                        <li><button class="dropdown-item" type="submit" name="changeCalculationState" id="changeCalculationState" role="presentation" th:value="${calculationState.id}" th:text="${calculationState.title}"></button></li>
+                                    </div>
+                                </ul>
+                            </span>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div id="exampleModalPopovers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalPopoversLabel">

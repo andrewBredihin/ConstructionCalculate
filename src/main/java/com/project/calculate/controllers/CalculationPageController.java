@@ -1,12 +1,8 @@
 package com.project.calculate.controllers;
 
-import com.project.calculate.CalculateApplication;
 import com.project.calculate.entity.*;
-import com.project.calculate.form.CalculationInfo;
-import com.project.calculate.form.FrameForm;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -23,13 +19,12 @@ public class CalculationPageController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
     private CalculationRepository calculationRepository;
+    @Autowired
+    private CalculationStatusRepository calculationStatusRepository;
 
     @RequestMapping(value = "/calculation", method = RequestMethod.GET)
-    public String calculationPage(HttpServletRequest request,
-                                  Model model,
+    public String calculationPage(HttpServletRequest request, Model model,
                                   @RequestParam(name = "calculationId", defaultValue = "") Long calculationId) {
         Calculation calculation = calculationRepository.getReferenceById(calculationId);
         Set<Result> results = calculation.getResults();
@@ -64,6 +59,7 @@ public class CalculationPageController {
             statuses.add(new CalculationStatus(1l, "Актуален"));
         }
 
+        model.addAttribute("calculationId", calculation.getId());
         model.addAttribute("calculationDate", calculation.getCreatedDate().toString());
         model.addAttribute("calculationAdres", calculation.getAddressObjectConstractions());
         model.addAttribute("calculationStatus", calculationState.getTitle());
@@ -107,5 +103,19 @@ public class CalculationPageController {
      */
     private String getPriceToStringFormat(double price){
         return String.format("%.2f", price) + " Руб";
+    }
+
+    /**
+     * POST запрос. Изменяет статус расчета.
+     * @param calculationStateId
+     * @param calculationId
+     */
+    @RequestMapping(value = "/calculation", method = RequestMethod.POST)
+    public String calculationPageChangeCalculationState(@RequestParam(name = "changeCalculationState") Long calculationStateId,
+                                  @RequestParam(name = "calculationId") Long calculationId) {
+        Calculation calculation = calculationRepository.getReferenceById(calculationId);
+        calculation.setСalculationState(calculationStatusRepository.findById(calculationStateId).get());
+        calculationRepository.save(calculation);
+        return "redirect:/calculation?calculationId=" + calculationId;
     }
 }
