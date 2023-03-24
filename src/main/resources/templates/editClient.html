@@ -27,7 +27,7 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="card-body cardbody-color p-lg-4 " th:action="@{/addClient}" th:object="${clientForm}" method="POST">
+            <form class="card-body cardbody-color p-lg-4 ">
                 <span class="login100-form-title">
                    Редактирование клиента
                 </span>
@@ -35,33 +35,33 @@
                 <div class="row mb-4">
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="form6Example1" class="form-control"minlength="2" disabled/>
-                            <label class="form-label" for="form6Example1">Имя</label>
+                            <input type="text" id="name" class="form-control"minlength="2" disabled/>
+                            <label class="form-label" for="name">Имя</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="form6Example2" class="form-control"minlength="2" disabled/>
-                            <label class="form-label" for="form6Example2">Фамилия</label>
+                            <input type="text" id="midlename" class="form-control"minlength="2" disabled/>
+                            <label class="form-label" for="midlename">Фамилия</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="form6Example" class="form-control"minlength="2" disabled/>
-                            <label class="form-label" for="form6Example2">Отчество</label>
+                            <input type="text" id="lastname" class="form-control"minlength="2" disabled/>
+                            <label class="form-label" for="lastname">Отчество</label>
                         </div>
                     </div>
                 </div>
                 <!-- Text input -->
                 <div class="form-outline mb-4">
-                    <input type="text" id="form6Example4" class="form-control"minlength="20" disabled/>
-                    <label class="form-label" for="form6Example4">Адрес</label>
+                    <input type="text" id="Adress" class="form-control"minlength="20" disabled/>
+                    <label class="form-label" for="Adress">Адрес</label>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="form6Example5" class="form-control" disabled/>
-                    <label class="form-label" for="form6Example5">Email</label>
+                    <input type="email" id="Email" class="form-control" disabled/>
+                    <label class="form-label" for="Email">Email</label>
                 </div>
 
                 <!-- Number input -->
@@ -72,10 +72,10 @@
                 <!-- Submit button -->
                 <div class="row" style="margin-left: 120px">
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                        <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn">Редактировать</button>
+                        <button type="button" class="btn btn-primary btn-block mb-4 modal-btn" onclick="editbutton()">Редактировать</button>
                     </div>
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                        <button type="submit" class="btn btn-primary btn-block mb-4 modal-btn" disabled>Сохранить</button>
+                        <button type="submit" id="savebutton" class="btn btn-primary btn-block mb-4 modal-btn" disabled>Сохранить</button>
                     </div>
                 </div>
             </form>
@@ -107,6 +107,17 @@
         //2. Получить элемент, к которому необходимо добавить маску
         $("#phone").mask("89999999999");
     });
+
+    function editbutton()
+    {
+        document.getElementById('savebutton').disabled=false;
+        document.getElementById('name').disabled=false;
+        document.getElementById('midlename').disabled=false;
+        document.getElementById('lastname').disabled=false;
+        document.getElementById('Adress').disabled=false;
+        document.getElementById('Email').disabled=false;
+        document.getElementById('phone').disabled=false;
+    }
 </script>
 </body>
 </html>
