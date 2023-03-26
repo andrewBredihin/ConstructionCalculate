@@ -49,6 +49,21 @@ public class Customer {
     @JoinColumn(name = "manager_id")
     private User manager;
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", phone=" + phone +
+                ", email='" + email + '\'' +
+                ", adress='" + adress + '\'' +
+                ", calculations=" + calculations +
+                ", manager=" + manager +
+                '}';
+    }
+
     public User getManager() {
         return manager;
     }

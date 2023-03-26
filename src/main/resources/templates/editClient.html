@@ -27,46 +27,53 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="card-body cardbody-color p-lg-4 ">
+            <form class="card-body cardbody-color p-lg-4 "
+                  th:action="@{/editClient}"
+                  th:object="${clientForm}"
+                  method="POST">
                 <span class="login100-form-title">
                    Редактирование клиента
                 </span>
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">
+                    <div >
+                        <input th:field="*{manager}" hidden="hidden"/>
+                        <input th:field="*{id}" hidden="hidden"/>
+                    </div>
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="name" class="form-control"minlength="2" disabled/>
+                            <input type="text" id="name" th:field="*{first_name}" class="form-control"minlength="2" disabled/>
                             <label class="form-label" for="name">Имя</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="midlename" class="form-control"minlength="2" disabled/>
+                            <input type="text" id="midlename" th:field="*{last_name}" class="form-control" minlength="2" disabled/>
                             <label class="form-label" for="midlename">Фамилия</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-outline">
-                            <input type="text" id="lastname" class="form-control"minlength="2" disabled/>
+                            <input type="text" id="lastname" th:field="*{second_name}" class="form-control" minlength="2" disabled/>
                             <label class="form-label" for="lastname">Отчество</label>
                         </div>
                     </div>
                 </div>
                 <!-- Text input -->
                 <div class="form-outline mb-4">
-                    <input type="text" id="Adress" class="form-control"minlength="20" disabled/>
+                    <input type="text" id="Adress" th:field="*{adress}" class="form-control" minlength="20" disabled/>
                     <label class="form-label" for="Adress">Адрес</label>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="Email" class="form-control" disabled/>
+                    <input type="email" id="Email" th:field="*{email}" class="form-control" disabled/>
                     <label class="form-label" for="Email">Email</label>
                 </div>
 
                 <!-- Number input -->
                 <div class="form-outline mb-4">
-                    <input type="tel" id="phone" name="tel" class="form-control" minlength="11" maxlength="11" disabled/>
+                    <input type="tel" id="phone" name="tel" th:field="*{phone}" class="form-control" minlength="11" maxlength="11" disabled/>
                     <label class="form-label" for="phone">Телефон</label>
                 </div>
                 <!-- Submit button -->

@@ -135,9 +135,6 @@ public class StructuralElementFrameController {
                             @RequestParam(name = "exitButton", required = false) String exitButton,
                             @RequestParam(name = "adress", defaultValue = "") String adress) {
 
-        LoggerFactory.getLogger(CalculateApplication.class).error("CALC BUTTON: " + customerId);
-        LoggerFactory.getLogger(CalculateApplication.class).error("EXIT BUTTON: " + exitButton);
-
         if (exitButton != null)
             return "redirect:/home";
         //Получаем значения из формы
