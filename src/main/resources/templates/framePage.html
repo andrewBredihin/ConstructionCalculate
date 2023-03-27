@@ -463,8 +463,10 @@
         InteriorWallCoverings_div.toggle('hidden');
         if (document.getElementById('internalCheck').value === '1'){
             document.getElementById('internalCheck').value = '0';
+            document.getElementById('OSB_internal_wal').required = false;
         } else {
             document.getElementById('internalCheck').value = '1';
+            document.getElementById('OSB_internal_wal').required = true;
         }
     });
     document.querySelector('#WindowOpenings_btn').addEventListener('click',function () {
@@ -487,52 +489,66 @@
         InteriorWallCoverings_div.toggle('hidden');
         if (document.getElementById('overlapCheck').value === '1'){
             document.getElementById('overlapCheck').value = '0';
+            document.getElementById('overlap_thickness').required = false;
+            document.getElementById('OSB_thickness').required = false;
+            document.getElementById('steam_waterproofing_thickness').required = false;
+            document.getElementById('windscreen_thickness').required = false;
+            document.getElementById('insulation__thickness').required = false;
         } else {
             document.getElementById('overlapCheck').value = '1';
+            document.getElementById('overlap_thickness').required = true;
+            document.getElementById('OSB_thickness').required = true;
+            document.getElementById('steam_waterproofing_thickness').required = true;
+            document.getElementById('windscreen_thickness').required = true;
+            document.getElementById('insulation__thickness').required = true;
         }
     });
     document.querySelector('#addWindowOpenings_btn').addEventListener('click',function () {
-        i++;
-        const html='<div class="row mb-4" id="DelOrAddWindowOpenings'+i+'">\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="win_height'+i+'">Высота</label>\n' +
-            '                                            <input type="number" id="win_height'+i+'" value="" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="win_width'+i+'">Ширина</label>\n' +
-            '                                            <input type="number" id="win_width'+i+'" value="" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="win_count'+i+'">Количество</label>\n' +
-            '                                            <input type="number" id="win_count'+i+'" value="" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div class="row mb-4"id="DelOrAddWindowOpenings_btn'+i+'">\n' +
-            '                                    <div class="col-sm-9">\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-sm-3">\n' +
-            '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+i+'" onclick="delfunkWin(this.id)"><i class="fa fa-minus"></i></button>\n' +
-            '                                    </div>\n' +
-            '                                </div>';
-        $('#WindowOpenings_div_add').append(html);
         var width = document.getElementById('win_width').value;
         var height = document.getElementById('win_height').value;
         var count = document.getElementById('win_count').value;
-        var baseInput = document.getElementById('request_value').value;
-        var newInput = baseInput + '&winHeight' + '=' + height + '|winWidth' + '=' + width + '|winCount' + '=' + count;
-        document.getElementById('win_width'+i).value = width;
-        document.getElementById('win_height'+i).value = height;
-        document.getElementById('win_count'+i).value = count;
-        document.getElementById('win_width').value = '';
-        document.getElementById('win_height').value = '';
-        document.getElementById('win_count').value = '';
-        document.getElementById('request_value').value = newInput;
+        if (width !== '' && height !== '' && count !== ''){
+            i++;
+            const html='<div class="row mb-4" id="DelOrAddWindowOpenings'+i+'">\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="win_height'+i+'">Высота</label>\n' +
+                '                                            <input type="number" id="win_height'+i+'" value="" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="win_width'+i+'">Ширина</label>\n' +
+                '                                            <input type="number" id="win_width'+i+'" value="" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="win_count'+i+'">Количество</label>\n' +
+                '                                            <input type="number" id="win_count'+i+'" value="" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="row mb-4"id="DelOrAddWindowOpenings_btn'+i+'">\n' +
+                '                                    <div class="col-sm-9">\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col-sm-3">\n' +
+                '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+i+'" onclick="delfunkWin(this.id)"><i class="fa fa-minus"></i></button>\n' +
+                '                                    </div>\n' +
+                '                                </div>';
+            $('#WindowOpenings_div_add').append(html);
+
+
+            var baseInput = document.getElementById('request_value').value;
+            var newInput = baseInput + '&winHeight' + '=' + height + '|winWidth' + '=' + width + '|winCount' + '=' + count;
+            document.getElementById('win_width'+i).value = width;
+            document.getElementById('win_height'+i).value = height;
+            document.getElementById('win_count'+i).value = count;
+            document.getElementById('win_width').value = '';
+            document.getElementById('win_height').value = '';
+            document.getElementById('win_count').value = '';
+            document.getElementById('request_value').value = newInput;
+        }
     });
     function delfunkWin(i)
     {
@@ -546,47 +562,50 @@
     }
 
     document.querySelector('#addWindowOpenings_btn1').addEventListener('click',function () {
-        j++;
-        const html='<div class="row mb-4" id="DelOrAddDoorOpenings'+j+'">\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="door_height'+j+'">Высота</label>\n' +
-            '                                            <input type="number" id="door_height'+j+'" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="door_width'+j+'">Ширина</label>\n' +
-            '                                            <input type="number" id="door_width'+j+'" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="door_count'+j+'">Количество</label>\n' +
-            '                                            <input type="number" id="door_count'+j+'" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div class="row mb-4" id="DelOrAddDoorOpenings_btn'+j+'">\n' +
-            '                                    <div class="col-sm-9">\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-sm-3">\n' +
-            '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+j+'" onclick="delfunkDoor(this.id)"><i class="fa fa-minus"></i></button>\n' +
-            '                                    </div>\n' +
-            '                                </div>';
-        $('#WindowOpenings_div_add1').append(html);
         var width = document.getElementById('door_height').value;
         var height = document.getElementById('door_height').value;
         var count = document.getElementById('door_count').value;
-        var baseInput = document.getElementById('request_value').value;
-        var newInput = baseInput + '&doorHeight' + '=' + height + '|doorWidth' + '=' + width + '|doorCount' + '=' + count;
-        document.getElementById('door_width'+j).value = width;
-        document.getElementById('door_height'+j).value = height;
-        document.getElementById('door_count'+j).value = count;
-        document.getElementById('door_width').value = '';
-        document.getElementById('door_height').value = '';
-        document.getElementById('door_count').value = '';
-        document.getElementById('request_value').value = newInput;
+
+        if (width !== '' && height !== '' && count !== '') {
+            j++;
+            const html = '<div class="row mb-4" id="DelOrAddDoorOpenings' + j + '">\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="door_height' + j + '">Высота</label>\n' +
+                '                                            <input type="number" id="door_height' + j + '" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="door_width' + j + '">Ширина</label>\n' +
+                '                                            <input type="number" id="door_width' + j + '" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="door_count' + j + '">Количество</label>\n' +
+                '                                            <input type="number" id="door_count' + j + '" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="row mb-4" id="DelOrAddDoorOpenings_btn' + j + '">\n' +
+                '                                    <div class="col-sm-9">\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col-sm-3">\n' +
+                '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="' + j + '" onclick="delfunkDoor(this.id)"><i class="fa fa-minus"></i></button>\n' +
+                '                                    </div>\n' +
+                '                                </div>';
+            $('#WindowOpenings_div_add1').append(html);
+            var baseInput = document.getElementById('request_value').value;
+            var newInput = baseInput + '&doorHeight' + '=' + height + '|doorWidth' + '=' + width + '|doorCount' + '=' + count;
+            document.getElementById('door_width' + j).value = width;
+            document.getElementById('door_height' + j).value = height;
+            document.getElementById('door_count' + j).value = count;
+            document.getElementById('door_width').value = '';
+            document.getElementById('door_height').value = '';
+            document.getElementById('door_count').value = '';
+            document.getElementById('request_value').value = newInput;
+        }
     });
     function delfunkDoor(j)
     {
@@ -600,47 +619,49 @@
 
     }
     document.querySelector('#addWindowOpenings_btn2').addEventListener('click',function () {
-        g++;
-        const html='<div class="row mb-4" id="DelOrAddDoorOpenings_i'+g+'">\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="door_height_i'+g+'">Высота</label>\n' +
-            '                                            <input type="number" id="door_height_i'+g+'" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="door_width_i'+g+'">Ширина</label>\n' +
-            '                                            <input type="number" id="door_width_i'+g+'" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col">\n' +
-            '                                        <div class="form-outline">\n' +
-            '                                            <label class="form-label" for="door_count_i'+g+'">Количество</label>\n' +
-            '                                            <input type="number" id="door_count_i'+g+'" class="form-control" disabled/>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div class="row mb-4"id="DelOrAddDoorOpenings_i_btn'+g+'">\n' +
-            '                                    <div class="col-sm-9">\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-sm-3">\n' +
-            '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="'+g+'" onclick="delfunkDoorI(this.id)"><i class="fa fa-minus"></i></button>\n' +
-            '                                    </div>\n' +
-            '                                </div>';
-        $('#WindowOpenings_div_add2').append(html);
         var width = document.getElementById('door_height_i').value;
         var height = document.getElementById('door_height_i').value;
         var count = document.getElementById('door_count_i').value;
-        var baseInput = document.getElementById('request_value').value;
-        var newInput = baseInput + '&doorHeightI' + '=' + height + '|doorWidthI' + '=' + width + '|doorCountI' + '=' + count;
-        document.getElementById('door_width_i'+g).value = width;
-        document.getElementById('door_height_i'+g).value = height;
-        document.getElementById('door_count_i'+g).value = count;
-        document.getElementById('door_width_i').value = '';
-        document.getElementById('door_height_i').value = '';
-        document.getElementById('door_count_i').value = '';
-        document.getElementById('request_value').value = newInput;
+        if (width !== '' && height !== '' && count !== '') {
+            g++;
+            const html = '<div class="row mb-4" id="DelOrAddDoorOpenings_i' + g + '">\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="door_height_i' + g + '">Высота</label>\n' +
+                '                                            <input type="number" id="door_height_i' + g + '" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="door_width_i' + g + '">Ширина</label>\n' +
+                '                                            <input type="number" id="door_width_i' + g + '" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col">\n' +
+                '                                        <div class="form-outline">\n' +
+                '                                            <label class="form-label" for="door_count_i' + g + '">Количество</label>\n' +
+                '                                            <input type="number" id="door_count_i' + g + '" class="form-control" disabled/>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="row mb-4"id="DelOrAddDoorOpenings_i_btn' + g + '">\n' +
+                '                                    <div class="col-sm-9">\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col-sm-3">\n' +
+                '                                        <button type="button" class="btn m-1 pull-right btn-secondary btn-sm" id="' + g + '" onclick="delfunkDoorI(this.id)"><i class="fa fa-minus"></i></button>\n' +
+                '                                    </div>\n' +
+                '                                </div>';
+            $('#WindowOpenings_div_add2').append(html);
+            var baseInput = document.getElementById('request_value').value;
+            var newInput = baseInput + '&doorHeightI' + '=' + height + '|doorWidthI' + '=' + width + '|doorCountI' + '=' + count;
+            document.getElementById('door_width_i' + g).value = width;
+            document.getElementById('door_height_i' + g).value = height;
+            document.getElementById('door_count_i' + g).value = count;
+            document.getElementById('door_width_i').value = '';
+            document.getElementById('door_height_i').value = '';
+            document.getElementById('door_count_i').value = '';
+            document.getElementById('request_value').value = newInput;
+        }
     });
     function delfunkDoorI(g)
     {
