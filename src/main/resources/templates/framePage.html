@@ -29,9 +29,9 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a th:href="'/clientCard?id=' + ${customerId}" style="font-size: 16px" th:utext="${Customers_info}"></a>
+                        <a th:href="'/clientCard?id=' + ${customerId}" class="a-line" style="font-size: 16px" th:utext="${Customers_info}"></a>
                     </div>
-                    <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
+                    <div class="phone">тел: <a class="a-line" th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <div class="form-inline mr-auto">
@@ -39,16 +39,31 @@
                         </div>
                     </div>
                     <span class="navbar-text">
-                            <p th:utext="${user_name}"></p>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <p th:utext="${user_name}"></p>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="/logout" class="a-line">выйти</a>
+                            </div>
+                        </div>
                     </span>
                 </div>
             </div>
         </nav>
         <div class="container hero">
-            <div class="col-12 col-lg-6 col-xl-5" style="margin-left: 570px">
-                <span class="navbar-text" style="font-size: 40px;color: white">
-                    Каркас
-                </span>
+            <div class="row justify-content-center navbar-text text-center" style="font-size: 40px;color: white;">
+                Каркас
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                    <button type="button" class="btn btn-light btn-lg action-button" onclick="history.back()" style="font-size: 20px">❮ Назад</button>
+                </div>
+                <!--Андрей вот здесь сделай переход на карточку клиента при нажатии на кнопку закрыть-->
+                <div class="col-12 col-lg-6 col-xl-5">
+                    <button type="button" class="btn btn-light btn-lg action-button pull-right" style="font-size: 20px">закрыть</button>
+                </div>
             </div>
             <br>
             <div class="limiter">
@@ -76,7 +91,7 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Высота этажа</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" th:field="*{height}" placeholder="м/см/мм"/>
+                                        <input type="number" class="form-control Input_adress" th:field="*{height}" step="0.01" min="0.01" placeholder="м/см/мм"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -84,7 +99,7 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Периметр внешних стен</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" th:field="*{perimeter_of_external_walls}"/>
+                                        <input type="number" class="form-control Input_adress" step="0.01" min="0.01" th:field="*{perimeter_of_external_walls}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -92,7 +107,7 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Площадь основания</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" th:field="*{base_area}"/>
+                                        <input type="number" class="form-control Input_adress" step="0.01" min="0.01" th:field="*{base_area}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -115,7 +130,7 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Длина внутренних стен</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" th:field="*{internal_wall_length}"/>
+                                        <input type="number" class="form-control Input_adress" step="0.01" min="0.01" th:field="*{internal_wall_length}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -244,19 +259,19 @@
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="win_height">Высота</label>
-                                            <input type="number" id="win_height" value="" class="form-control"/>
+                                            <input type="number" id="win_height" value="" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="win_width">Ширина</label>
-                                            <input type="number" id="win_width" value="" class="form-control"/>
+                                            <input type="number" id="win_width" value="" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="win_count">Количество</label>
-                                            <input type="number" id="win_count" value="" class="form-control"/>
+                                            <input type="number" id="win_count" value="" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -275,19 +290,19 @@
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="door_height">Высота</label>
-                                            <input type="number" id="door_height" class="form-control"/>
+                                            <input type="number" id="door_height" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="door_width">Ширина</label>
-                                            <input type="number" id="door_width" class="form-control"/>
+                                            <input type="number" id="door_width" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="door_count">Количество</label>
-                                            <input type="number" id="door_count" class="form-control"/>
+                                            <input type="number" id="door_count" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -306,19 +321,19 @@
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="door_height_i">Высота</label>
-                                            <input type="number" id="door_height_i" class="form-control"/>
+                                            <input type="number" id="door_height_i" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="door_width_i">Ширина</label>
-                                            <input type="number" id="door_width_i" class="form-control"/>
+                                            <input type="number" id="door_width_i" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-outline">
                                             <label class="form-label" for="door_count_i">Количество</label>
-                                            <input type="number" id="door_count_i" class="form-control"/>
+                                            <input type="number" id="door_count_i" step="0.01" min="0.01" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>

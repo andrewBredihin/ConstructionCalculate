@@ -23,9 +23,9 @@
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                     <h1 style="font-size: 25px">Клиент:</h1>
                     <div class="phone">
-                        <a th:href="'/clientCard?id=' + ${id}" style="font-size: 16px" th:utext="${Customers_info}"></a>
+                        <a th:href="'/clientCard?id=' + ${id}" class="a-line" style="font-size: 16px;" th:utext="${Customers_info}"></a>
                     </div>
-                    <div class="phone">тел: <a th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
+                    <div class="phone">тел: <a class="a-line" th:href="'tel:' + ${customer_phone}" th:utext="${customer_phone_str}"/></div>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <div class="form-inline mr-auto">
@@ -33,19 +33,33 @@
                         </div>
                     </div>
                     <span class="navbar-text">
-                             <p th:utext="${user_name}"></p>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <p th:utext="${user_name}"></p>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="/logout" class="a-line">выйти</a>
+                            </div>
+                        </div>
                     </span>
                 </div>
             </div>
         </nav>
         <div class="container hero">
-            <div class="row justify-content-center">
-                <div class="col-sm-3 text-center" >
-                    <span style="font-size: 40px;color: white">
-                        Расчет
-                    </span>
+            <div class="row justify-content-center navbar-text text-center" style="font-size: 40px;color: white;">
+                Расчет
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                    <button type="button" class="btn btn-light btn-lg action-button" onclick="history.back()" style="font-size: 20px">❮ Назад</button>
+                </div>
+                <!--Андрей вот здесь сделай переход на карточку клиента при нажатии на кнопку закрыть-->
+                <div class="col-12 col-lg-6 col-xl-5">
+                    <button type="button" class="btn btn-light btn-lg action-button pull-right" style="font-size: 20px">закрыть</button>
                 </div>
             </div>
+            <br>
             <div class="row justify-content-end">
                 <div class="col-sm-3" >
                     <form method="POST" th:action="@{/calculation}">

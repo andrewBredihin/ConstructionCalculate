@@ -31,6 +31,9 @@
                   th:action="@{/editClient}"
                   th:object="${clientForm}"
                   method="POST">
+                <div class="row justify-content-start">
+                    <a class="previous" type="button" style="font-size: 20px" onclick="history.back()">❮ Назад</a>
+                </div>
                 <span class="login100-form-title">
                    Редактирование клиента
                 </span>
@@ -79,7 +82,7 @@
                 <!-- Submit button -->
                 <div class="row" style="margin-left: 120px">
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                        <button type="button" class="btn btn-primary btn-block mb-4 modal-btn" onclick="editbutton()">Редактировать</button>
+                        <button type="button" id="editbutton" class="btn btn-primary btn-block mb-4 modal-btn" onclick="editbutton()">Редактировать</button>
                     </div>
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                         <button type="submit" id="savebutton" class="btn btn-primary btn-block mb-4 modal-btn" disabled>Сохранить</button>
@@ -118,6 +121,7 @@
     function editbutton()
     {
         document.getElementById('savebutton').disabled=false;
+        document.getElementById('editbutton').disabled=true;
         document.getElementById('name').disabled=false;
         document.getElementById('midlename').disabled=false;
         document.getElementById('lastname').disabled=false;

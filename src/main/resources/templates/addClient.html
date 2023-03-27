@@ -34,6 +34,9 @@
             th:action="@{/addClient}"
             th:object="${clientForm}"
             method="POST">
+        <div class="row justify-content-start">
+          <a class="previous" type="button" style="font-size: 20px" onclick="history.back()">❮ Назад</a>
+        </div>
         <span class="login100-form-title">
           Добавить клиента
         </span>
