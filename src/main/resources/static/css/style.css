@@ -299,6 +299,12 @@
 #CalculationOfOverlaps_div.hidden{
     display: block;
 }
+#frame_div{
+    display: none;
+}
+#frame_div.hidden{
+    display: block;
+}
 
 .previous:hover {
     background-color: #ddd;

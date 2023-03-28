@@ -54,7 +54,7 @@
                 <br>
                 <div class="row">
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                        <button type="button" class="btn btn-light btn-lg action-button" onclick="history.back()" style="font-size: 20px">❮ Назад</button>
+                        <button type="button" class="btn btn-light btn-lg action-button" onclick="location.href='/home'" style="font-size: 20px">❮ Назад</button>
                     </div>
                     <div class="col-12 col-lg-6 col-xl-5">
                         <button type="button" class="btn btn-light btn-lg action-button pull-right" onclick="location.href='/home'" style="font-size: 20px">закрыть</button>
@@ -81,9 +81,6 @@
                                 <hr>
                                 <a th:href="'/foundationPage?customerId=' + ${customerId}" role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
                                    data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Фундамент</a>
-                                <hr>
-                                <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
-                                   data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Крыша</a>
                             </div>
                         </div>
                     </div>
