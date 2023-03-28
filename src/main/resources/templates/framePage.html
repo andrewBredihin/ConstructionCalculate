@@ -445,7 +445,8 @@
                                 <button type="submit" id="calculateButton" name="calculateButton" th:value="${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
                             </div>
                             <div class="col-sm-4">
-                                <button type="submit" id="exitButton" name="exitButton" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</button>
+                                <a th:if="${calculationId != null}" th:href="'/calculation?calculationId='+${calculationId}" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</a>
+                                <a th:if="${calculationId == null}" th:href="'/clientCard?id='+${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</a>
                             </div>
                         </div>
                         <!-- Text input -->

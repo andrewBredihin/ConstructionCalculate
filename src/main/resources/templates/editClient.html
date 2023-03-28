@@ -82,7 +82,7 @@
                 <!-- Submit button -->
                 <div class="row" style="margin-left: 120px">
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                        <button type="button" id="editbutton" class="btn btn-primary btn-block mb-4 modal-btn" onclick="editbutton()">Редактировать</button>
+                        <button type="button" id="editbutton" class="btn btn-primary btn-block mb-4 modal-btn">Редактировать</button>
                     </div>
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                         <button type="submit" id="savebutton" class="btn btn-primary btn-block mb-4 modal-btn" disabled>Сохранить</button>
@@ -118,17 +118,16 @@
         $("#phone").mask("89999999999");
     });
 
-    function editbutton()
-    {
+    document.querySelector('#editbutton').addEventListener('click',function () {
         document.getElementById('savebutton').disabled=false;
-        document.getElementById('editbutton').disabled=true;
         document.getElementById('name').disabled=false;
         document.getElementById('midlename').disabled=false;
         document.getElementById('lastname').disabled=false;
         document.getElementById('Adress').disabled=false;
         document.getElementById('Email').disabled=false;
         document.getElementById('phone').disabled=false;
-    }
+        document.getElementById('editbutton').disabled=true;
+    });
 </script>
 </body>
 </html>

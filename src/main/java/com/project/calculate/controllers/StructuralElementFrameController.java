@@ -132,11 +132,8 @@ public class StructuralElementFrameController {
                             @RequestParam(name = "overlapCheck", defaultValue = "0") String overlapCheck,
                             @RequestParam(name = "amountFloor") int amountFloor,
                             @RequestParam(name = "calculationId", defaultValue = "") Long calculationId,
-                            @RequestParam(name = "exitButton", required = false) String exitButton,
                             @RequestParam(name = "adress", defaultValue = "") String adress) {
 
-        if (exitButton != null)
-            return "redirect:/home";
         //Получаем значения из формы
         double height = frameForm.getHeight();
         double perimeter_of_external_walls = frameForm.getPerimeter_of_external_walls();
@@ -304,12 +301,8 @@ public class StructuralElementFrameController {
             if (calculationId == null)
                 calculationRepository.save(calculation);
 
-            for (Result x : results){
-                resultRepository.save(x);
-            }
-            for (Opening x : openings){
-                openingRepository.save(x);
-            }
+            resultRepository.saveAll(results);
+            openingRepository.saveAll(openings);
         } catch (Exception e){
             System.out.println(e);
         }
@@ -360,7 +353,7 @@ public class StructuralElementFrameController {
             PriceList priceList = materialCharacteristic.getPriceLists().iterator().next();
             result.setPrice(priceList.getPurchasePrice() * amount);
             result.setFullPrice(priceList.getSellingPrice() * amount);
-            result.setMeasurementUnit(measurementUnitRepository.findById(1L).get().getMeasurementUnitsName());
+            result.setMeasurementUnit(materialCharacteristic.getMeasurementUnit().getMeasurementUnitsName());
             result.setElementType(elementType);
         } catch (Exception e){
             System.out.println(e);

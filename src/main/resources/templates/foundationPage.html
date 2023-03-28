@@ -67,18 +67,25 @@
       <br>
       <div class="limiter">
         <div class="Container-skeleton">
-          <form class="card-body cardbody-color p-lg-4 " th:action="@{/framePage}" method="POST">
+          <form class="card-body cardbody-color p-lg-4 " th:action="@{/foundationPage}" method="POST">
             <!-- 2 column grid layout with text inputs for the first and last names -->
-            <div th:object="${frameForm}">
+            <div th:object="${foundationForm}">
+              <div class="row mb-4">
+                <div class="col-sm-9 p-3">
+                  <div class="form-outline">
+                    <input th:if="${calculationId == null}" type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                    <input th:if="${calculationId != null}" disabled type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                  </div>
+                </div>
+              </div>
               <input type="hidden" th:value="${calculationId}" id="calculationId" name="calculationId"/>
-              <input type="hidden" th:value="${amountFloor}" id="amountFloor" name="amountFloor"/>
               <div class="container" id="count_floor" style="width: 75%;margin-left: 2px">
                 <div class="row">
                   <div class="col-sm-8 text-center">
                     <p class="fw-weight-bold" style="font-weight:400; ">Периметр внешних стен</p>
                   </div>
                   <div class="col-sm-4">
-                    <input type="number" step="0.01" min="0.01" class="form-control Input_adress"/>
+                    <input type="number" th:field="*{externalWallLength}" step="0.01" min="0.01" class="form-control Input_adress"/>
                   </div>
                 </div>
                 <div class="row">
@@ -86,7 +93,7 @@
                     <p class="fw-weight-bold" style="font-weight:400; ">Длина внутренних стен</p>
                   </div>
                   <div class="col-sm-4">
-                    <input type="number" step="0.01" min="0.01" class="form-control Input_adress"/>
+                    <input type="number" th:field="*{internalWallLength}" step="0.01" min="0.01" class="form-control Input_adress"/>
                   </div>
                 </div>
                 <div class="row">
@@ -95,11 +102,12 @@
                   </div>
                   <div class="col-sm-4">
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" id="external_wall_thickness" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                      <input type="text" th:field="*{concretePiles}" class="form-control" id="concretePiles" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                       <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                       <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" onclick="document.getElementById('external_wall_thickness').value='100'">100 мм</a></li>
-                        <li><a class="dropdown-item" onclick="document.getElementById('external_wall_thickness').value='200'">200 мм</a></li>
+                        <div th:each ="concretePiles : ${concretePilesList}">
+                          <li><a class="dropdown-item" th:text="${concretePiles.name}" th:attr="onclick=|myFunk('${concretePiles.getName()}', 'concretePiles')|">test</a></li>
+                        </div>
                       </ul>
                     </div>
                   </div>
@@ -110,11 +118,12 @@
                   </div>
                   <div class="col-sm-4">
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" id="inputinnerwall" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                      <input type="text" th:field="*{concrete}" class="form-control" id="concrete" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                       <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                       <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" onclick="document.getElementById('inputinnerwall').value='100'">100 мм</a></li>
-                        <li><a class="dropdown-item" onclick="document.getElementById('inputinnerwall').value='200'">200 мм</a></li>
+                        <div th:each ="concrete : ${concreteList}">
+                          <li><a class="dropdown-item" th:text="${concrete.name}" th:attr="onclick=|myFunk('${concrete.getName()}', 'concrete')|">test</a></li>
+                        </div>
                       </ul>
                     </div>
                   </div>
@@ -123,10 +132,11 @@
             </div>
             <div class="row justify-content-center">
               <div class="col-sm-4">
-                <button type="submit" id="calculateButton" name="calculateButton" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
+                <button type="submit" id="calculateButton" th:value="${customerId}" name="calculateButton" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
               </div>
               <div class="col-sm-4">
-                <button type="submit" id="exitButton" name="exitButton" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</button>
+                <a th:if="${calculationId != null}" th:href="'/calculation?calculationId='+${calculationId}" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</a>
+                <a th:if="${calculationId == null}" th:href="'/clientCard?id='+${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</a>
               </div>
             </div>
           </form>
@@ -141,5 +151,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+<script>
+  function myFunk(text, id){
+    document.getElementById(id).value=text;
+  }
+</script>
 </body>
 </html>

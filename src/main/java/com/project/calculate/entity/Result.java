@@ -46,6 +46,33 @@ public class Result {
     @Column(name = "element_type", nullable = false, length = Integer.MAX_VALUE)
     private String elementType;
 
+    @ManyToMany(mappedBy = "results")
+    private Set<StructuralElementBasement> structuralElementBasements = new LinkedHashSet<>();
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "amount=" + amount +
+                ", fullPrice=" + fullPrice +
+                ", material='" + material + '\'' +
+                ", measurementUnit='" + measurementUnit + '\'' +
+                ", price=" + price +
+                ", materialCharacteristics=" + materialCharacteristics +
+                ", calculation=" + calculation +
+                ", structuralElementFrames=" + structuralElementFrames +
+                ", elementType='" + elementType + '\'' +
+                ", structuralElementBasements=" + structuralElementBasements +
+                '}';
+    }
+
+    public Set<StructuralElementBasement> getStructuralElementBasements() {
+        return structuralElementBasements;
+    }
+
+    public void setStructuralElementBasements(Set<StructuralElementBasement> structuralElementBasements) {
+        this.structuralElementBasements = structuralElementBasements;
+    }
+
     public String getElementType() {
         return elementType;
     }

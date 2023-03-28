@@ -52,15 +52,13 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", phone=" + phone +
                 ", email='" + email + '\'' +
                 ", adress='" + adress + '\'' +
-                ", calculations=" + calculations +
-                ", manager=" + manager +
+                ", manager=" + manager.getFirstName() + " " + manager.getLastName() +
                 '}';
     }
 

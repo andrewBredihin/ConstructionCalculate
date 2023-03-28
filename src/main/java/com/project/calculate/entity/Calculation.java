@@ -44,6 +44,17 @@ public class Calculation {
     @OneToMany(mappedBy = "calculation", cascade = {CascadeType.ALL})
     private Set<Result> results = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "Calculation{" +
+                ", addressObjectConstractions='" + addressObjectConstractions + '\'' +
+                ", createdDate=" + createdDate +
+                ", number=" + number +
+                ", customer=" + customer.getFullName() +
+                ", сalculationState=" + сalculationState +
+                '}';
+    }
+
     public Set<Result> getResults() {
         return results;
     }

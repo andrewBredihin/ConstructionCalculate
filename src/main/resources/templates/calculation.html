@@ -87,10 +87,10 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                            <a th:if="${frames.size() == 0}" th:href="'/framePage?customerId=' + ${customerId} + '&amountFloor=1&calculationId=' + ${calculationId}" role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
                                data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Каркас</a>
                             <hr>
-                            <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
+                            <a th:if="${basement == null}" th:href="'/foundationPage?customerId=' + ${customerId} + '&calculationId=' + ${calculationId}" role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
                                data-original-title="Popover title" data-toggle="popover" style="color: #fff;">Фундамент</a>
                             <hr>
                             <a role="button" class="btn btn-secondary popover-test modal-btn" title="" data-content="Popover body content is set in this attribute."
@@ -125,7 +125,7 @@
                                 <button type="button" class="btn btn-info" style="color: white;" data-toggle="modal" data-target="#exampleModalPopovers">Добавить конструктивный элемент</button>
                             </div>
                         </div>
-                        <div class="container" style="width: 100%;margin-left: 2px;" th:each ="frame : ${frames}">
+                        <div th:if="${frames.size() > 0}" class="container" style="width: 100%;margin-left: 2px;" th:each ="frame : ${frames}">
                             <div class="row">
                                 <div class="col-sm-6 text-left">
                                     <p class="fw-weight-bold" style="font-weight:700; " th:text="'Результат расчета ' + ${frame.floorNumber} + ' этажа'"></p>
@@ -198,6 +198,53 @@
                                             <th></th>
                                             <th></th>
                                             <th class="text-center" th:text="${frame.fullPriceMoneyFormat}"></th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${basement != null}" class="container" style="width: 100%;margin-left: 2px;">
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <p class="fw-weight-bold" style="font-weight:700;">Результат расчета фундамента</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th>Материал</th>
+                                            <th>Ед.Измерения</th>
+                                            <th>Количество</th>
+                                            <th>стоимость материлов</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th>Фундамент</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        <div th:each ="result : ${basement.getResults()}">
+                                            <tr>
+                                                <td class="text-center"></td>
+                                                <td th:text="${result.material}"></td>
+                                                <td th:text="${result.measurementUnit}"></td>
+                                                <td th:text="${result.amount}"></td>
+                                                <td class="text-right" th:text="${result.price}"></td>
+                                            </tr>
+                                        </div>
+                                        <tr>
+                                            <th>Итого стоимость материлов</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th class="text-center" th:text="${basement.fullPriceMoneyFormat}"></th>
                                         </tr>
                                         </tbody>
                                     </table>

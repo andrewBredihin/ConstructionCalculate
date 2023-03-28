@@ -1,6 +1,7 @@
 package com.project.calculate.controllers;
 
 import com.project.calculate.entity.*;
+import com.project.calculate.form.BasementFormToCalculationPage;
 import com.project.calculate.form.FrameFormToCalculationPage;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,13 +33,22 @@ public class CalculationPageController {
         Calculation calculation = calculationRepository.getReferenceById(calculationId);
         Set<Result> results = calculation.getResults();
 
+        double allPrice = 0;
+
         Set<StructuralElementFrame> frames = new HashSet<>();
         Long frameId = -1l;
+        BasementFormToCalculationPage basement = null;
         for (Result x : results){
-            Long id = x.getStructuralElementFrames().iterator().next().getId();
-            if (id != frameId){
-                frames.add(structuralElementFrameRepository.getReferenceById(id));
-                frameId = id;
+            if (x.getStructuralElementFrames().size() > 0){
+                Long id = x.getStructuralElementFrames().iterator().next().getId();
+                if (id != frameId){
+                    frames.add(structuralElementFrameRepository.getReferenceById(id));
+                    frameId = id;
+                }
+            }
+            else if (x.getStructuralElementBasements().size() > 0 && basement == null){
+                basement = new BasementFormToCalculationPage(x.getStructuralElementBasements().iterator().next());
+                allPrice += basement.getFullPrice();
             }
         }
 
@@ -79,7 +89,7 @@ public class CalculationPageController {
             frameForms.add(frameForm);
         }
 
-        double allPrice = 0;
+
         for (FrameFormToCalculationPage x : frameForms){
             allPrice += x.getFullPrice();
         }
@@ -94,6 +104,8 @@ public class CalculationPageController {
             statuses.add(new CalculationStatus(1l, "Актуален"));
         }
 
+        model.addAttribute("customerId", calculation.getCustomer().getId());
+        model.addAttribute("basement", basement);
         model.addAttribute("frames", frameForms);
         model.addAttribute("allPrice", getPriceToStringFormat(allPrice));
         model.addAttribute("calculationId", calculation.getId());
