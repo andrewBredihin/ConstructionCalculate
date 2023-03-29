@@ -46,7 +46,7 @@ public class Result {
     @Column(name = "element_type", nullable = false, length = Integer.MAX_VALUE)
     private String elementType;
 
-    @ManyToMany(mappedBy = "results")
+    @ManyToMany(mappedBy = "results", cascade = {CascadeType.ALL})
     private Set<StructuralElementBasement> structuralElementBasements = new LinkedHashSet<>();
 
     @Override
