@@ -65,6 +65,10 @@ public class Result {
                 '}';
     }
 
+    public String getPriceToMoneyFormat(){
+        return String.format("%.2f", this.price);
+    }
+
     public Set<StructuralElementBasement> getStructuralElementBasements() {
         return structuralElementBasements;
     }

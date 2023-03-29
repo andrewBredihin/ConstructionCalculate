@@ -164,7 +164,7 @@
                                                     <td th:text="${resultExternal.material}"></td>
                                                     <td th:text="${resultExternal.measurementUnit}"></td>
                                                     <td th:text="${resultExternal.amount}"></td>
-                                                    <td class="text-right" th:text="${resultExternal.price}"></td>
+                                                    <td class="text-right" th:text="${resultExternal.getPriceToMoneyFormat()}"></td>
                                                 </tr>
                                             </div>
                                             <tr>
@@ -180,7 +180,7 @@
                                                     <td th:text="${resultInternal.material}"></td>
                                                     <td th:text="${resultInternal.measurementUnit}"></td>
                                                     <td th:text="${resultInternal.amount}"></td>
-                                                    <td class="text-right" th:text="${resultInternal.price}"></td>
+                                                    <td class="text-right" th:text="${resultInternal.getPriceToMoneyFormat()}"></td>
                                                 </tr>
                                             </div>
                                             <tr>
@@ -196,7 +196,7 @@
                                                     <td th:text="${resultOverlap.material}"></td>
                                                     <td th:text="${resultOverlap.measurementUnit}"></td>
                                                     <td th:text="${resultOverlap.amount}"></td>
-                                                    <td class="text-right" th:text="${resultOverlap.price}"></td>
+                                                    <td class="text-right" th:text="${resultOverlap.getPriceToMoneyFormat()}"></td>
                                                 </tr>
                                             </div>
                                             <tr>
@@ -245,7 +245,7 @@
                                                 <td th:text="${result.material}"></td>
                                                 <td th:text="${result.measurementUnit}"></td>
                                                 <td th:text="${result.amount}"></td>
-                                                <td class="text-right" th:text="${result.price}"></td>
+                                                <td class="text-right" th:text="${result.getPriceToMoneyFormat()}"></td>
                                             </tr>
                                         </div>
                                         <tr>
