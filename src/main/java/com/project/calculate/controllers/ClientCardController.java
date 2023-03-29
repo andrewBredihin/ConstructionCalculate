@@ -10,6 +10,7 @@ import com.project.calculate.repository.CalculationRepository;
 import com.project.calculate.repository.CustomerRepository;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.util.PropertySource;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Контроллер страницы карточки клиента /clientCard
@@ -75,7 +75,20 @@ public class ClientCardController {
         for (Calculation x : calculations) {
             calculationForms.add(new CalculationForm(x.getId(), x.getCreatedDate().toString(), x.getСalculationState().getTitle(), x.getAddressObjectConstractions(), x.getNumber()));
         }
-        model.addAttribute("calculations", calculationForms);
+
+        Comparator<CalculationForm> comparator = new Comparator<CalculationForm>() {
+            @Override
+            public int compare(CalculationForm left, CalculationForm right) {
+                return left.getNumber() - right.getNumber();
+            }
+        };
+
+        List<CalculationForm> calculationFormsSorted = new ArrayList<>(calculationForms);
+        Collections.sort(calculationFormsSorted, comparator);
+
+        /*for(CalculationForm x : list)
+            LoggerFactory.getLogger(CalculateApplication.class).error("TEST ORDER: " + x.getId());*/
+        model.addAttribute("calculations", calculationFormsSorted);
 
         return "/clientCard";
     }

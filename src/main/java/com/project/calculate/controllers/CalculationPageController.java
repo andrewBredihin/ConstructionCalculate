@@ -1,10 +1,13 @@
 package com.project.calculate.controllers;
 
+import com.project.calculate.CalculateApplication;
 import com.project.calculate.entity.*;
 import com.project.calculate.form.BasementFormToCalculationPage;
+import com.project.calculate.form.CalculationForm;
 import com.project.calculate.form.FrameFormToCalculationPage;
 import com.project.calculate.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -104,14 +107,21 @@ public class CalculationPageController {
             statuses.add(new CalculationStatus(1l, "Актуален"));
         }
 
+        LoggerFactory.getLogger(CalculateApplication.class).error("ERROR frames: " + frames.size());
+
+        Comparator<FrameFormToCalculationPage> comparator = (left, right) -> left.getFloorNumber() - right.getFloorNumber();
+        List<FrameFormToCalculationPage> frameFormsSorted = new ArrayList<>(frameForms);
+        Collections.sort(frameFormsSorted, comparator);
+
         model.addAttribute("customerId", calculation.getCustomer().getId());
         model.addAttribute("basement", basement);
-        model.addAttribute("frames", frameForms);
+        model.addAttribute("frames", frameFormsSorted);
         model.addAttribute("allPrice", getPriceToStringFormat(allPrice));
         model.addAttribute("calculationId", calculation.getId());
         model.addAttribute("calculationDate", calculation.getCreatedDate().toString());
         model.addAttribute("calculationAdres", calculation.getAddressObjectConstractions());
         model.addAttribute("calculationStatus", calculationState.getTitle());
+        model.addAttribute("calculationStatusId", calculationState.getId());
         model.addAttribute("calculationStates", statuses);
 
         //Отображение ФИ:должность пользователя

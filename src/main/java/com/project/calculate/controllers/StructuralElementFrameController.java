@@ -57,7 +57,12 @@ public class StructuralElementFrameController {
                                              @RequestParam(name = "customerId", defaultValue = "") Long customerId,
                                              @RequestParam(name = "amountFloor") int amountFloor,
                                              @RequestParam(name = "calculationId", defaultValue = "", required = false) Long calculationId) {
-        model.addAttribute("frameForm", new FrameForm());
+        FrameForm form = new FrameForm();
+        form.setOverlap_thickness(100);
+        form.setInternal_wall_thickness(100);
+        form.setExternal_wall_thickness(100);
+
+        model.addAttribute("frameForm", form);
         model.addAttribute("customerId", customerId);
         model.addAttribute("id", customerId);
         model.addAttribute("amountFloor", amountFloor);

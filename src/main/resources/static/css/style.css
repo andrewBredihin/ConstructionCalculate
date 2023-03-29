@@ -305,6 +305,12 @@
 #frame_div.hidden{
     display: block;
 }
+#basement_div{
+    display: none;
+}
+#basement_div.hidden{
+    display: block;
+}
 
 .previous:hover {
     background-color: #ddd;

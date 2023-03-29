@@ -1,5 +1,7 @@
 package com.project.calculate.form;
 
+import java.util.Objects;
+
 public class CalculationForm {
     private Long id;
     private String date;
@@ -55,4 +57,5 @@ public class CalculationForm {
     public void setNumber(int number) {
         this.number = number;
     }
+
 }

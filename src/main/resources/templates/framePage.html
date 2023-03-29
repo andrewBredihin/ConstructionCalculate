@@ -58,11 +58,7 @@
             <br>
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                    <button type="button" class="btn btn-light btn-lg action-button" onclick="history.back()" style="font-size: 20px">❮ Назад</button>
-                </div>
-                <!--Андрей вот здесь сделай переход на карточку клиента при нажатии на кнопку закрыть-->
-                <div class="col-12 col-lg-6 col-xl-5">
-                    <button type="button" class="btn btn-light btn-lg action-button pull-right" style="font-size: 20px">закрыть</button>
+                    <a type="button" class="btn btn-light btn-lg action-button" th:href="'/clientCard?id=' + ${customerId}" style="font-size: 20px">❮ Назад</a>
                 </div>
             </div>
             <br>
@@ -74,7 +70,7 @@
                             <div class="row mb-4">
                                 <div class="col-sm-9 p-3">
                                     <div class="form-outline">
-                                        <input th:if="${amountFloor == 1}" type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                                        <input th:if="${amountFloor == 1}" required type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
                                         <input th:if="${amountFloor > 1}" disabled type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
                                     </div>
                                 </div>
@@ -91,15 +87,15 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Высота этажа</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" th:field="*{height}" step="0.01" min="0.01" placeholder="м/см/мм"/>
+                                        <input type="number" required class="form-control Input_adress" th:field="*{height}" step="0.01" min="0.01" placeholder="м/см/мм"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-8 text-center">
-                                        <p class="fw-weight-bold" style="font-weight:400; ">Периметр внешних стен</p>
+                                        <p class="fw-weight-bold" style="font-weight:400;">Периметр внешних стен</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" step="0.01" min="0.01" th:field="*{perimeter_of_external_walls}"/>
+                                        <input type="number" class="form-control Input_adress" required step="0.01" min="0.01" th:field="*{perimeter_of_external_walls}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -107,7 +103,7 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Площадь основания</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" step="0.01" min="0.01" th:field="*{base_area}"/>
+                                        <input type="number" class="form-control Input_adress" required step="0.01" min="0.01" th:field="*{base_area}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -116,7 +112,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="external_wall_thickness" th:field="*{external_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="external_wall_thickness" required tabindex="-1" min="0.01" value="100" style="pointer-events: none;" th:field="*{external_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li><a class="dropdown-item" onclick="document.getElementById('external_wall_thickness').value='100'">100 мм</a></li>
@@ -130,7 +126,7 @@
                                         <p class="fw-weight-bold" style="font-weight:400; ">Длина внутренних стен</p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control Input_adress" step="0.01" min="0.01" th:field="*{internal_wall_length}"/>
+                                        <input type="number" class="form-control Input_adress" required step="0.01" min="0.01" th:field="*{internal_wall_length}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -139,7 +135,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="inputinnerwall" th:field="*{internal_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="inputinnerwall" required tabindex="-1" style="pointer-events: none;" value="100" min="0.01" th:field="*{internal_wall_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li><a class="dropdown-item" onclick="document.getElementById('inputinnerwall').value='100'">100 мм</a></li>
@@ -157,7 +153,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="OSB_external_wall" th:field="*{OSB_external_wall}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" required tabindex="-1" style="pointer-events: none;" id="OSB_external_wall" th:field="*{OSB_external_wall}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Osb : ${OsbList}">
@@ -173,7 +169,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="steamWaterproofingExternal" th:field="*{steam_waterproofing_external}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="steamWaterproofingExternal" required tabindex="-1" style="pointer-events: none;" th:field="*{steam_waterproofing_external}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Waterproofing : ${Waterproofings}">
@@ -189,7 +185,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="windscreenExternalWall" th:field="*{windscreen_external_wall}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="windscreenExternalWall" required tabindex="-1" style="pointer-events: none;" th:field="*{windscreen_external_wall}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Windscreen : ${Windscreens}">
@@ -205,7 +201,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="insulation_external_wall" th:field="*{insulation_external_wall}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="insulation_external_wall" required tabindex="-1" style="pointer-events: none;" th:field="*{insulation_external_wall}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Insulation : ${Insulations}">
@@ -232,7 +228,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="OSB_internal_wal" th:field="*{OSB_internal_wal}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="OSB_internal_wal" tabindex="-1" style="pointer-events: none;" th:field="*{OSB_internal_wal}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Osb : ${OsbList}">
@@ -365,7 +361,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="overlap_thickness" th:field="*{overlap_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="overlap_thickness" tabindex="-1" style="pointer-events: none;" min="0.01" th:field="*{overlap_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li><a class="dropdown-item" onclick="document.getElementById('overlap_thickness').value='100'">100 мм</a></li>
@@ -380,7 +376,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="OSB_thickness" th:field="*{OSB_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="OSB_thickness" tabindex="-1" style="pointer-events: none;" th:field="*{OSB_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Osb : ${OsbList}">
@@ -396,7 +392,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="steam_waterproofing_thickness" th:field="*{steam_waterproofing_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="steam_waterproofing_thickness" tabindex="-1" style="pointer-events: none;" th:field="*{steam_waterproofing_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Waterproofing : ${Waterproofings}">
@@ -412,7 +408,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="windscreen_thickness" th:field="*{windscreen_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="windscreen_thickness" tabindex="-1" style="pointer-events: none;" th:field="*{windscreen_thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Windscreen : ${Windscreens}">
@@ -428,7 +424,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="insulation__thickness" th:field="*{insulation__thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                                            <input type="text" class="form-control" id="insulation__thickness" tabindex="-1" style="pointer-events: none;" th:field="*{insulation__thickness}" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <div th:each ="Insulation : ${Insulations}">

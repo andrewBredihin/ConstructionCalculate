@@ -56,9 +56,6 @@
                     <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
                         <button type="button" class="btn btn-light btn-lg action-button" onclick="location.href='/home'" style="font-size: 20px">❮ Назад</button>
                     </div>
-                    <div class="col-12 col-lg-6 col-xl-5">
-                        <button type="button" class="btn btn-light btn-lg action-button pull-right" onclick="location.href='/home'" style="font-size: 20px">закрыть</button>
-                    </div>
                 </div>
                 <br>
                 <div class="row">
@@ -93,18 +90,15 @@
                             <table class="table"  th:each ="calculation : ${calculations}">
                                 <tbody style="font-size: 20px">
                                 <tr>
-                                    <td class="text-center">
+                                    <td style="width: 15%" class="text-center">
                                         <a type="button" th:href="'/calculation?calculationId=' + ${calculation.id}" class="btn btn-sm modal-btn" style="color: white;font-size: 20px"  th:text="'Расчет №' + ${calculation.number}">
                                             <span class="glyphicon glyphicon-remove-circle"></span>
                                         </a>
                                     </td>
-                                    <td th:text="${calculation.date}"></td>
-                                    <td th:text="${calculation.status}"></td>
+                                    <td style="width: 15%" class="text-center" th:text="${calculation.date}"></td>
+                                    <td style="width: 15%" class="text-center" th:text="${calculation.status}"></td>
                                     <td class="text-center" th:text="${calculation.adress}"></td>
-                                    <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" class="btn btn-info btn-just-icon btn-sm" data-original-title="" title="">
-                                            <i class="fa fa-copy" aria-hidden="true" style="font-size: 25px;color: white"></i>
-                                        </button>
+                                    <td style="width: 10%" class="td-actions text-right">
                                         <button type="button" th:value="${calculation.id}" onclick="myFunction(this.value)" rel="tooltip" class="btn btn-danger btn-just-icon btn-sm" data-toggle="modal" data-target="#DeleteCalc">
                                             <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 25px"></i>
                                         </button>

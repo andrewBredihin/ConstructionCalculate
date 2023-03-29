@@ -57,11 +57,7 @@
       </div>
       <div class="row">
         <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-          <button type="button" class="btn btn-light btn-lg action-button" onclick="history.back()" style="font-size: 20px">❮ Назад</button>
-        </div>
-        <!--Андрей вот здесь сделай переход на карточку клиента при нажатии на кнопку закрыть-->
-        <div class="col-12 col-lg-6 col-xl-5">
-          <button type="button" class="btn btn-light btn-lg action-button pull-right" style="font-size: 20px">закрыть</button>
+          <a type="button" class="btn btn-light btn-lg action-button" th:href="'/clientCard?id=' + ${customerId}" style="font-size: 20px">❮ Назад</a>
         </div>
       </div>
       <br>
@@ -73,7 +69,7 @@
               <div class="row mb-4">
                 <div class="col-sm-9 p-3">
                   <div class="form-outline">
-                    <input th:if="${calculationId == null}" type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
+                    <input th:if="${calculationId == null}" required type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
                     <input th:if="${calculationId != null}" disabled type="text" name="adress" th:value="${adress}" class="form-control Input_adress" placeholder="Добавить адресс объекта строительства" minlength="20"/>
                   </div>
                 </div>
@@ -102,7 +98,7 @@
                   </div>
                   <div class="col-sm-4">
                     <div class="input-group mb-3">
-                      <input type="text" th:field="*{concretePiles}" class="form-control" id="concretePiles" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                      <input type="text" th:field="*{concretePiles}" required tabindex="-1" style="pointer-events: none;" class="form-control" id="concretePiles" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                       <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                       <ul class="dropdown-menu dropdown-menu-end">
                         <div th:each ="concretePiles : ${concretePilesList}">
@@ -118,7 +114,7 @@
                   </div>
                   <div class="col-sm-4">
                     <div class="input-group mb-3">
-                      <input type="text" th:field="*{concrete}" class="form-control" id="concrete" aria-label="Ввод текста с помощью раскрывающейся кнопки">
+                      <input type="text" th:field="*{concrete}" required tabindex="-1" style="pointer-events: none;" class="form-control" id="concrete" aria-label="Ввод текста с помощью раскрывающейся кнопки">
                       <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                       <ul class="dropdown-menu dropdown-menu-end">
                         <div th:each ="concrete : ${concreteList}">
@@ -133,10 +129,6 @@
             <div class="row justify-content-center">
               <div class="col-sm-4">
                 <button type="submit" id="calculateButton" th:value="${customerId}" name="calculateButton" class="btn btn-primary btn-block mb-4 modal-btn">Расчитать</button>
-              </div>
-              <div class="col-sm-4">
-                <a th:if="${calculationId != null}" th:href="'/calculation?calculationId='+${calculationId}" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</a>
-                <a th:if="${calculationId == null}" th:href="'/clientCard?id='+${customerId}" class="btn btn-primary btn-block mb-4 modal-btn">Закончить расчет</a>
               </div>
             </div>
           </form>

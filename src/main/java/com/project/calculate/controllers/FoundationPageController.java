@@ -157,7 +157,9 @@ public class FoundationPageController {
             LoggerFactory.getLogger(CalculateApplication.class).error("ERROR: " + e.getMessage());
         }
 
-        return "redirect:/home";
+        if (calculationId == null)
+            calculationId = calculationRepository.getMaxId();
+        return "redirect:/calculation?calculationId=" + calculationId;
     }
 
     private int getAmountConcretePiles(double length){

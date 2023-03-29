@@ -2,6 +2,7 @@ package com.project.calculate.controllers;
 
 import com.project.calculate.entity.Customer;
 import com.project.calculate.entity.User;
+import com.project.calculate.form.FrameFormToCalculationPage;
 import com.project.calculate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,12 @@ public class MainPageController {
         model.addAttribute("user_name", user_info);
 
         Set<Customer> customers = user.getCustomers();
-        model.addAttribute("customers", customers);
+
+        Comparator<Customer> comparator = (left, right) -> left.getFirstName().compareTo(right.getFirstName());
+        List<Customer> customersSorted = new ArrayList<>(customers);
+        Collections.sort(customersSorted, comparator);
+
+        model.addAttribute("customers", customersSorted);
 
         return "MainPage";
     }
