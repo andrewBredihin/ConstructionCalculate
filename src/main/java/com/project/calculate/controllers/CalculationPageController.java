@@ -107,8 +107,6 @@ public class CalculationPageController {
             statuses.add(new CalculationStatus(1l, "Актуален"));
         }
 
-        LoggerFactory.getLogger(CalculateApplication.class).error("ERROR frames: " + frames.size());
-
         Comparator<FrameFormToCalculationPage> comparator = (left, right) -> left.getFloorNumber() - right.getFloorNumber();
         List<FrameFormToCalculationPage> frameFormsSorted = new ArrayList<>(frameForms);
         Collections.sort(frameFormsSorted, comparator);
@@ -123,6 +121,7 @@ public class CalculationPageController {
         model.addAttribute("calculationStatus", calculationState.getTitle());
         model.addAttribute("calculationStatusId", calculationState.getId());
         model.addAttribute("calculationStates", statuses);
+        model.addAttribute("calculationNumber", calculation.getNumber());
 
         //Отображение ФИ:должность пользователя
         String principal = request.getUserPrincipal().getName();
