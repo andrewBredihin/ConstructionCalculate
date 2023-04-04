@@ -68,19 +68,11 @@ public class StructuralElementFrame {
     @Column(name = "windscreen_thickness", nullable = false)
     private String windscreenThickness;
 
-    @ManyToMany(mappedBy = "structuralElementFrames", cascade = {CascadeType.ALL})
-    private Set<Result> results = new LinkedHashSet<>();
-
-    @ManyToMany(mappedBy = "structuralElementFrames", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "frame", cascade = {CascadeType.ALL})
     private Set<Opening> openings = new LinkedHashSet<>();
 
-    public Set<Opening> getOpenings() {
-        return openings;
-    }
-
-    public void setOpenings(Set<Opening> openings) {
-        this.openings = openings;
-    }
+    @OneToMany(mappedBy = "frame", cascade = {CascadeType.ALL})
+    private Set<Result> results = new LinkedHashSet<>();
 
     public Set<Result> getResults() {
         return results;
@@ -88,6 +80,14 @@ public class StructuralElementFrame {
 
     public void setResults(Set<Result> results) {
         this.results = results;
+    }
+
+    public Set<Opening> getOpenings() {
+        return openings;
+    }
+
+    public void setOpenings(Set<Opening> openings) {
+        this.openings = openings;
     }
 
     public StructuralElementFrame(){}

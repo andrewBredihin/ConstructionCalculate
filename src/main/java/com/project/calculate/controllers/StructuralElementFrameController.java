@@ -218,13 +218,10 @@ public class StructuralElementFrameController {
             }
         }
 
-        Set<StructuralElementFrame> frames = new HashSet<>();
-        frames.add(frame);
-
         Set<Opening> openings = new HashSet<>();
         if (windowsAndDoorsCheck.equals("1"))
             try {
-                openings = createOpenings(openingsStr, frames);
+                openings = createOpenings(openingsStr, frame);
             } catch (WrongHeightExeption e){
                 System.out.println(e);
             }
@@ -237,30 +234,30 @@ public class StructuralElementFrameController {
         try{
             MaterialCharacteristic boardExternal = materialCharacteristicsRepository.getMaterialCharacteristicByWedthAndName(external_wall_thickness / 1000, "Доска");
             Material boardExternalMaterial = boardExternal.getMaterials();
-            Result resultBoardExternal = createBoardResult(frames, openings, calculation, boardExternalMaterial,
+            Result resultBoardExternal = createBoardResult(frame, openings, calculation, boardExternalMaterial,
                     boardExternal, perimeter_of_external_walls, height, base_area, EXTERNAL);
             results.add(resultBoardExternal);
         }catch (Exception e){
             System.out.println(e);
         }
         //ОСБ внешних стен
-        Result resultOsbExternalWall = createResult(frames, calculation, OSB_external_wall, externalWallSquare * 2, EXTERNAL);
+        Result resultOsbExternalWall = createResult(frame, calculation, OSB_external_wall, externalWallSquare * 2, EXTERNAL);
         results.add(resultOsbExternalWall);
         //Парогидроизоляция внешних стен
-        Result resultSteamWaterproofingExternal = createResult(frames, calculation, steam_waterproofing_external, externalWallSquare, EXTERNAL);
+        Result resultSteamWaterproofingExternal = createResult(frame, calculation, steam_waterproofing_external, externalWallSquare, EXTERNAL);
         results.add(resultSteamWaterproofingExternal);
         //Ветрозащита внешних стен
-        Result windscreenExternalWall = createResult(frames, calculation, windscreen_external_wall, externalWallSquare, EXTERNAL);
+        Result windscreenExternalWall = createResult(frame, calculation, windscreen_external_wall, externalWallSquare, EXTERNAL);
         results.add(windscreenExternalWall);
         //Утеплитель внешних стен
-        Result insulationExternalWall = createResult(frames, calculation, insulation_external_wall, externalWallSquare, EXTERNAL);
+        Result insulationExternalWall = createResult(frame, calculation, insulation_external_wall, externalWallSquare, EXTERNAL);
         results.add(insulationExternalWall);
 
         //Доски для внутренних стен
         try{
             MaterialCharacteristic boardInternal = materialCharacteristicsRepository.getMaterialCharacteristicByWedthAndName(internal_wall_thickness / 1000, "Доска");
             Material boardInternalMaterial = boardInternal.getMaterials();
-            Result resultBoardInternal = createBoardResult(frames, openings, calculation, boardInternalMaterial,
+            Result resultBoardInternal = createBoardResult(frame, openings, calculation, boardInternalMaterial,
                     boardInternal, internal_wall_length, height, base_area, INTERNAL);
             results.add(resultBoardInternal);
         }catch (Exception e){
@@ -268,7 +265,7 @@ public class StructuralElementFrameController {
         }
         //ОСБ внутренних стен
         if (internalCheck.equals("1")){
-            Result OsbInternalWal = createResult(frames, calculation, OSB_internal_wal, internalWallSquare * 2, INTERNAL);
+            Result OsbInternalWal = createResult(frame, calculation, OSB_internal_wal, internalWallSquare * 2, INTERNAL);
             results.add(OsbInternalWal);
         }
 
@@ -278,23 +275,23 @@ public class StructuralElementFrameController {
             try{
                 MaterialCharacteristic boardOverlap = materialCharacteristicsRepository.getMaterialCharacteristicByWedthAndName(overlap_thickness / 1000, "Доска");
                 Material boardOverlapMaterial = boardOverlap.getMaterials();
-                Result resultBoardInternal = createBoardResult(frames, openings, calculation, boardOverlapMaterial,
+                Result resultBoardInternal = createBoardResult(frame, openings, calculation, boardOverlapMaterial,
                         boardOverlap, internal_wall_length, height, base_area, OVERLAP);
                 results.add(resultBoardInternal);
             }catch (Exception e){
                 System.out.println(e);
             }
             //ОСБ перекрытия
-            Result OsbThickness = createResult(frames, calculation, OSB_thickness, base_area, OVERLAP);
+            Result OsbThickness = createResult(frame, calculation, OSB_thickness, base_area, OVERLAP);
             results.add(OsbThickness);
             //Парогидроизоляция перекрытия
-            Result steamWaterproofingThicknes = createResult(frames, calculation, steam_waterproofing_thicknes, base_area, OVERLAP);
+            Result steamWaterproofingThicknes = createResult(frame, calculation, steam_waterproofing_thicknes, base_area, OVERLAP);
             results.add(steamWaterproofingThicknes);
             //Ветрозащита перекрытия
-            Result windscreenThickness = createResult(frames, calculation, windscreen_thickness, base_area, OVERLAP);
+            Result windscreenThickness = createResult(frame, calculation, windscreen_thickness, base_area, OVERLAP);
             results.add(windscreenThickness);
             //Утеплитель перекрытия
-            Result insulationThickness = createResult(frames, calculation, insulation__thickness, base_area, OVERLAP);
+            Result insulationThickness = createResult(frame, calculation, insulation__thickness, base_area, OVERLAP);
             results.add(insulationThickness);
         }
 
@@ -310,6 +307,7 @@ public class StructuralElementFrameController {
             openingRepository.saveAll(openings);
         } catch (Exception e){
             System.out.println(e);
+            LoggerFactory.getLogger(CalculateApplication.class).error("ERROR: " + e.getMessage());
         }
         //return "redirect:/home";
         amountFloor += 1;
@@ -338,7 +336,7 @@ public class StructuralElementFrameController {
      * @param square
      * @return Result
      */
-    private Result createResult(Set<StructuralElementFrame> frame, Calculation calculation, String material, Double square, String elementType){
+    private Result createResult(StructuralElementFrame frame, Calculation calculation, String material, Double square, String elementType){
         //Long id = 1L;
         Result result = new Result();
         /*try {
@@ -347,7 +345,7 @@ public class StructuralElementFrameController {
             System.out.println(e);
         }*/
         try {
-            result.setStructuralElementFrames(frame);
+            result.setFrame(frame);
             //result.setId(id);
             result.setCalculation(calculation);
             result.setMaterial(material);
@@ -379,10 +377,10 @@ public class StructuralElementFrameController {
      * @param elementType
      * @return Result
      */
-    private Result createBoardResult(Set<StructuralElementFrame> frame, Set<Opening> openings, Calculation calculation, Material material, MaterialCharacteristic materialCharacteristic, double length, double height, double square, String elementType){
+    private Result createBoardResult(StructuralElementFrame frame, Set<Opening> openings, Calculation calculation, Material material, MaterialCharacteristic materialCharacteristic, double length, double height, double square, String elementType){
         Result result = new Result();
         try {
-            result.setStructuralElementFrames(frame);
+            result.setFrame(frame);
             result.setCalculation(calculation);
             result.setMaterial(material.getName());
             result.setMaterialCharacteristics(materialCharacteristic);
@@ -405,17 +403,17 @@ public class StructuralElementFrameController {
     /**
      * Создает коллекцию оконных проемов и дверей по входной строке, содержащей их параметры
      * @param requestValue
-     * @param frames
+     * @param frame
      * @return Set
      */
-    private Set<Opening> createOpenings(String requestValue, Set<StructuralElementFrame> frames) throws WrongHeightExeption {
+    private Set<Opening> createOpenings(String requestValue, StructuralElementFrame frame) throws WrongHeightExeption {
         Set<Opening> openings = new HashSet<>();
         if (!requestValue.equals("")){
             String[] openingsList = requestValue.split("&");
             for (int i = 1; i < openingsList.length; i++){
                 String[] opening = openingsList[i].split("\\|");
                 Opening openingObject = new Opening();
-                openingObject.setStructuralElementFrames(frames);
+                openingObject.setFrame(frame);
                 String openingType = opening[0].split("=")[0];
                 if (openingType.equals("winHeight"))
                     openingObject.setType("Окно");
@@ -426,13 +424,13 @@ public class StructuralElementFrameController {
                 for (int j = 0; j < opening.length; j++) {
                     String value = opening[j].split("=")[1];
                     if (j == 0){
-                        if (frames.iterator().next().getFloorHeight() <= Double.valueOf(value))
+                        if (frame.getFloorHeight() <= Double.valueOf(value))
                             throw new WrongHeightExeption("Размер окна/двери не должен превышать размеры стены");
                         else
                             openingObject.setHeight(Double.valueOf(value));
                     }
                     else if (j == 1)
-                        if (frames.iterator().next().getPerimeterOfExternalWalls() <= Double.valueOf(value))
+                        if (frame.getPerimeterOfExternalWalls() <= Double.valueOf(value))
                             throw new WrongHeightExeption("Размер окна/двери не должен превышать размеры стены");
                         else
                             openingObject.setWidth(Double.valueOf(value));

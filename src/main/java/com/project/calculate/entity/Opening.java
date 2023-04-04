@@ -25,29 +25,16 @@ public class Opening {
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "openings_in_structural_element_frame",
-            joinColumns = @JoinColumn(name = "opening_id"),
-            inverseJoinColumns = @JoinColumn(name = "frame_id"))
-    private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "frame_id")
+    private StructuralElementFrame frame;
 
-    @Override
-    public String toString() {
-        return "Opening{" +
-                ", type='" + type + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", amount=" + amount +
-                ", structuralElementFrames=" + structuralElementFrames +
-                '}';
+    public StructuralElementFrame getFrame() {
+        return frame;
     }
 
-    public Set<StructuralElementFrame> getStructuralElementFrames() {
-        return structuralElementFrames;
-    }
-
-    public void setStructuralElementFrames(Set<StructuralElementFrame> structuralElementFrames) {
-        this.structuralElementFrames = structuralElementFrames;
+    public void setFrame(StructuralElementFrame frame) {
+        this.frame = frame;
     }
 
     public Integer getAmount() {

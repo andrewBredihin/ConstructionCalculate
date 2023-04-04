@@ -26,22 +26,16 @@ public class StructuralElementBasement {
     @Column(name = "perimeter_of_external_walls", nullable = false)
     private Double perimeterOfExternalWalls;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "basement_results",
-            joinColumns = @JoinColumn(name = "basement_id"),
-            inverseJoinColumns = @JoinColumn(name = "result_id"))
+
+    @OneToMany(mappedBy = "basement", cascade = {CascadeType.ALL})
     private Set<Result> results = new LinkedHashSet<>();
 
-    @Override
-    public String toString() {
-        return "StructuralElementBasement{" +
-                "id=" + id +
-                ", concrete='" + concrete + '\'' +
-                ", concretePiles='" + concretePiles + '\'' +
-                ", internalWallLength=" + internalWallLength +
-                ", perimeterOfExternalWalls=" + perimeterOfExternalWalls +
-                ", results=" + results +
-                '}';
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Set<Result> getResults() {

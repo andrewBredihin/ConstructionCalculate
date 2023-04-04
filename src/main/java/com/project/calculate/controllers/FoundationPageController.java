@@ -131,17 +131,14 @@ public class FoundationPageController {
             }
         }
 
-        Set<StructuralElementBasement> basements = new HashSet<>();
-        basements.add(basement);
-
         Set<Result> results = new HashSet<>();
 
         //Бетон
         Material concreteMaterial = materialsRepository.findByName(foundationForm.getConcrete());
-        Result concreteResult = createResult(basements, calculation, concreteMaterial, foundationForm.getExternalWallLength() + foundationForm.getInternalWallLength(), CONCRETE);
+        Result concreteResult = createResult(basement, calculation, concreteMaterial, foundationForm.getExternalWallLength() + foundationForm.getInternalWallLength(), CONCRETE);
         //Бетонные сваи
         Material concretePilesMaterial = materialsRepository.findByName(foundationForm.getConcretePiles());
-        Result concretePilesResult = createResult(basements, calculation, concretePilesMaterial, foundationForm.getExternalWallLength() + foundationForm.getInternalWallLength(), CONCRETE_PILES);
+        Result concretePilesResult = createResult(basement, calculation, concretePilesMaterial, foundationForm.getExternalWallLength() + foundationForm.getInternalWallLength(), CONCRETE_PILES);
 
         results.add(concreteResult);
         results.add(concretePilesResult);
@@ -171,10 +168,10 @@ public class FoundationPageController {
         return (int)Math.ceil(amount);
     }
 
-    private Result createResult(Set<StructuralElementBasement> basement, Calculation calculation, Material material, Double wallLength, String elementType){
+    private Result createResult(StructuralElementBasement basement, Calculation calculation, Material material, Double wallLength, String elementType){
         Result result = new Result();
         try {
-            result.setStructuralElementBasements(basement);
+            result.setBasement(basement);
             result.setCalculation(calculation);
             result.setMaterial(material.getName());
             MaterialCharacteristic materialCharacteristic = material.getMaterialCharacteristics().iterator().next();

@@ -42,15 +42,15 @@ public class CalculationPageController {
         Long frameId = -1l;
         BasementFormToCalculationPage basement = null;
         for (Result x : results){
-            if (x.getStructuralElementFrames().size() > 0){
-                Long id = x.getStructuralElementFrames().iterator().next().getId();
+            if (x.getFrame() != null){
+                Long id = x.getFrame().getId();
                 if (id != frameId){
                     frames.add(structuralElementFrameRepository.getReferenceById(id));
                     frameId = id;
                 }
             }
-            else if (x.getStructuralElementBasements().size() > 0 && basement == null){
-                basement = new BasementFormToCalculationPage(x.getStructuralElementBasements().iterator().next());
+            else if (x.getBasement() != null && basement == null){
+                basement = new BasementFormToCalculationPage(x.getBasement());
                 allPrice += basement.getFullPrice();
             }
         }

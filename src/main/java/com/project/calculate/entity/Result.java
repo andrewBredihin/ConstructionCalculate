@@ -13,7 +13,6 @@ public class Result {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
@@ -37,44 +36,35 @@ public class Result {
     @JoinColumn(name = "calculation_id", nullable = false)
     private Calculation calculation;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "frame_results",
-            joinColumns = @JoinColumn(name = "result_id"),
-            inverseJoinColumns = @JoinColumn(name = "frame_id"))
-    private Set<StructuralElementFrame> structuralElementFrames = new LinkedHashSet<>();
-
     @Column(name = "element_type", nullable = false, length = Integer.MAX_VALUE)
     private String elementType;
 
-    @ManyToMany(mappedBy = "results", cascade = {CascadeType.ALL})
-    private Set<StructuralElementBasement> structuralElementBasements = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "basement_id")
+    private StructuralElementBasement basement;
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                "amount=" + amount +
-                ", fullPrice=" + fullPrice +
-                ", material='" + material + '\'' +
-                ", measurementUnit='" + measurementUnit + '\'' +
-                ", price=" + price +
-                ", materialCharacteristics=" + materialCharacteristics +
-                ", calculation=" + calculation +
-                ", structuralElementFrames=" + structuralElementFrames +
-                ", elementType='" + elementType + '\'' +
-                ", structuralElementBasements=" + structuralElementBasements +
-                '}';
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "frame_id")
+    private StructuralElementFrame frame;
+
+    public StructuralElementBasement getBasement() {
+        return basement;
+    }
+
+    public void setBasement(StructuralElementBasement basement) {
+        this.basement = basement;
+    }
+
+    public StructuralElementFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(StructuralElementFrame frame) {
+        this.frame = frame;
     }
 
     public String getPriceToMoneyFormat(){
         return String.format("%.2f", this.price);
-    }
-
-    public Set<StructuralElementBasement> getStructuralElementBasements() {
-        return structuralElementBasements;
-    }
-
-    public void setStructuralElementBasements(Set<StructuralElementBasement> structuralElementBasements) {
-        this.structuralElementBasements = structuralElementBasements;
     }
 
     public String getElementType() {
@@ -83,14 +73,6 @@ public class Result {
 
     public void setElementType(String elementType) {
         this.elementType = elementType;
-    }
-
-    public Set<StructuralElementFrame> getStructuralElementFrames() {
-        return structuralElementFrames;
-    }
-
-    public void setStructuralElementFrames(Set<StructuralElementFrame> structuralElementFrames) {
-        this.structuralElementFrames = structuralElementFrames;
     }
 
 
